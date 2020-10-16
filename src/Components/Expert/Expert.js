@@ -7,10 +7,12 @@ function Expert(props) {
 
   return (
     <div className="expert">
-        <p>{expert.name}</p>
+        <h4 className='expert-name'>{expert.name}</h4>
         <p>{expert.twitterHandle}</p>
-        <p>{expert.rating}</p>
+        <img src={expert.image} alt='Expert'/>
         <p>{expert.description}</p>
+        <p>{Object.keys(expert.categories)[0]}</p>
+        <p>{expert.categories[Object.keys(expert.categories)[0]]}</p>
     </div>
   );
 }

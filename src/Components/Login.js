@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import * as yup from 'yup'
+import '../App.css';
 
 const defaultValues = {
     email: '',
@@ -53,7 +54,7 @@ const Login = (props) => {
         // Adds new data to state & clears form
         setSavedFormInfo([...savedFormInfo, newData]);
         setFormValues(defaultValues);
-        history.push('/dashboard');
+        history.push('/');
     }
 
     const validate = (name, value) => {
@@ -76,12 +77,13 @@ const Login = (props) => {
 
     return (
       <div className="login">
+          <h2>Log In</h2>
           <form onSubmit={submit}>
-              <label>email:
+              <label>Email: &nbsp;
                   <input value={formValues.email} onChange={handleChanges} placeholder='Enter email' name="email" type='email' />
               </label>
               {errors.email.length > 0 ? <p>{errors.email}</p> : null}  
-              <label>Password:
+              <label>Password: &nbsp;
                   <input value={formValues.password} onChange={handleChanges} placeholder='Enter password' name="password" type='password' />
               </label>
               <button disabled={buttonDisabled}>Log in</button>

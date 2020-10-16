@@ -1,12 +1,19 @@
 import React from 'react';
+import '../App.css';
 
 function Navbar() {
   return (
     <div className="navbar">
-        <ul>
-          <li> <a href='/Login'>Login</a></li>
-          <li> <a href='/Dashboard'>Dashboard</a></li>
-        </ul>
+      <div className='logo'>
+        <h3>ExpertsToLearnFrom</h3>
+      </div>
+
+      <div className='nav-links'>
+        <a href='/' >Dashboard</a>
+        <a href='/Login' >Login</a>
+        <a href='/new-expert' >Post New Expert</a>
+      </div>
+      
     </div>
   );
 }

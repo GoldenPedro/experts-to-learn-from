@@ -6,6 +6,7 @@ import Navbar from './Components/Navbar'
 import Dashboard from './Components/Dashboard'
 import Login from './Components/Login'
 import Signup from './Components/Signup'
+import NewExpertForm from './Components/Expert/NewExpertForm'
 
 function App() {
   return (
@@ -22,8 +23,8 @@ function App() {
         <Route exact path='/signup'>
           <Signup />
         </Route>
-        <Route exact path='/newpost'>
-          <Dashboard />
+        <Route exact path='/new-expert'>
+          <NewExpertForm />
         </Route>
       </Switch>
       </Router>
