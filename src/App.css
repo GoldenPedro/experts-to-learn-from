@@ -4,8 +4,14 @@
   align-items: center;
 }
 
-* {
+/* * {
   border: 1px solid black;
+} */
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* ======= NAVBAR ======= */
@@ -59,7 +65,43 @@
   width: 40%;
 }
 
+/* ======= EXPERT CARD ======= */
 
 .expert {
-  border: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin-bottom: 1.5%;
+}
+
+.expert-img-container {
+  width: 15%;
+}
+
+.expert-img {
+  max-width: 100%;
+  border-radius: 50%;
+}
+
+.expert-name {
+  font-size: 1.3rem;
+}
+
+.expert-text {
+  width: 60%;
+}
+
+.expert-category-rating {
+  display: flex;
+  justify-content: space-evenly;
+  width: 20%;
+}
+
+.expert-category {
+  width: 50%;
+  padding: 1%;
+}
+
+.expert-voting {
+  width: 50%;
 }

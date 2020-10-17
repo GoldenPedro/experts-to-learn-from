@@ -5,23 +5,24 @@ const expertsArray = [
   {
     id : 1,
     name: 'Kai Wong',
-    image: 'https://www.nicepng.com/png/detail/7-78595_asian-businessman-png-professional-man-images-png.png',
+    image: 'https://ableelite.com/wp-content/uploads/2016/06/avatar_square_blue_512dp.png',
     categories: {
       'photography': 51,
       'filmmaking': 45,
     },
     twitterHandle: '@kaimanwong',
-    blog: '',
     youtubeChannel: '',
+    blog: '',
     bookRecommendations: '',
     tweets: '',
     quotes: '',
+    articles: '',
     description: 'Photographer that worked for DigitalRevTV and has a YouTube channel talking about photography and photo gear',
   },
   {
     id : 2,
     name: 'David Perell',
-    image: '',
+    image: 'https://ableelite.com/wp-content/uploads/2016/06/avatar_square_blue_512dp.png',
     categories: {
       'writing': 78,
     },
@@ -36,7 +37,7 @@ const expertsArray = [
   {
     id : 1,
     name: 'Kai Wong',
-    image: '',
+    image: 'https://ableelite.com/wp-content/uploads/2016/06/avatar_square_blue_512dp.png',
     categories: {
       'photography': 51,
     },
@@ -51,7 +52,7 @@ const expertsArray = [
   {
     id : 2,
     name: 'David Perell',
-    image: '',
+    image: 'https://ableelite.com/wp-content/uploads/2016/06/avatar_square_blue_512dp.png',
     categories: {
       'writing': 78,
     },
@@ -66,7 +67,7 @@ const expertsArray = [
   {
     id : 1,
     name: 'Kai Wong',
-    image: '',
+    image: 'https://ableelite.com/wp-content/uploads/2016/06/avatar_square_blue_512dp.png',
     categories: {
       'photography': 51,
     },
@@ -81,7 +82,7 @@ const expertsArray = [
   {
     id : 2,
     name: 'David Perell',
-    image: '',
+    image: 'https://ableelite.com/wp-content/uploads/2016/06/avatar_square_blue_512dp.png',
     categories: {
       'writing': 78,
     },
