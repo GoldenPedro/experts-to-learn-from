@@ -11,7 +11,7 @@ function Navbar() {
       <div className='nav-links'>
         <a href='/' >Dashboard</a>
         <a href='/Login' >Login</a>
-        <a href='/new-expert' >Post New Expert</a>
+        <a href='/new-expert' >New Entry</a>
       </div>
       
     </div>

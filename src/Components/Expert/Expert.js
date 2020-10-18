@@ -1,4 +1,5 @@
 import React from 'react';
+import playSolid from '../../Assets/playSolid.svg'
 
 function Expert(props) {
     const {expert} = props
@@ -21,9 +22,9 @@ function Expert(props) {
             <p>{Object.keys(expert.categories)[0]}</p>
           </div>
           <div className='expert-voting'>
-            <i class="fas fa-play"></i>
+            <img className='upvote-icon' src={playSolid} alt='upvote' />
             <p className='expert-rating'>{expert.categories[Object.keys(expert.categories)[0]]}</p>
-            <i class="fas fa-play"></i>
+            <img className='downvote-icon' src={playSolid} alt='downvote' />
           </div>
         </div>
     </div>
