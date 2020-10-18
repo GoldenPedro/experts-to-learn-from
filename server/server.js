@@ -4,8 +4,16 @@ const app = express(); // create express app
 const path = require("path");
 const http = require('http');
 const mongoose = require('mongoose');
+var cors = require('cors')
 
 const URI = process.env.MONGO_URI;
+
+
+app.use(cors())
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 
 mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true },function(err){
   if(err) console.log(err);
@@ -14,6 +22,15 @@ mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true },functi
 
 
 app.use(express.static(path.join(__dirname, "..", "build")));
+
+
+
+
+app.post("/api/users", (req, res) => {
+  console.log("hello")
+  console.log(res.body)
+});
+
 
 // app.get("/", (req, res) => {
 //   res.send("This is from express.js");
