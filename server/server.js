@@ -27,8 +27,11 @@ app.use(express.static(path.join(__dirname, "..", "build")));
 
 
 app.post("/api/users", (req, res) => {
-  console.log("hello")
-  console.log(res.body)
+  console.log(req.body)
+});
+
+app.post("/api/login", (req, res) => {
+  console.log(req.body)
 });
 
 
