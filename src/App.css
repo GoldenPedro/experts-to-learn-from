@@ -80,7 +80,8 @@
 
 .expert:hover {
   cursor: pointer;
-  transform: scale(1.03);
+  transform: scale(1.005);
+  border: 1px solid blue;
   box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
   -webkit-transition: transform .03s ease-in-out;
 }
@@ -145,3 +146,5 @@
 .downvote-icon:hover {
   filter: invert(31%) sepia(98%) saturate(6669%) hue-rotate(355deg) brightness(101%) contrast(130%);
 }
+
+/* https://codepen.io/sosuke/pen/Pjoqqp */
