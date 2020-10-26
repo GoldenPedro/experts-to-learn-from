@@ -7,6 +7,10 @@ import '../../App.css';
 const defaultValues = {
     name: '',
     description: '',
+    twitterHandle: '',
+    youtubeChannel: '',
+    blog: '',
+    categories: {},
 }
 
 const defaultErrors = {
@@ -17,9 +21,13 @@ const defaultErrors = {
 const schema = yup.object().shape({
     name: yup.string().required('name is required'),
     description: yup.string().required('Username is required'),
+    twitterHandle: yup.string(),
+    youtubeChannel: yup.string(),
+    blog: yup.string(),
+    categories: yup.string(),
 })
 
-const Login = (props) => {
+const NewExpert = (props) => {
     // State
     const [formValues, setFormValues] = useState(defaultValues);
     const [savedFormInfo, setSavedFormInfo] = useState([]);
@@ -42,7 +50,7 @@ const Login = (props) => {
             description: formValues.description,
         }
         // Axios functionality
-        axios.post('https://reqres.in/api/login', formValues)
+        axios.post('https://reqres.in/api/NewExpert', formValues)
             .then((res) => {
                 console.log(res.data);
             })
@@ -74,15 +82,27 @@ const Login = (props) => {
       }, [formValues]);
 
     return (
-      <div className="login">
+      <div className="new-expert">
           <h2>Submit a new Expert!</h2>
           <form onSubmit={submit}>
-              <label>Name: &nbsp;
+              <label>Name: * &nbsp;
                   <input value={formValues.name} onChange={handleChanges} placeholder='Enter name' name="name" type='name' />
               </label>
               {errors.name.length > 0 ? <p>{errors.name}</p> : null}  
-              <label>Description: &nbsp;
+              <label>Description: * &nbsp;
                   <input value={formValues.description} onChange={handleChanges} placeholder='Enter description' name="description" />
+              </label>
+              <label>Twitter Handle: &nbsp;
+                  <input value={formValues.twitterHandle} onChange={handleChanges} placeholder='Enter twitterHandle' name="twitterHandle" />
+              </label>
+              <label>YouTube Channel: &nbsp;
+                  <input value={formValues.youtubeChannel} onChange={handleChanges} placeholder='Enter youtubeChannel' name="youtubeChannel" />
+              </label>
+              <label>Blog: &nbsp;
+                  <input value={formValues.blog} onChange={handleChanges} placeholder='Enter blog' name="blog" />
+              </label>
+              <label>categories: &nbsp;
+                  <input value={formValues.categories} onChange={handleChanges} placeholder='Enter categories' name="categories" />
               </label>
               <button disabled={buttonDisabled}>Submit</button>
           </form>
@@ -90,4 +110,4 @@ const Login = (props) => {
     );
   }
   
-  export default Login;
+  export default NewExpert;

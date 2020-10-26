@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import './App.css';
 
 import Navbar from './Components/Navbar'
@@ -12,7 +12,6 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <Router>
       <Switch>
         <Route exact path='/'>
           <Dashboard />
@@ -27,7 +26,6 @@ function App() {
           <NewExpertForm />
         </Route>
       </Switch>
-      </Router>
     </div>
   );
 }

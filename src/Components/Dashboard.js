@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Expert from './Expert/Expert'
+import ExpertCard from './Expert/ExpertCard'
 
 const expertsArray = [
   {
@@ -104,7 +104,7 @@ function Dashboard() {
     <div className="dashboard">
         <h1>Experts To Learn From</h1>
         {experts.map(expert => (
-          <Expert expert={expert} key={expert.id} />
+          <ExpertCard expert={expert} key={expert.id} />
         ))}
     </div>
   );
