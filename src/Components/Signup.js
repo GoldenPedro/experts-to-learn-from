@@ -21,6 +21,7 @@ const schema = yup.object().shape({
     passwordConfirmation: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
 })
 
+
 function Login() {
     // State
     const [formValues, setFormValues] = useState(defaultValues);
@@ -48,6 +49,13 @@ function Login() {
         axios.post('http://www.expertstolearnfrom.com/api/users', formValues)
         .then((res) => {
             console.log(res.data);
+
+            if(res.data.redirectUrl != null){
+                history.push(res.data.redirectUrl);
+            }
+            else{
+                history.push("/dashboard");
+            }
         })
         .catch(err => {
             console.log(err);
@@ -55,7 +63,7 @@ function Login() {
         // Adds new data to state & clears form
         setSavedFormInfo([...savedFormInfo, newData]);
         setFormValues(defaultValues);
-        history.push('/dashboard');
+        // history.push("/dashboard");
     }
 
     const validate = (name, value) => {

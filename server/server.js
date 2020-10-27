@@ -6,6 +6,9 @@ const http = require('http');
 // const mongoose = require('mongoose');
 const { MongoClient } = require('mongodb');
 var cors = require('cors')
+// const bcrypt = require('bcrypt');
+const session = require('express-session');
+const passport = require('passport');
 
 const URI = process.env.MONGO_URI;
 
@@ -16,6 +19,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
 
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // MongoClient.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true },function(err, client){
 //   if(err) console.log(err);
@@ -39,25 +52,64 @@ async function data(callback){
       }
     }
 
+  // function ensureAuthenticated(req, res, next) {
+  //     if (req.isAuthenticated()) {
+  //       return next();
+  //     }
+  //     res.redirect('/');
+  //   }
+
   data(async (client) => {
-    const myDataBase = await client.db('mydatabase').collection('users');
+    const users = await client.db('mydatabase').collection('users');
+    // const experts = await client.db('mydatabase').collection('experts');
 
 
-    app.post("/api/users", (req, res) => {
-      console.log(req.body)
+    app.post("/api/users", (req, res, next) => {
+      // console.log(req.body)
+
+      // const hash = bcrypt.hashSync(req.body.password, 12);
+      users.findOne({ email: req.body.email }, function (err, user) {
+        if (err) {
+          next(err);
+        } else if (user) {
+       
+          // return res.status(200).json({
+          //   success: true,
+          //   redirectUrl: '/'
+          // });
+
+          return res.json({
+            success: true,
+            redirectUrl: '/'
+          });
+        } else {
+          users.insertOne({ email: req.body.email, password: req.body.password }, (err, doc) => {
+            if (err) {
+      
+            } else {
+              next(null, doc.ops[0]);
+            }
+          });
+        }
+      });
     
-      myDataBase.insertOne(req.body, function(err, res) {
-          if (err) throw err;
-          console.log("1 user inserted");
-        })
+      // users.insertOne(req.body, function(err, res) {
+      //     if (err) throw err;
+      //     console.log("1 user inserted");
+      //   })
       
     });
     
     app.post("/api/login", (req, res) => {
       console.log(req.body)
     });
+
     
-    
+    // app.post("/api/login", (req, res) => {
+    //   passport.authenticate('local', { failureRedirect: '/' }), (req, res) => { 
+    //   }});
+
+   
     app.use((req, res, next) => {
       res.sendFile(path.join(__dirname, "..", "build", "index.html"));
     });
