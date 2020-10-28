@@ -54,7 +54,7 @@ function Login() {
                 history.push(res.data.redirectUrl);
             }
             else{
-                history.push("/dashboard");
+                history.push("/");
             }
         })
         .catch(err => {
