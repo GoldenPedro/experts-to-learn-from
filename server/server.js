@@ -44,7 +44,7 @@ async function data(callback){
         return next();
       }
       console.log("lol you tried me")
-      res.redirect('/');
+      // res.redirect('/');
     }
 
   data(async (client) => {
@@ -67,7 +67,7 @@ async function data(callback){
     },
       function (username, password, done) {
         users.findOne({ email: username }, function (err, user) {
-          console.log('User '+ user +' attempted to log in.');
+          console.log('User '+ user.email +' attempted to log in.');
           if (err) { return done(err); }
           if (!user) { return done(null, false); }
           if (password !== user.password) { return done(null, false); }
@@ -81,7 +81,7 @@ async function data(callback){
 
       users.findOne({ email: req.body.email }, function (err, user) {
         if (err) {
-          next(err);
+          // next(err);
         } else if (user) {
        
           // return res.status(200).json({
@@ -93,24 +93,42 @@ async function data(callback){
             success: true,
             redirectUrl: '/login'
           });
+
         } else {
           users.insertOne({ email: req.body.email, password: req.body.password }, (err, doc) => {
             if (err) {
-              return res.json({
-                success: false,
-                redirectUrl: '/'
-              });
+              // return res.json({
+              //   success: false,
+              //   redirectUrl: '/'
+              // });
             } else {
-              next(null, doc.ops[0]);   
+                 next(null, doc.ops[0]);
+
+                 return res.json({
+                  success: true,
+                  redirectUrl: '/'
+                });
             }
           });
         }
       });
     },
-    passport.authenticate('local', { failureRedirect: '/' }),
-    (req, res, next) => {
-      // res.redirect('/profile');
-    });
+    passport.authenticate('local',(err, user, info) =>{
+      if(err){
+        console.log(err)
+      }
+      if(info != undefined){
+        console.log(info.message);
+        //maybe send the info
+      }
+      else{
+        console.log(user)
+        const token = jwt.sign({id: user.email}, process.env.SESSION_SECRET)
+        console.log(token);
+      }
+    }),(req, res, next) => {
+    }
+    );
 
     // app.get('/logout', (req, res) => {
     //   req.logout();
@@ -133,7 +151,7 @@ async function data(callback){
       if(err){
         console.log(err)
       }
-      if(info !== undefined){
+      if(info != undefined){
         console.log(info.message);
         //maybe send the info
       }

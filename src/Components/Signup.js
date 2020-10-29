@@ -50,7 +50,7 @@ function Login() {
         .then((res) => {
             console.log(res.data);
 
-            if(res.data.redirectUrl != null){
+            if(res.data.redirectUrl != undefined){
                 history.push(res.data.redirectUrl);
             }
             else{
