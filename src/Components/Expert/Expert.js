@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Link, useParams, useHistory } from 'react-router-dom'
 
 
-const PlantCard = (props) =>{
+const Expert = (props) =>{
     //setting card state
     const[plant, setPlant] = useState([]);
     const history = useHistory()
@@ -32,7 +32,7 @@ const PlantCard = (props) =>{
 
 
     return(
-            <div className='plantCard'>
+            <div className='expert'>
                 
                 <h2>Name: {plant.name}</h2>
                 <p>Location: {plant.location}</p>
@@ -44,4 +44,4 @@ const PlantCard = (props) =>{
 }
 
 
-export default PlantCard
+export default Expert

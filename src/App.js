@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 
+import PrivateRoute from './Components/Private/PrivateRoute'
 import Navbar from './Components/Navbar'
 import Dashboard from './Components/Dashboard'
 import Login from './Components/Login'
@@ -22,9 +23,7 @@ function App() {
         <Route exact path='/signup'>
           <Signup />
         </Route>
-        <Route exact path='/new-expert'>
-          <NewExpertForm />
-        </Route>
+        <PrivateRoute exact path='/new-expert' component={NewExpertForm} />
       </Switch>
     </div>
   );

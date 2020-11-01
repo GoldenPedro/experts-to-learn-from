@@ -46,7 +46,9 @@ const Login = (props) => {
         // Axios functionality
         axios.post('http://www.expertstolearnfrom.com/api/login', formValues)
             .then((res) => {
-                console.log(res.data);
+                console.log(res.data.token);
+                window.localStorage.setItem('token', res.data.token)
+                history.push('/')
             })
             .catch(err => {
                 console.log(err);

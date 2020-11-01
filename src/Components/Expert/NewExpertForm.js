@@ -7,7 +7,7 @@ import '../../App.css';
 const defaultValues = {
     name: '',
     description: '',
-    twitterHandle: '',
+    twitterLink: '',
     youtubeChannel: '',
     blog: '',
     categories: {},
@@ -21,7 +21,7 @@ const defaultErrors = {
 const schema = yup.object().shape({
     name: yup.string().required('name is required'),
     description: yup.string().required('Username is required'),
-    twitterHandle: yup.string(),
+    twitterLink: yup.string(),
     youtubeChannel: yup.string(),
     blog: yup.string(),
     categories: yup.string(),
@@ -40,6 +40,7 @@ const NewExpert = (props) => {
         const { name, value } = evt.target;
         validate(name, value);
         setFormValues({ ...formValues, [name]: value });
+        console.log(formValues)
     }
 
     const submit = (evt) => {
@@ -93,7 +94,7 @@ const NewExpert = (props) => {
                   <input value={formValues.description} onChange={handleChanges} placeholder='Enter description' name="description" />
               </label>
               <label>Twitter Handle: &nbsp;
-                  <input value={formValues.twitterHandle} onChange={handleChanges} placeholder='Enter twitterHandle' name="twitterHandle" />
+                  <input value={formValues.twitterLink} onChange={handleChanges} placeholder='Enter twitterLink' name="twitterLink" />
               </label>
               <label>YouTube Channel: &nbsp;
                   <input value={formValues.youtubeChannel} onChange={handleChanges} placeholder='Enter youtubeChannel' name="youtubeChannel" />

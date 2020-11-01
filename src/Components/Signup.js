@@ -49,15 +49,11 @@ function Login() {
         axios.post('http://www.expertstolearnfrom.com/api/users', formValues)
         .then((res) => {
             console.log(res.data);
-
-            if(res.data.redirectUrl != undefined){
-                history.push(res.data.redirectUrl);
+            console.log(res.data.token);
+            window.localStorage.setItem('token', res.data.token)
+            history.push("/");
             }
-            else{
-                history.push("/");
-            }
-        })
-        .catch(err => {
+        ).catch(err => {
             console.log(err);
         })
         // Adds new data to state & clears form
