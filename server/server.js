@@ -39,14 +39,6 @@ async function data(callback){
       }
     }
 
-  function ensureAuthenticated(req, res, next) {
-      if (req.isAuthenticated()) {
-        return next();
-      }
-      console.log("lol you tried me")
-      // res.redirect('/');
-    }
-
   data(async (client) => {
     const users = await client.db('mydatabase').collection('users');
     // const experts = await client.db('mydatabase').collection('experts');
@@ -67,7 +59,7 @@ async function data(callback){
     },
       function (username, password, done) {
         users.findOne({ email: username }, function (err, user) {
-          console.log('User '+ user.email +' attempted to log in.');
+          // console.log('User '+ user +' attempted to log in.');
           if (err) { return done(err); }
           if (!user) { return done(null, false); }
           if (password !== user.password) { return done(null, false); }
@@ -81,88 +73,75 @@ async function data(callback){
 
       users.findOne({ email: req.body.email }, function (err, user) {
         if (err) {
-          // next(err);
-        } else if (user) {
-       
-          // return res.status(200).json({
-          //   success: true,
-          //   redirectUrl: '/'
-          // });
-
-          return res.json({
-            success: true,
-            redirectUrl: '/login'
+          return res.status(500).json({
+            err: err
           });
+          
+        } else if (user) {
+          return res.status(300);
 
         } else {
           users.insertOne({ email: req.body.email, password: req.body.password }, (err, doc) => {
             if (err) {
-              // return res.json({
-              //   success: false,
-              //   redirectUrl: '/'
-              // });
+              return res.status(500)
             } else {
-                 next(null, doc.ops[0]);
-
-                 return res.json({
-                  success: true,
-                  redirectUrl: '/'
+                //  next(null, doc.ops[0]);
+                 const token = jwt.sign({id: req.body.email}, process.env.SESSION_SECRET)
+                 return res.status(200).json({
+                  token: token
                 });
             }
           });
         }
       });
-    },
-    passport.authenticate('local',(err, user, info) =>{
-      if(err){
-        console.log(err)
-      }
-      if(info != undefined){
-        console.log(info.message);
-        //maybe send the info
-      }
-      else{
-        console.log(user)
-        const token = jwt.sign({id: user.email}, process.env.SESSION_SECRET)
-        console.log(token);
-      }
-    }),(req, res, next) => {
     }
+    // ,
+    // passport.authenticate('local',(err, user, info) =>{
+    //   if(err){
+    //     console.log(err)
+    //   }
+    //   if(info != undefined){
+    //     console.log(info.message);
+    //     //maybe send the info
+    //   }
+    //   else{
+
+    //   console.log(user)
+    //   }
+    // }),(req, res, next) => {
+    // }
     );
 
-    // app.get('/logout', (req, res) => {
-    //   req.logout();
-    //   res.redirect('/');
-    // });
 
-    app.route('/lol').get(ensureAuthenticated, (req, res) => {
-      //res.render();
-    });
-
-    // app.post("/api/login", (req, res) => {
-    //   console.log(req.body)
-    //   passport.authenticate('local'), (req, res) => {
-    //     console.log("hello")
-    //     // console.log(req.body)
-    //   }
-    // });
-
-    app.route("/api/login").post(passport.authenticate('local',(err, user, info) => {
+    app.post("/api/login", (req, res) => {
+      passport.authenticate('local' ,(err, user, info) => {
       if(err){
-        console.log(err)
+        return res.status(500).json({
+          err: err
+        });
       }
       if(info != undefined){
         console.log(info.message);
         //maybe send the info
       }
       else{
-        console.log(user)
-        const token = jwt.sign({id: user.email}, process.env.SESSION_SECRET)
-        console.log(token);
+        const token = jwt.sign({id: req.body.email}, process.env.SESSION_SECRET)
+        return res.status(200).json({
+          token: token
+        });
       }
-      }), (req, res) => {
-
+      })(req, res);
     });
+
+
+    // app.route("/api/login").post(passport.authenticate('local'), (req, res) => {
+    //     const token = jwt.sign({id: req.body.email}, process.env.SESSION_SECRET)
+    //     console.log(token);
+    //     return res.json({
+    //       auth: true,
+    //       token: token
+    //     });
+    // });
 
 
     
