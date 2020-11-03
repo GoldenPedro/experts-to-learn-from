@@ -41,7 +41,7 @@ async function data(callback){
 
   data(async (client) => {
     const users = await client.db('mydatabase').collection('users');
-    // const experts = await client.db('mydatabase').collection('experts');
+    const experts = await client.db('mydatabase').collection('experts');
 
     passport.serializeUser((user, done) => {
       done(null, user._id);
@@ -111,8 +111,7 @@ async function data(callback){
     // }),(req, res, next) => {
     // }
     );
-
-
+    
     app.post("/api/login", (req, res) => {
       passport.authenticate('local' ,(err, user, info) => {
       if(err){
@@ -133,15 +132,57 @@ async function data(callback){
       })(req, res);
     });
 
+    app.post("/api/NewExpert", (req, res) => {
 
-    // app.route("/api/login").post(passport.authenticate('local'), (req, res) => {
-    //     const token = jwt.sign({id: req.body.email}, process.env.SESSION_SECRET)
-    //     console.log(token);
-    //     return res.json({
-    //       auth: true,
-    //       token: token
-    //     });
-    // });
+      
+      experts.findOne({ name: req.body.name }, function (err, expert) {
+        if (err) {
+          return res.status(500).json({
+            err: err
+          });
+          
+        } else if (expert) {
+
+          var newdata = {}
+          var newcategory
+
+          for(var key in req.body) {
+            if(key !== "categories"){
+             newdata[key] = req.body[key]
+            }
+            else{
+              newcategory = req.body[key]
+            }
+          }
+
+
+        experts.updateOne(
+          {_id: new ObjectID(expert._id)},
+
+          {$push: {categories: newcategory},
+          $set: newdata}
+        
+          );
+          // { upsert: true }
+
+        return res.status(200)
+
+        } else {
+          experts.insertOne(
+            {
+              name: req.body.name, description: req.body.description, twitterLink: req.body.twitterLink, 
+              youtubeChannel: req.body.youtubeChannel, blog: req.body.blog, categories: [req.body.categories]
+            }, (err, doc) => {
+            if (err) {
+              return res.status(500)
+            } else {
+              return res.status(200)
+            }
+          });
+        }
+      });
+    });
+    
 
 
     
