@@ -59,7 +59,6 @@ async function data(callback){
     },
       function (username, password, done) {
         users.findOne({ email: username }, function (err, user) {
-          // console.log('User '+ user +' attempted to log in.');
           if (err) { return done(err); }
           if (!user) { return done(null, false); }
           if (password !== user.password) { return done(null, false); }
@@ -134,53 +133,76 @@ async function data(callback){
 
     app.post("/api/NewExpert", (req, res) => {
 
-      
-      experts.findOne({ name: req.body.name }, function (err, expert) {
+      var newdata = {}
+      var newcategory
+
+      for (var key in req.body) {
+  
+        if (key !== "categories") {
+          newdata[key] = req.body[key]
+        } else {
+          newcategory = req.body[key]
+        }
+      }
+
+
+      experts.updateOne({name: req.body.name}, {$set: newdata, $push: {categories: newcategory}}, {upsert:true}, function (err, result) {
         if (err) {
           return res.status(500).json({
             err: err
           });
-          
-        } else if (expert) {
-
-          var newdata = {}
-          var newcategory
-
-          for(var key in req.body) {
-            if(key !== "categories"){
-             newdata[key] = req.body[key]
-            }
-            else{
-              newcategory = req.body[key]
-            }
-          }
-
-
-        experts.updateOne(
-          {_id: new ObjectID(expert._id)},
-
-          {$push: {categories: newcategory},
-          $set: newdata}
-        
-          );
-          // { upsert: true }
-
-        return res.status(200)
-
         } else {
-          experts.insertOne(
-            {
-              name: req.body.name, description: req.body.description, twitterLink: req.body.twitterLink, 
-              youtubeChannel: req.body.youtubeChannel, blog: req.body.blog, categories: [req.body.categories]
-            }, (err, doc) => {
-            if (err) {
-              return res.status(500)
-            } else {
-              return res.status(200)
-            }
-          });
+          return res.status(200)
         }
       });
+
+      // experts.findOne({ name: req.body.name }, function (err, expert) {
+      //   if (err) {
+      //     return res.status(500).json({
+      //       err: err
+      //     });
+          
+      //   } else if (expert) {
+
+      //     var newdata = {}
+      //     var newcategory
+
+      //     for(var key in req.body) {
+      //       if(key !== "categories"){
+      //        newdata[key] = req.body[key]
+      //       }
+      //       else{
+      //         newcategory = req.body[key]
+      //       }
+      //     }
+
+
+      //   experts.updateOne(
+      //     {_id: new ObjectID(expert._id)},
+
+      //     {$push: {categories: newcategory},
+      //     $set: newdata}
+        
+      //     );
+
+      //   return res.status(200)
+
+      //   } else {
+      //     experts.insertOne(
+      //       {
+      //         name: req.body.name, description: req.body.description, twitterLink: req.body.twitterLink, 
+      //         youtubeChannel: req.body.youtubeChannel, blog: req.body.blog, categories: [req.body.categories]
+      //       }, (err, doc) => {
+      //       if (err) {
+      //         return res.status(500).json({
+      //           err: err
+      //         });
+      //       } else {
+      //         return res.status(200)
+      //       }
+      //     });
+      //   }
+      // });
     });
     
 
