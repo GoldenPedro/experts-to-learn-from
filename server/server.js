@@ -42,6 +42,7 @@ async function data(callback){
   data(async (client) => {
     const users = await client.db('mydatabase').collection('users');
     const experts = await client.db('mydatabase').collection('experts');
+    const categories = await client.db('mydatabase').collection('categories');
 
     passport.serializeUser((user, done) => {
       done(null, user._id);
@@ -66,6 +67,25 @@ async function data(callback){
         });
       }
     ));
+
+
+    function addCategory(category) {
+      categories.findOne({ name: category }, function (err, key) {
+        if (err) {
+          return;
+        } else if (key) {
+          return; 
+        } else {
+          categories.insertOne({name: category}, (err, doc) => {
+            if (err) {
+              return;
+            } else {
+              return;
+            }
+          });
+        }
+      });
+    }
     
     app.post("/api/users", (req, res, next) => {
       // const hash = bcrypt.hashSync(req.body.password, 12);
@@ -77,7 +97,9 @@ async function data(callback){
           });
           
         } else if (user) {
-          return res.status(300);
+          return res.status(300).json({
+            message: "user already exist"
+          });
 
         } else {
           users.insertOne({ email: req.body.email, password: req.body.password }, (err, doc) => {
@@ -132,80 +154,79 @@ async function data(callback){
     });
 
     app.post("/api/NewExpert", (req, res) => {
-
-      var newdata = {}
-      var newcategory
-
-      for (var key in req.body) {
-  
-        if (key !== "categories") {
-          newdata[key] = req.body[key]
-        } else {
-          newcategory = req.body[key]
-        }
-      }
-
-
-      experts.updateOne({name: req.body.name}, {$set: newdata, $push: {categories: newcategory}}, {upsert:true}, function (err, result) {
+      experts.findOne({ name: req.body.name }, function (err, expert) {
         if (err) {
           return res.status(500).json({
             err: err
           });
+          
+        } else if (expert) {
+          return res.status(200).json({
+            message: "This expert already exist"
+          })
+
         } else {
-          return res.status(200)
+          experts.insertOne(
+            {
+              name: req.body.name, description: [req.body.description], twitterLink: [req.body.twitterLink], 
+              youtubeChannel: [req.body.youtubeChannel], blog: [req.body.blog], categories: [req.body.categories]
+            }, (err, doc) => {
+            if (err) {
+              return res.status(500).json({
+                err: err
+              });
+            } else {
+              addCategory(req.body.categories)
+              return res.status(200).json({
+                message: "expert has been added"
+              })
+            }
+          });
         }
       });
-
-      // experts.findOne({ name: req.body.name }, function (err, expert) {
-      //   if (err) {
-      //     return res.status(500).json({
-      //       err: err
-      //     });
-          
-      //   } else if (expert) {
-
-      //     var newdata = {}
-      //     var newcategory
-
-      //     for(var key in req.body) {
-      //       if(key !== "categories"){
-      //        newdata[key] = req.body[key]
-      //       }
-      //       else{
-      //         newcategory = req.body[key]
-      //       }
-      //     }
-
-
-      //   experts.updateOne(
-      //     {_id: new ObjectID(expert._id)},
-
-      //     {$push: {categories: newcategory},
-      //     $set: newdata}
-        
-      //     );
-
-      //   return res.status(200)
-
-      //   } else {
-      //     experts.insertOne(
-      //       {
-      //         name: req.body.name, description: req.body.description, twitterLink: req.body.twitterLink, 
-      //         youtubeChannel: req.body.youtubeChannel, blog: req.body.blog, categories: [req.body.categories]
-      //       }, (err, doc) => {
-      //       if (err) {
-      //         return res.status(500).json({
-      //           err: err
-      //         });
-      //       } else {
-      //         return res.status(200)
-      //       }
-      //     });
-      //   }
-      // });
     });
     
 
+  //   app.get("/api/expertlist", (req, res) => {
+  // //     // 'categories.name': req.body.name
+  //     experts.find({categories: { $all: ["photography"]}}).toArray(function (err, expert) {
+  //       if (err) {
+  //         return res.status(500).json({
+  //           err: err
+  //         });
+  //       }
+  //       return res.status(200).json(expert);
+  //   });
+  // });
+
+
+
+    // app.get("/api/categories", (req, res) => {
+    //   //  experts.distinct('categories')
+
+    //   categories.find().toArray(function(err, category) {
+    //     if (err) {
+    //         return res.status(500).json({
+    //           err: err
+    //         });
+    //     }
+    //     else{
+    //       return res.status(200).json(category);
+    //     }
+    //   });
+    // });
+
+
+    // app.get("/api/getexpert", (req, res) => {
+    //   experts.findOne({ _id: new ObjectID(req.body.id)}, function (err, expert) {
+    //     if (err) {
+    //       return res.status(500).json({
+    //         err: err
+    //       });  
+    //     }
+    //     return res.status(200).json(expert);
+    //   });
+    // });
 
     
 
