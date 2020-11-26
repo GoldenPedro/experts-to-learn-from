@@ -1,6 +1,6 @@
 require('dotenv').config()
 const express = require("express");
-const app = express(); // create express app
+const app = express();
 const path = require("path");
 const http = require('http');
 // const mongoose = require('mongoose');
@@ -116,21 +116,6 @@ async function data(callback){
         }
       });
     }
-    // ,
-    // passport.authenticate('local',(err, user, info) =>{
-    //   if(err){
-    //     console.log(err)
-    //   }
-    //   if(info != undefined){
-    //     console.log(info.message);
-    //     //maybe send the info
-    //   }
-    //   else{
-
-    //   console.log(user)
-    //   }
-    // }),(req, res, next) => {
-    // }
     );
     
     app.post("/api/login", (req, res) => {
@@ -166,6 +151,8 @@ async function data(callback){
           })
 
         } else {
+          //TODO lowercase categories
+
           experts.insertOne(
             {
               name: req.body.name, description: [req.body.description], twitterLink: [req.body.twitterLink], 
@@ -201,32 +188,49 @@ async function data(callback){
 
 
 
-    // app.get("/api/categories", (req, res) => {
-    //   //  experts.distinct('categories')
+    app.post("/api/categories", (req, res) => {
+      //  experts.distinct('categories')
+      categories.find().toArray(function(err, category) {
+        if (err) {
+            return res.status(500).json({
+              err: err
+            });
+        }
+        else{
+          name = []
+          category.forEach(element => {
+            if (element.name.startsWith(req.body.category.toLowerCase())){
+              name.push(element.name)
+            }
+         });
+          return res.status(200).json(name);
+        }
+      });
+    });
 
-    //   categories.find().toArray(function(err, category) {
-    //     if (err) {
-    //         return res.status(500).json({
-    //           err: err
-    //         });
-    //     }
-    //     else{
-    //       return res.status(200).json(category);
-    //     }
-    //   });
+
+    app.get("/api/getexpert/:id", (req, res) => {
+      try {
+        experts.findOne({ _id: new ObjectID(req.params.id)}, function (err, expert) {
+          if (err) {
+            return res.status(500).json({
+              err: err
+            });  
+          }
+          return res.status(200).json(expert);
+        });
+      }
+      catch(err) {
+        return res.status(500).json({
+          err: err
+        });  
+      } 
+    });
+
+
+    // app.get("/api/updateexpert/", (req, res) => {
     // });
 
-
-    // app.get("/api/getexpert", (req, res) => {
-    //   experts.findOne({ _id: new ObjectID(req.body.id)}, function (err, expert) {
-    //     if (err) {
-    //       return res.status(500).json({
-    //         err: err
-    //       });  
-    //     }
-    //     return res.status(200).json(expert);
-    //   });
-    // });
 
     
 
