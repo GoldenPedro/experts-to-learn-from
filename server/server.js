@@ -106,7 +106,6 @@ async function data(callback){
             if (err) {
               return res.status(500)
             } else {
-                //  next(null, doc.ops[0]);
                  const token = jwt.sign({id: req.body.email}, process.env.SESSION_SECRET)
                  return res.status(200).json({
                   token: token
@@ -124,10 +123,6 @@ async function data(callback){
         return res.status(500).json({
           err: err
         });
-      }
-      if(info != undefined){
-        console.log(info.message);
-        //maybe send the info
       }
       else{
         const token = jwt.sign({id: req.body.email}, process.env.SESSION_SECRET)
@@ -151,19 +146,18 @@ async function data(callback){
           })
 
         } else {
-          //TODO lowercase categories
 
           experts.insertOne(
             {
-              name: req.body.name, description: [req.body.description], twitterLink: [req.body.twitterLink], 
-              youtubeChannel: [req.body.youtubeChannel], blog: [req.body.blog], categories: [req.body.categories]
+              name: req.body.name, description: [req.body.descriptions], twitterLink: [req.body.twitterLinks], 
+              youtubeChannel: [req.body.youtubeChannels], blog: [req.body.blogs], categories: [req.body.categories]
             }, (err, doc) => {
             if (err) {
               return res.status(500).json({
                 err: err
               });
             } else {
-              addCategory(req.body.categories)
+              addCategory(req.body.categories.category)
               return res.status(200).json({
                 message: "expert has been added"
               })
@@ -174,22 +168,20 @@ async function data(callback){
     });
     
 
-  //   app.get("/api/expertlist", (req, res) => {
-  // //     // 'categories.name': req.body.name
-  //     experts.find({categories: { $all: ["photography"]}}).toArray(function (err, expert) {
-  //       if (err) {
-  //         return res.status(500).json({
-  //           err: err
-  //         });
-  //       }
-  //       return res.status(200).json(expert);
-  //   });
-  // });
-
-
+    app.get("/api/expertlist/:name", (req, res) => {
+      experts.find({'categories.category': req.params.name}).toArray(function (err, expert) {
+        if (err) {
+          return res.status(500).json({
+            err: err
+          });
+        }
+        else{
+          return res.status(200).json(expert);
+        }
+    });
+  });
 
     app.post("/api/categories", (req, res) => {
-      //  experts.distinct('categories')
       categories.find().toArray(function(err, category) {
         if (err) {
             return res.status(500).json({
@@ -217,7 +209,9 @@ async function data(callback){
               err: err
             });  
           }
-          return res.status(200).json(expert);
+          else{
+            return res.status(200).json(expert);
+          }
         });
       }
       catch(err) {
@@ -228,7 +222,18 @@ async function data(callback){
     });
 
 
-    // app.get("/api/updateexpert/", (req, res) => {
+    // app.put("/api/updateexpert/", (req, res) => {
+    //   //maybe need to find it and then update to push it 
+    //   experts.findAndModify({ _id: new ObjectID(req.body.id)},[],{$push: {hi: 'there'}},{},function(err, expert) {
+    //     if (err) {
+    //       return res.status(500).json({
+    //         err: err
+    //       });  
+    //     }
+    //     else{
+    //       return res.status(200).json(expert);
+    //     }
+    //   });
     // });
 
 
