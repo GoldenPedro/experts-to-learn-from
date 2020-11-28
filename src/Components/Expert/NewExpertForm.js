@@ -6,11 +6,14 @@ import '../../App.css';
 
 const defaultValues = {
     name: '',
-    description: '',
+    descriptions: {
+        description: '',
+        rating: 1
+    },
     twitterLink: '',
     youtubeChannel: '',
     blog: '',
-    categories: {},
+    category: '',
 }
 
 const defaultErrors = {
@@ -18,19 +21,24 @@ const defaultErrors = {
     description: '',
 };
 
+const defaultCategorySearch = {
+    category: ''
+}
+
 const schema = yup.object().shape({
     name: yup.string().required('name is required'),
     description: yup.string().required('Username is required'),
     twitterLink: yup.string(),
     youtubeChannel: yup.string(),
     blog: yup.string(),
-    categories: yup.string(),
+    category: yup.string(),
 })
 
 const NewExpert = (props) => {
     // State
     const [formValues, setFormValues] = useState(defaultValues);
     const [savedFormInfo, setSavedFormInfo] = useState([]);
+    const [categorySearch, setCategorySearch] = useState(defaultCategorySearch)
     const [errors, setErrors] = useState(defaultErrors);
     const [buttonDisabled, setButtonDisabled] = useState(true)
     const history = useHistory();
@@ -48,10 +56,10 @@ const NewExpert = (props) => {
         // Packages an easy-to-use payload to put onto state
         const newData = {
             name: formValues.name.trim(),
-            description: formValues.description,
+            description: formValues.description.trim(),
         }
         // Axios functionality
-        axios.post('http://www.expertstolearnfrom.com/api/NewExpert', formValues)
+        axios.post('http://www.expertstolearnfrom.com/api/NewExpert', newData)
             .then((res) => {
                 console.log(res.data);
             })
@@ -61,7 +69,21 @@ const NewExpert = (props) => {
         // Adds new data to state & clears form
         setSavedFormInfo([...savedFormInfo, newData]);
         setFormValues(defaultValues);
-        history.push('/');
+        // history.push('/');
+    }
+
+    const search = (evt) => {
+        evt.preventDefault();
+        console.log(formValues.category)
+        axios.post('http://www.expertstolearnfrom.com/api/categories', categorySearch)
+        .then(res => {
+            console.log(res.data);
+        })
+    }
+
+    const handleSearchChanges = (evt) => {
+        const { name, value } = evt.target;
+        setCategorySearch({ ...categorySearch, [name]: value });
     }
 
     const validate = (name, value) => {
@@ -85,6 +107,12 @@ const NewExpert = (props) => {
     return (
       <div className="new-expert">
           <h2>Submit a new Expert!</h2>
+          <form onSubmit={search}>
+              <label>Which category would you like to add a new Expert in? * &nbsp;
+                  <input value={categorySearch.category} onChange={handleSearchChanges} placeholder='Search category' name="category" type='text' />
+              </label>
+              <button>Search</button>
+          </form>
           <form onSubmit={submit}>
               <label>Name: * &nbsp;
                   <input value={formValues.name} onChange={handleChanges} placeholder='Enter name' name="name" type='name' />
@@ -101,9 +129,6 @@ const NewExpert = (props) => {
               </label>
               <label>Blog: &nbsp;
                   <input value={formValues.blog} onChange={handleChanges} placeholder='Enter blog' name="blog" />
-              </label>
-              <label>categories: &nbsp;
-                  <input value={formValues.categories} onChange={handleChanges} placeholder='Enter categories' name="categories" />
               </label>
               <button disabled={buttonDisabled}>Submit</button>
           </form>

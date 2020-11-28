@@ -8,6 +8,8 @@ import Dashboard from './Components/Dashboard'
 import Login from './Components/Login'
 import Signup from './Components/Signup'
 import NewExpertForm from './Components/Expert/NewExpertForm'
+import CreateExpertForm from './Components/Expert/CreateExpertForm'
+
 
 function App() {
   return (
@@ -23,7 +25,7 @@ function App() {
         <Route exact path='/signup'>
           <Signup />
         </Route>
-        <PrivateRoute exact path='/new-expert' component={NewExpertForm} />
+        <PrivateRoute exact path='/new-expert' component={CreateExpertForm} />
       </Switch>
     </div>
   );
