@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SelectCategoryForm from './SelectCategoryForm'
 import ExpertDetailsForm from './ExpertDetailsForm'
+import axios from 'axios'
 
 
 export class CreateExpertForm extends Component {
@@ -8,16 +9,36 @@ export class CreateExpertForm extends Component {
   state = {
     step: 1,
     name: '',
-    descriptions: {
-      description: '',
-      rating: 1
-    },
+    description: '',
     twitterLink: '',
     youtubeChannel: '',
     blog: '',
     category: '',
   }
 
+  submitData = {
+    name: '',
+    descriptions: {
+        description: '',
+        rating: 1
+    },
+    twitterLinks: {
+        twitterLink: '',
+        rating: 1
+    },
+    youtubeChannels: {
+        youtubeChannel: '',
+        rating: 1
+    },
+    blogs: {
+        blog: '',
+        rating: 1
+    },
+    categories: {
+        category: '',
+        rating: 1
+    },
+}
 
   // Proceed to next step
   nextStep = () => {
@@ -44,6 +65,32 @@ export class CreateExpertForm extends Component {
     this.setState({...this.state, category: payload})
   }
 
+  submit = (evt) => {
+    evt.preventDefault();
+    // Packages an easy-to-use payload to put onto state
+    const newData = {...this.submitData,
+      name: this.state.name, 
+      descriptions: {description: this.state.description, rating: 1},
+      twitterLinks: {twitterLink: this.state.twitterLink, rating: 1},
+      youtubeChannels: {youtubeChannel: this.state.youtubeChannel, rating: 1},
+      blogs: {blog: this.state.blog, rating: 1},
+      categories: {category: this.state.category.toLowerCase(), rating: 1}
+    }
+    console.log(newData)
+    // Axios functionality
+    axios.post('http://www.expertstolearnfrom.com/api/NewExpert', newData)
+        .then((res) => {
+            console.log(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    // Adds new data to state & clears form
+    // setSavedFormInfo([...savedFormInfo, newData]);
+    // setFormValues(defaultValues);
+    // history.push('/');
+}
+
     render() {
 
       const { step } = this.state;
@@ -67,6 +114,7 @@ export class CreateExpertForm extends Component {
               prevStep={this.prevStep}
               handleChange={this.handleChange}
               values={values}
+              submit={this.submit}
             />
           );
         // case 3:

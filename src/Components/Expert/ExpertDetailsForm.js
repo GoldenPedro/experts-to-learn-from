@@ -13,6 +13,32 @@ import '../../App.css';
 //     category: '',
 // }
 
+// let submitData = {
+//     name: '',
+//     descriptions: {
+//         description: '',
+//         rating: 1
+//     },
+//     twitterLinks: {
+//         twitterLink: '',
+//         rating: 1
+//     },
+//     youtubeChannels: {
+//         youtubeChannel: '',
+//         rating: 1
+//     },
+//     blogs: {
+//         blog: '',
+//         rating: 1
+//     },
+//     categories: {
+//         category: '',
+//         rating: 1
+//     },
+// }
+
+
+
 // const defaultErrors = {
 //     name: '',
 //     description: '',
@@ -35,7 +61,7 @@ const NewExpert = (props) => {
     // const [errors, setErrors] = useState(defaultErrors);
     const [buttonDisabled, setButtonDisabled] = useState(true)
     const history = useHistory();
-    const {handleChange, nextStep, prevStep, values} = props
+    const {handleChange, nextStep, prevStep, values, submit} = props
 
     // Form functions
     // const handleChanges = (evt) => {
@@ -45,26 +71,23 @@ const NewExpert = (props) => {
     //     console.log(formValues)
     // }
 
-    const submit = (evt) => {
-        evt.preventDefault();
-        // Packages an easy-to-use payload to put onto state
-        // const newData = {
-        //     name: formValues.name.trim(),
-        //     description: formValues.description.trim(),
-        // }
-        // Axios functionality
-        axios.post('http://www.expertstolearnfrom.com/api/NewExpert', values)
-            .then((res) => {
-                console.log(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-        // Adds new data to state & clears form
-        // setSavedFormInfo([...savedFormInfo, newData]);
-        // setFormValues(defaultValues);
-        // history.push('/');
-    }
+//   const submit = (evt) => {
+//     evt.preventDefault();
+//     // Packages an easy-to-use payload to put onto state
+//     const newData = {...submitData, descriptions: {description: values.description}}
+//     // Axios functionality
+//     axios.post('http://www.expertstolearnfrom.com/api/NewExpert', newData)
+//         .then((res) => {
+//             console.log(res.data);
+//         })
+//         .catch(err => {
+//             console.log(err);
+//         })
+    // Adds new data to state & clears form
+    // setSavedFormInfo([...savedFormInfo, newData]);
+    // setFormValues(defaultValues);
+    // history.push('/');
+// }
 
     // const validate = (name, value) => {
     //     yup
@@ -93,7 +116,7 @@ const NewExpert = (props) => {
               </label>
               {/* {errors.name.length > 0 ? <p>{errors.name}</p> : null}   */}
               <label>Description: * &nbsp;
-                  <input value={values.descriptions.description} onChange={handleChange('description')} placeholder='Enter description' name="description" />
+                  <input value={values.description} onChange={handleChange('description')} placeholder='Enter description' name="description" />
               </label>
               <label>Twitter Handle: &nbsp;
                   <input value={values.twitterLink} onChange={handleChange('twitterLink')} placeholder='Enter twitterLink' name="twitterLink" />
