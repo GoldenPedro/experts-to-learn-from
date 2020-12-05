@@ -51,9 +51,7 @@ const selectCategory = (evt) => {
   return (
     <div className="dashboard">
         <h1>Experts To Learn From</h1>
-        {experts.map(expert => (
-          <ExpertCard expert={expert} key={expert._id} />
-        ))}
+       
 
     <div className='select-category-form'>
             <form onSubmit={search}>
@@ -69,6 +67,10 @@ const selectCategory = (evt) => {
                 ))
             }
         </div>
+
+        {experts.map(expert => (
+          <ExpertCard expert={expert} key={expert._id} />
+        ))}
     </div>
   );
 }
