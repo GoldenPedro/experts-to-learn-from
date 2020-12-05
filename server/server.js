@@ -77,11 +77,7 @@ async function data(callback){
           return; 
         } else {
           categories.insertOne({name: category}, (err, doc) => {
-            if (err) {
               return;
-            } else {
-              return;
-            }
           });
         }
       });
@@ -149,8 +145,8 @@ async function data(callback){
 
           experts.insertOne(
             {
-              name: req.body.name, description: [req.body.descriptions], twitterLink: [req.body.twitterLinks], 
-              youtubeChannel: [req.body.youtubeChannels], blog: [req.body.blogs], categories: [req.body.categories]
+              name: req.body.name, descriptions: [req.body.descriptions], twitterLinks: [req.body.twitterLinks], 
+              youtubeChannels: [req.body.youtubeChannels], blogs: [req.body.blogs], categories: [req.body.categories]
             }, (err, doc) => {
             if (err) {
               return res.status(500).json({
@@ -168,8 +164,8 @@ async function data(callback){
     });
     
 
-    app.get("/api/expertlist/:name", (req, res) => {
-      experts.find({'categories.category': req.params.name}).toArray(function (err, expert) {
+    app.get("/api/expertlist/:category", (req, res) => {
+      experts.find({'categories.category': req.params.category}).toArray(function (err, expert) {
         if (err) {
           return res.status(500).json({
             err: err
@@ -222,18 +218,101 @@ async function data(callback){
     });
 
 
-    // app.put("/api/updateexpert/", (req, res) => {
-    //   //maybe need to find it and then update to push it 
-    //   experts.findAndModify({ _id: new ObjectID(req.body.id)},[],{$push: {hi: 'there'}},{},function(err, expert) {
-    //     if (err) {
-    //       return res.status(500).json({
-    //         err: err
-    //       });  
-    //     }
-    //     else{
-    //       return res.status(200).json(expert);
-    //     }
-    //   });
+    app.post("/api/updateexpert/", (req, res) => {
+      //Need from frontend: new value to add; id of the expert; name of the category its going to
+      experts.findOneAndUpdate({ _id: new ObjectID(req.body.id)}, {$push: {[req.body.name]: req.body.value}}, {new: true}, function(err, expert){
+      // experts.findAndModify({ _id: new ObjectID(req.body.id)},[],{$push: {test: req.body.value}},{},function(err, expert) {
+        if (err) {
+          return res.status(500).json({
+            err: err
+          });  
+        }
+        else{
+          return res.status(200).json(expert);
+        }
+      });
+    });
+
+    // app.post("/api/vote/", (req, res) => {
+
+    //   if (req.body.voteType == ""){
+    //     experts.updateOne({ _id: new ObjectID(req.body.expert)},{
+    //         $pull: {
+    //             "downvoters": req.body.user
+    //         }}, (err, result) => {
+    //         if (result.modifiedCount > 0){
+    //             experts.updateOne({ _id: new ObjectID(req.body.expert)},{
+    //                 $inc: {
+    //                     "result": 1
+    //                 }
+    //             });
+    //         }
+    //         else{
+    //           experts.updateOne({ _id: new ObjectID(req.body.expert)},{
+    //                 $pull: {
+    //                     "upvoters": req.body.user
+    //                 }}, (err, result) => {
+    //                 if (result.modifiedCount > 0){
+    //                   experts.updateOne({ _id: new ObjectID(req.body.expert)},{
+    //                         $inc: {
+    //                             "result": -1
+    //                         }
+    //                     });
+    //                 }
+    //             });
+    //         }
+    //     });
+    //   }
+
+    //   counterInc = 0;
+    //   voterType = null;
+
+    //   if (req.body.voteType == "up"){
+    //     voterType = "upvoters";
+
+    //     experts.updateOne({ _id: new ObjectID(req.body.expert)},{
+    //         $pull: {
+    //             "downvoters": req.body.user
+    //         },}, (err,result) => {
+    //         if (result.modifiedCount > 0){
+    //             counterInc = 2;
+    //         }
+    //         else{
+    //             counterInc = 1;
+    //         }
+    //     });
+    //   }
+    //   else if (req.body.voteType == "down"){
+    //       voterType = "downvoters";
+
+    //       experts.updateOne({ _id: new ObjectID(req.body.expert)},{
+    //           $pull: {
+    //               "upvoters": req.body.user
+    //           },}, (err,result) => {
+    //           if (result.modifiedCount > 0){
+    //               counterInc = -2;
+    //           }
+    //           else{
+    //               counterInc = -1;
+    //           }
+    //       });
+    //   }
+
+    //   if (req.body.voteType !== ""){
+    //     experts.updateOne({ _id: new ObjectID(req.body.expert)},{
+    //         $addToSet: {
+    //             [voterType]: req.body.user
+    //         }}, (err,result) => {
+    //         if (result.modifiedCount > 0){
+    //             experts.updateOne({ _id: new ObjectID(req.body.expert)},{
+    //                 $inc: {
+    //                     "result": counterInc
+    //                 }
+    //             });
+    //         }
+    //     });
+    //   }
+
     // });
 
 
