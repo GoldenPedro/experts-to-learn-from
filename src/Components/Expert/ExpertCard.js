@@ -9,21 +9,21 @@ function ExpertCard(props) {
   return (
     <div className="expert">
         <div className='expert-img-container'>
-          <img className='expert-img' src={expert.image} alt='Expert'/>
+          <img className='expert-img' src="" alt='Expert'/>
         </div>
         <div  className='expert-text'>
           <h4 className='expert-name'>{expert.name}</h4>
-          <p className='expert-description'>{expert.description}</p>
-          <p className='expert-twitter'>{expert.twitterHandle}</p>
+          <p className='expert-description'>{expert.descriptions[0].description}</p>
+          <p className='expert-twitter'>{expert.twitterLinks[0].twitterLink}</p>
         </div>
         
         <div className='expert-category-rating'>
           <div className='expert-category'>
-            <p>{Object.keys(expert.categories)[0]}</p>
+            <p>{expert.categories[0].category}</p>
           </div>
           <div className='expert-voting'>
             <img className='upvote-icon' src={playSolid} alt='upvote' />
-            <p className='expert-rating'>{expert.categories[Object.keys(expert.categories)[0]]}</p>
+            <p className='expert-rating'>{expert.categories[0].rating}</p>
             <img className='downvote-icon' src={playSolid} alt='downvote' />
           </div>
         </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import * as yup from 'yup'
-import '../../App.css';
+// import '../../App.css';
 
 // const defaultValues = {
 //     name: '',
