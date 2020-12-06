@@ -9,6 +9,7 @@ import Login from './Components/Login'
 import Signup from './Components/Signup'
 import NewExpertForm from './Components/Expert/NewExpertForm'
 import CreateExpertForm from './Components/Expert/CreateExpertForm'
+import Expert from './Components/Expert/Expert';
 
 
 function App() {
@@ -26,6 +27,9 @@ function App() {
           <Signup />
         </Route>
         <PrivateRoute exact path='/new-expert' component={CreateExpertForm} />
+        <Route path='/api/getexpert/:id'>
+          <Expert />
+        </Route>
       </Switch>
     </div>
   );
