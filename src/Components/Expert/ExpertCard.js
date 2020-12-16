@@ -1,20 +1,30 @@
 import React from 'react';
 import playSolid from '../../Assets/playSolid.svg'
+import Expert from './Expert'
+import { Link } from 'react-router-dom'
 
 function ExpertCard(props) {
     const {expert} = props
 
     console.log(expert.name)
+    
 
   return (
+      
     <div className="expert">
         <div className='expert-img-container'>
           <img className='expert-img' src="" alt='Expert'/>
         </div>
         <div  className='expert-text'>
-          <h4 className='expert-name'>{expert.name}</h4>
+          <Link to={`/api/getexpert/${expert._id}`}>
+            <h4 className='expert-name'>{expert.name}</h4>
+          </Link>
+          
           <p className='expert-description'>{expert.descriptions[0].description}</p>
-          <a className='expert-twitter' href={expert.twitterLinks[0].twitterLink}><p>Twitter</p></a>
+
+
+            <a className='expert-twitter' href={expert.twitterLinks[0].twitterLink}><p>Twitter</p></a>
+          
           <a className='expert-youtubeChannel' href={expert.youtubeChannels[0].youtubeChannel}><p>YouTube</p></a>
         </div>
         

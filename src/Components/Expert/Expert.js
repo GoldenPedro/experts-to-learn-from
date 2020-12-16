@@ -1,43 +1,28 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Link, useParams, useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import { useParams } from 'react-router'
 
 
 const Expert = (props) =>{
-    //setting card state
-    const[plant, setPlant] = useState([]);
-    const history = useHistory()
+    const [experts, setExperts] = useState([])
     const { id } = useParams()
-    //wrap axios in useEffect
 
-    useEffect(()=>{
-        axios.get(`https://chrisjcorbin-watermyplants.herokuapp.com/plants/plant/${id}`)
-        .then(response=>{
-            setPlant(response.data)
-            console.log(response.data)
-        })
-        .catch(error=>{
-            console.log('THIS IS YOUR ERROR------>', error)
-        })
-    },[id])
+    useEffect(() => {
+        axios.get(`http://www.expertstolearnfrom.com/api/getexpert/${id}`)
+          .then((res) => {
+            setExperts(res.data)
+            
+          })
+      }, []);
 
-    const deletePlant = () => {
-        axios
-        .delete(`https://chrisjcorbin-watermyplants.herokuapp.com/plants/plant/${id}`)
-        .then(res => {
-          history.push('/profile');
-        })
-        .catch(err => console.log(err));
-      }
-
+    //   setTimeout(function(){console.log(experts.descriptions[0].description) }, 2000);
 
     return(
             <div className='expert'>
                 
-                <h2>Name: {plant.name}</h2>
-                <p>Location: {plant.location}</p>
-                <p>Species: {plant.species}</p>
-                <p>Water every: {plant.schedule} days </p>
+                <p>{experts.name}</p>
+                {/* <p>{experts.description[0].description}</p> */}
             </div>
         
     )
