@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { useParams } from 'react-router'
 
 
+
 const Expert = (props) =>{
     const [experts, setExperts] = useState([])
     const { id } = useParams()
@@ -16,13 +17,26 @@ const Expert = (props) =>{
           })
       }, []);
 
-    //   setTimeout(function(){console.log(experts.descriptions[0].description) }, 2000);
+      setTimeout(function(){console.log(experts) }, 2000);
+      // setTimeout(function(){console.log(experts.descriptions[0]) }, 2000);
+
+      if (!experts.descriptions) {
+        return <span>Loading...</span>
+      }
 
     return(
-            <div className='expert'>
+            <div>
                 
                 <p>{experts.name}</p>
-                {/* <p>{experts.description[0].description}</p> */}
+
+                <p>{experts.descriptions[0].description}</p>
+                <p>{experts.twitterLinks[0].twitterLink}</p>
+                <p>{experts.youtubeChannels[0].youtubeChannel}</p>
+
+                <div>
+                  
+                </div>
+
             </div>
         
     )
