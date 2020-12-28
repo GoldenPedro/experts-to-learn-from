@@ -6,6 +6,7 @@ import ArticlesTab from './ArticlesTab'
 import TweetsTab from './TweetsTab'
 import VideosTab from './VideosTab'
 import QuotesTab from './QuotesTab'
+import BookRecommendationsTab from './BookRecommendationsTab'
 
 
 
@@ -16,6 +17,7 @@ const Expert = (props) =>{
     const [tweets, setTweets] = useState(false)
     const [videos, setVideos] = useState(false)
     const [quotes, setQuotes] = useState(false)
+    const [bookRecommendations, setBookRecommendations] = useState(false)
 
     useEffect(() => {
         axios.get(`http://www.expertstolearnfrom.com/api/getexpert/${id}`)
@@ -56,12 +58,16 @@ const Expert = (props) =>{
                 <div className='tab'>
                   <h3 onClick={() => setQuotes(!quotes)}>Quotes</h3>
                 </div>
+                <div className='tab'>
+                  <h3 onClick={() => setBookRecommendations(!bookRecommendations)}>Book Recommendations</h3>
+                </div>
 
                 <div>
                   { articles ? <ArticlesTab articles={experts.articles} id={experts._id}/> : null }
                   { tweets ? <TweetsTab tweets={experts.tweets} id={experts._id} /> : null }
                   { videos ? <VideosTab videos={experts.videos} id={experts._id} /> : null }
                   { quotes ? <QuotesTab quotes={experts.quotes} id={experts._id} /> : null }
+                  { bookRecommendations ? <BookRecommendationsTab bookRecommendations={experts.bookRecommendations} id={experts._id} /> : null }
                 </div>
                 
 
