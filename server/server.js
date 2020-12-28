@@ -124,7 +124,8 @@ async function data(callback){
       else{
         const token = jwt.sign({id: req.body.email}, process.env.SESSION_SECRET)
         return res.status(200).json({
-          token: token
+          token: token,
+          id: user._id
         });
       }
       })(req, res);
@@ -147,7 +148,8 @@ async function data(callback){
           experts.insertOne(
             {
               name: req.body.name, descriptions: [req.body.descriptions], twitterLinks: [req.body.twitterLinks], 
-              youtubeChannels: [req.body.youtubeChannels], blogs: [req.body.blogs], categories: [req.body.categories]
+              youtubeChannels: [req.body.youtubeChannels], blogs: [req.body.blogs], articles: [], bookRecommendations: [], tweets: [], videos: [],
+              quotes: [], categories: [req.body.categories]
             }, (err, doc) => {
             if (err) {
               return res.status(500).json({
@@ -155,6 +157,34 @@ async function data(callback){
               });
             } else {
               addCategory(req.body.categories.category)
+
+              // for (var [key, value] of Object.entries(req.body)) {
+
+              //   if (key !== "name" && key !== "user" ) {
+
+              //     var info = {
+              //       id: doc["ops"][0]["_id"],
+              //       field: key,
+              //       tag : Object.values(value)[0]
+              //     }
+                  
+              //     subfield = Object.keys(value)[0]
+
+              //     users.updateOne({ _id: new ObjectID(req.body.user)},{
+              //       $addToSet: {
+              //           ["upvotes"]: info
+              //       }}, (err,result) => {
+              //       if (err) {
+              //         experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
+              //           $inc: {
+              //             [field]: -1
+              //           }
+              //         })
+              //       }
+              //     });
+              //   }
+              // }
+
               return res.status(200).json({
                 message: "expert has been added"
               })
@@ -220,9 +250,6 @@ async function data(callback){
 
 
     app.post("/api/addexpertdetails/", (req, res) => {
-      //Need from frontend: new value to add; id of the expert; name of the category its going to
-      // experts.findOneAndUpdate({ _id: new ObjectID(req.body.id)}, {$push: {[req.body.name]: req.body.value}}, {new: true}, function(err, expert){
-      // experts.findAndModify({ _id: new ObjectID(req.body.id)},[],{$push: {test: req.body.value}},{},function(err, expert) {
       experts.updateOne({ _id: new ObjectID(req.body.id)}, {$push: {[req.body.name]: req.body.value}}, function(err, expert){
         if (err) {
           return res.status(500).json({
@@ -237,7 +264,7 @@ async function data(callback){
     
     app.post("/api/vote/", (req, res) => {
 
-      info = {
+      var info = {
         id: req.body.expert,
         field: req.body.field,
         tag : req.body.tag
@@ -323,6 +350,18 @@ async function data(callback){
       }
     });
 
+    app.get("/api/getrankedexpert/", (req, res) => {
+      experts.find().sort({"categories.rating": -1}).toArray(function(err, expert) {  
+        if (err) {
+          return res.status(500).json({
+            err: err
+          });  
+        }
+        else{
+          return res.status(200).json(expert);
+        }
+      })
+    });
 
       // app.get("/api/checkvote/", (req, res) => {
 
@@ -348,8 +387,6 @@ async function data(callback){
       //   })
       // });
 
-
-    
 
    
     app.use((req, res, next) => {
