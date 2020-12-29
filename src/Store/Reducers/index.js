@@ -1,9 +1,7 @@
 import { combineReducers } from 'redux'
+import { saveUserInfoReducer } from './saveUserInfoReducer'
 
-const test = () => {
-    console.log("test")    
-}
 
 export default combineReducers({
-    test
+    saveUserInfoReducer,
 })

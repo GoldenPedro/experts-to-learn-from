@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import SelectCategoryForm from './SelectCategoryForm'
 import ExpertDetailsForm from './ExpertDetailsForm'
+import { connect } from 'react-redux';
+import saveUserInfoReducer from '../../Store/Reducers'
 import axios from 'axios'
 
 
@@ -69,6 +71,7 @@ export class CreateExpertForm extends Component {
     evt.preventDefault();
     // Packages an easy-to-use payload to put onto state
     const newData = {...this.submitData,
+      user: this.props.userinfo.id,
       name: this.state.name, 
       descriptions: {description: this.state.description, rating: 1},
       twitterLinks: {twitterLink: this.state.twitterLink, rating: 1},
@@ -92,6 +95,8 @@ export class CreateExpertForm extends Component {
 }
 
     render() {
+
+          
 
       const { step } = this.state;
       const { name, description, twitterLink, youtubeChannel, blog, category } = this.state;
@@ -132,4 +137,11 @@ export class CreateExpertForm extends Component {
       }
     }
 }
-export default CreateExpertForm;
+
+const mapStateToProps = state => {
+  return {
+    userinfo: state.saveUserInfoReducer.userinfo
+  }
+}
+
+export default connect(mapStateToProps, {saveUserInfoReducer})(CreateExpertForm);

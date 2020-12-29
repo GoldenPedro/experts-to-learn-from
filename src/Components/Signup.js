@@ -5,18 +5,21 @@ import * as yup from 'yup'
 
 const defaultValues = {
     email: '',
+    username: '',
     password: '',
     passwordConfirmation: '',
 }
 
 const defaultErrors = {
     email: '',
+    username: '',
     password: '',
     passwordConfirmation: '',
 };
 
 const schema = yup.object().shape({
     email: yup.string().email('Please enter a valid email').required('Email is required'),
+    username: yup.string().required('Username is required'),
     password: yup.string().required('Password is required'),
     passwordConfirmation: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
 })
@@ -42,6 +45,7 @@ function Login() {
         // Packages an easy-to-use payload to put onto state
         const newData = {
             email: formValues.email.trim(),
+            username: formValues.username.trim(),
             password: formValues.password,
             passwordConfirmation: formValues.password,
         }
@@ -87,6 +91,10 @@ function Login() {
                   <input value={formValues.email} onChange={handleChanges} placeholder='Enter email' name="email" type='text' />
               </label>
               {errors.email.length > 0 ? <p>{errors.email}</p> : null} 
+              <label>Username: &nbsp;
+                  <input value={formValues.username} onChange={handleChanges} placeholder='Enter username' name="username" type='username' />
+              </label>
+              {errors.username.length > 0 ? <p>{errors.username}</p> : null} 
               <label>Password:
                   <input value={formValues.password} onChange={handleChanges} placeholder='Enter password' name="password" type='password' />
                   <input value={formValues.passwordConfirmation} onChange={handleChanges} placeholder='Enter password' name="passwordConfirmation" type='password' />

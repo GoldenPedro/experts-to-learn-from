@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { saveUserInfoAction } from '../Store/Actions'
 import * as yup from 'yup'
 // import '../App.css';
 
@@ -16,7 +18,7 @@ const defaultErrors = {
 
 const schema = yup.object().shape({
     email: yup.string().email('Must be a valid email').required('Email is required'),
-    password: yup.string().required('Username is required'),
+    password: yup.string().required('Password is required'),
     passwordConfirmation: yup.string()
      .oneOf([yup.ref('password'), null], 'Passwords must match')
 })
@@ -27,6 +29,7 @@ const Login = (props) => {
     const [savedFormInfo, setSavedFormInfo] = useState([]);
     const [errors, setErrors] = useState(defaultErrors);
     const [buttonDisabled, setButtonDisabled] = useState(true)
+    const { saveUserInfoAction } = props
     const history = useHistory();
 
     // Form functions
@@ -48,6 +51,7 @@ const Login = (props) => {
             .then((res) => {
                 console.log(res.data);
                 window.localStorage.setItem('token', res.data.token)
+                saveUserInfoAction(res.data)
                 history.push('/')
             })
             .catch(err => {
@@ -84,7 +88,7 @@ const Login = (props) => {
               <label>Email: &nbsp;
                   <input value={formValues.email} onChange={handleChanges} placeholder='Enter email' name="email" type='email' />
               </label>
-              {errors.email.length > 0 ? <p>{errors.email}</p> : null}  
+              {errors.email.length > 0 ? <p>{errors.email}</p> : null} 
               <label>Password: &nbsp;
                   <input value={formValues.password} onChange={handleChanges} placeholder='Enter password' name="password" type='password' />
               </label>
@@ -93,5 +97,11 @@ const Login = (props) => {
       </div>
     );
   }
+
+  const mapStateToProps = state => {
+    return {
+      userinfo: state.saveUserInfoAction
+  }
+}
   
-  export default Login;
+  export default connect(mapStateToProps, { saveUserInfoAction })(Login);
