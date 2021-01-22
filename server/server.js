@@ -86,48 +86,68 @@ async function data(callback){
     
     app.post("/api/users", (req, res, next) => {
       // const hash = bcrypt.hashSync(req.body.password, 12);
-
-      users.findOne({ email: req.body.email }, function (err, user) {
+      users.findOne({ email: req.body.email }, function (err, email) {
         if (err) {
           return res.status(500).json({
             err: err
           });
-          
-        } else if (user) {
+        } else if (email) {
           return res.status(300).json({
-            message: "user already exist"
+            message: "email already exist"
           });
-
         } else {
-          users.insertOne({ email: req.body.email, password: req.body.password }, (err, doc) => {
+          users.findOne({ username: req.body.username }, function (err, user) {
             if (err) {
-              return res.status(500)
+              return res.status(500).json({
+                err: err
+              });
+            } else if (user) {
+              return res.status(300).json({
+                message: "user already exist"
+              });
             } else {
-                 const token = jwt.sign({id: req.body.email}, process.env.SESSION_SECRET)
-                 return res.status(200).json({
-                  token: token
-                });
+              users.insertOne({ email: req.body.email, username: req.body.username, password: req.body.password }, (err, doc) => {
+                if (err) {
+                  return res.status(500).json({
+                    err: err
+                  });
+                } else {
+                     const token = jwt.sign({id: req.body.email}, process.env.SESSION_SECRET)
+                     return res.status(200).json({
+                      token: token,
+                      id: doc["ops"][0]["_id"],
+                      user: doc["ops"][0]["username"]
+                    });
+                }
+              });
             }
           });
         }
       });
-    }
-    );
+    });
     
     app.post("/api/login", (req, res) => {
       passport.authenticate('local' ,(err, user, info) => {
-      if(err){
-        return res.status(500).json({
-          err: err
-        });
-      }
-      else{
-        const token = jwt.sign({id: req.body.email}, process.env.SESSION_SECRET)
-        return res.status(200).json({
-          token: token,
-          id: user._id
-        });
-      }
+        if (err) {
+          return res.status(500).json({
+            err: err
+          });
+        }
+        else{
+          if (user) {
+            const token = jwt.sign({id: req.body.email}, process.env.SESSION_SECRET)
+            return res.status(200).json({
+              token: token,
+              id: user._id,
+              user: user.username
+            });
+          }
+          else{
+            return res.status(200).json({
+              user: req.body.email
+            });
+          }
+        }
       })(req, res);
     });
 
@@ -158,32 +178,32 @@ async function data(callback){
             } else {
               addCategory(req.body.categories.category)
 
-              // for (var [key, value] of Object.entries(req.body)) {
+              for (var [key, value] of Object.entries(req.body)) {
 
-              //   if (key !== "name" && key !== "user" ) {
+                if (key !== "name" && key !== "user" ) {
 
-              //     var info = {
-              //       id: doc["ops"][0]["_id"],
-              //       field: key,
-              //       tag : Object.values(value)[0]
-              //     }
+                  var info = {
+                    id: doc["ops"][0]["_id"],
+                    field: key,
+                    tag : Object.values(value)[0]
+                  }
                   
-              //     subfield = Object.keys(value)[0]
+                  subfield = Object.keys(value)[0]
 
-              //     users.updateOne({ _id: new ObjectID(req.body.user)},{
-              //       $addToSet: {
-              //           ["upvotes"]: info
-              //       }}, (err,result) => {
-              //       if (err) {
-              //         experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
-              //           $inc: {
-              //             [field]: -1
-              //           }
-              //         })
-              //       }
-              //     });
-              //   }
-              // }
+                  users.updateOne({ _id: new ObjectID(req.body.user)},{
+                    $addToSet: {
+                        ["upvotes"]: info
+                    }}, (err,result) => {
+                    if (err) {
+                      experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
+                        $inc: {
+                          [field]: -1
+                        }
+                      })
+                    }
+                  });
+                }
+              }
 
               return res.status(200).json({
                 message: "expert has been added"
@@ -216,7 +236,7 @@ async function data(callback){
             });
         }
         else{
-          name = []
+          var name = []
           category.forEach(element => {
             if (element.name.startsWith(req.body.category.toLowerCase())){
               name.push(element.name)
@@ -281,7 +301,7 @@ async function data(callback){
             if (result.modifiedCount > 0) {
               experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
                 $inc: {
-                      [field]: 1
+                    [field]: 1
                 }
               });
             }
@@ -363,32 +383,6 @@ async function data(callback){
       })
     });
 
-      // app.get("/api/checkvote/", (req, res) => {
-
-      //   postid = "5fcc30f5ba4b4c792d2e7d96"
-      //   field = "categories"
-      //   tag = "photography"
-      //   user = "5f9a011e61486d5f83a83367"
-
-      //   // test={
-      //   //   id: expert,
-      //   //   field: "categories.category",
-      //   //   tag : "photography"
-      //   // }
-
-      //   users.findOne({ _id: new ObjectID(user)}, function (err, user) {
-          
-      //     if (user){
-      //       console.log(user)
-      //       test = user.upvoters.some( expert => expert['id'] === postid && expert['field'] === field && expert['tag'] === tag)
-      //       console.log(test)
-
-      //     }
-      //   })
-      // });
-
-
-   
     app.use((req, res, next) => {
       res.sendFile(path.join(__dirname, "..", "build", "index.html"));
     });
