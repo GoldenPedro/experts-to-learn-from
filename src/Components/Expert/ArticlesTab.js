@@ -49,19 +49,17 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
 
 
     return(
-            <div>
-            
-            <div>
-                <form onSubmit={submit}>
-                    <input onChange={handleChanges} placeholder="Enter link here" value={formValues.articleLink} name="articleLink"></input>
-                    <button>Submit</button>
-                </form>
-            </div>
-                
-            {articles.map(article => (
-                <Article article={article} />
-            ))}
-
+            <div className="">
+                <div>
+                    <form onSubmit={submit}>
+                        <input onChange={handleChanges} placeholder="Enter link here" value={formValues.articleLink} name="articleLink"></input>
+                        <button>Submit</button>
+                    </form>
+                </div>
+                    
+                {articles.map(article => (
+                    <Article article={article} />
+                ))}
             </div>
         
     )

@@ -6,7 +6,7 @@
 
 * {
   font-family: 'Roboto', sans-serif;
-  /* border: 1px solid black; */
+  border: 1px solid black;
 }
 
 
@@ -121,7 +121,7 @@
 }
 
 .expert-voting {
-  width: 50%;
+  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -145,6 +145,30 @@
 
 .downvote-icon:hover {
   filter: invert(31%) sepia(98%) saturate(6669%) hue-rotate(355deg) brightness(101%) contrast(130%);
+}
+
+/* ======= EXPERT PAGE ======= */
+
+.expert-component {
+  width: 90%;
+}
+
+.expert-detail-card {
+  display: flex;
+  justify-content: space-between;
+}
+
+.expert-detail-voting-rating-wrapper {
+  display: flex;
+  width: 50%
+}
+
+.expert-detail-voting {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 
