@@ -12,7 +12,7 @@ const {article} = props
 
     return(
             <div className="expert-detail-card">
-                <p>{article.article}</p>
+                <p className="expert-detail-card-title">{article.article}</p>
 
                 <div className="expert-detail-voting-rating-wrapper">
                     <p>{article.rating}</p>

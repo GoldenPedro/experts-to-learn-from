@@ -13,12 +13,17 @@ const Tweets = (props) =>{
             <div className="expert-detail-card">
                 
                 <p>{tweet.tweet}</p>
-                <p>{tweet.rating}</p>
+               
 
-                <div className='expert-voting'>
-                    <img className='upvote-icon' src={playSolid} alt='upvote' />
-                    <img className='downvote-icon' src={playSolid} alt='downvote' />
+                <div className="expert-detail-voting-rating-wrapper">
+                    <p>{tweet.rating}</p>
+                    <div className='expert-detail-voting'>
+                        <img className='upvote-icon' src={playSolid} alt='upvote' />
+                        <img className='downvote-icon' src={playSolid} alt='downvote' />
+                    </div>
                 </div>
+
+                
             </div>
         
     )

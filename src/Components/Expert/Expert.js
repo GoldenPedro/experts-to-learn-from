@@ -39,8 +39,7 @@ const Expert = (props) =>{
 
     return(
             <div className="expert-component">                
-                <p>{experts.name}</p>
-
+                <h2 className="expert-component-name">{experts.name}</h2>
                 <p>Description: {experts.descriptions[0].description}</p>
                 <p>Twitter: {experts.twitterLinks[0].twitterLink}</p>
                 <p>YouTube Channel: {experts.youtubeChannels[0].youtubeChannel}</p>
