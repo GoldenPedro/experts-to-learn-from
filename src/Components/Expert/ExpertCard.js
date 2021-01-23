@@ -21,11 +21,8 @@ function ExpertCard(props) {
           </Link>
           
           <p className='expert-description'>{expert.descriptions[0].description}</p>
-
-
-            <a className='expert-twitter' href={expert.twitterLinks[0].twitterLink}><p>Twitter</p></a>
-          
-          <a className='expert-youtubeChannel' href={expert.youtubeChannels[0].youtubeChannel}><p>YouTube</p></a>
+          <a className='expert-twitter' href={expert.twitterLinks[0].twitterLink}>Twitter</a>       
+          <a className='expert-youtubeChannel' href={expert.youtubeChannels[0].youtubeChannel}>YouTube</a>
         </div>
         
         <div className='expert-category-rating'>
