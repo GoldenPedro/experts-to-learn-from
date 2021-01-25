@@ -83,6 +83,35 @@ async function data(callback){
         }
       });
     }
+
+    // function automaticUpvote(body, expert) {
+    //    for (var [key, value] of Object.entries(body)) {
+    //       if (key !== "name" && key !== "user" ) {
+  
+    //         var info = {
+    //           id: expert,
+    //           field: key,
+    //           tag : Object.values(value)[0]
+    //         }
+            
+    //         field = info.field.concat(".$.rating");
+    //         subfield = Object.keys(value)[0]
+  
+    //         users.updateOne({ _id: new ObjectID(body.user)},{
+    //           $addToSet: {
+    //               ["upvotes"]: info
+    //           }}, (err,result) => {
+    //           if (err) {
+    //             experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
+    //               $inc: {
+    //                 [field]: -1
+    //               }
+    //             })
+    //           }
+    //         });
+    //       }
+    //     }
+    //   }
     
     app.post("/api/users", (req, res, next) => {
       // const hash = bcrypt.hashSync(req.body.password, 12);
@@ -277,6 +306,28 @@ async function data(callback){
           });  
         }
         else{
+          var info = {
+            id: req.body.id,
+            field: req.body.name,
+            tag :  Object.values(req.body.value)[0]
+          }
+          
+          subfield = Object.keys(req.body.value)[0]
+
+
+          users.updateOne({ _id: new ObjectID(req.body.userid)},{
+            $addToSet: {
+                ["upvotes"]: info
+            }}, (err,result) => {
+            if (err) {
+              experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
+                $inc: {
+                  [field]: -1
+                }
+              })
+            }
+          });
+
           return res.status(200).json(expert);
         }
       });
@@ -285,7 +336,7 @@ async function data(callback){
     app.post("/api/vote/", (req, res) => {
 
       var info = {
-        id: req.body.expert,
+        id: req.body.expertid,
         field: req.body.field,
         tag : req.body.tag
       }
@@ -293,8 +344,15 @@ async function data(callback){
       field = info.field.concat(".$.rating");
       subfield = req.body.subfield
 
+
+      // console.log(info)
+      // console.log(field)
+      // console.log(subfield)
+      // console.log(req.body.userid)
+      // console.log(req.body.votetype)
+
       if (req.body.votetype === "") {
-        users.updateOne({ _id: new ObjectID(req.body.user)},{
+        users.updateOne({ _id: new ObjectID(req.body.userid)},{
           $pull: {
             "downvotes" : info
           }}, (err,result) => {
@@ -306,7 +364,7 @@ async function data(callback){
               });
             }
             else{
-              users.updateOne({ _id: new ObjectID(req.body.user)},{
+              users.updateOne({ _id: new ObjectID(req.body.userid)},{
                 $pull: {
                   "upvotes": info
                 }}, (err, result) => {
@@ -327,10 +385,11 @@ async function data(callback){
 
       if (req.body.votetype === "upvote") {
         voterType = "upvotes"
-        users.updateOne({ _id: new ObjectID(req.body.user)},{
+        users.updateOne({ _id: new ObjectID(req.body.userid)},{
           $pull: {
             "downvotes" : info
           }}, (err,result) => {
+
           if (result.modifiedCount > 0) {
               counterInc = 2;
           }
@@ -341,7 +400,7 @@ async function data(callback){
       }
       else if (req.body.votetype === "downvote") {
         voterType = "downvotes"
-        users.updateOne({ _id: new ObjectID(req.body.user)},{
+        users.updateOne({ _id: new ObjectID(req.body.userid)},{
           $pull: {
             "upvotes" : info
           }}, (err,result) => {
@@ -353,9 +412,9 @@ async function data(callback){
           }
         });
       }
-
+ 
       if (req.body.votetype !== "") {
-        users.updateOne({ _id: new ObjectID(req.body.user)},{
+        users.updateOne({ _id: new ObjectID(req.body.userid)},{
             $addToSet: {
                 [voterType]: info
             }}, (err,result) => {
