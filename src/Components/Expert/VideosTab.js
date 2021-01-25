@@ -3,14 +3,15 @@ import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom'
 import { useParams } from 'react-router'
 import Video from './Video'
-
+import { connect } from 'react-redux';
+import saveUserInfoReducer from '../../Store/Reducers'
 
 const defaultValues = {
     videoLink: ''
 }
 
 const VideosTab = (props) =>{
-const {videos, id} = props
+const {videos, id, userinfo} = props
 const [formValues, setFormValues] = useState(defaultValues);
 const [savedFormInfo, setSavedFormInfo] = useState([]);
 
@@ -31,6 +32,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
                 rating: 1
             },
             id: id,
+            userid: userinfo,
             name: "videos"            
         }
         console.log(newData)
@@ -68,5 +70,10 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
     )
 }
 
-
-export default VideosTab
+const mapStateToProps = state => {
+    return {
+      userinfo: state.saveUserInfoReducer.userinfo.id
+    }
+  }
+  
+export default connect(mapStateToProps, {saveUserInfoReducer})(VideosTab);

@@ -3,6 +3,8 @@ import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom'
 import { useParams } from 'react-router'
 import Quote from './Quote'
+import { connect } from 'react-redux';
+import saveUserInfoReducer from '../../Store/Reducers'
 
 
 const defaultValues = {
@@ -10,7 +12,7 @@ const defaultValues = {
 }
 
 const QuotesTab = (props) =>{
-const {quotes, id} = props
+const {quotes, id, userinfo} = props
 const [formValues, setFormValues] = useState(defaultValues);
 const [savedFormInfo, setSavedFormInfo] = useState([]);
 
@@ -31,6 +33,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
                 rating: 1
             },
             id: id,
+            userid: userinfo,
             name: "quotes"            
         }
         console.log(newData)
@@ -68,5 +71,10 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
     )
 }
 
-
-export default QuotesTab
+const mapStateToProps = state => {
+    return {
+      userinfo: state.saveUserInfoReducer.userinfo.id
+    }
+  }
+  
+export default connect(mapStateToProps, {saveUserInfoReducer})(QuotesTab);

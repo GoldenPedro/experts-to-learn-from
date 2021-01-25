@@ -2,6 +2,7 @@ import React from 'react';
 import playSolid from '../../Assets/playSolid.svg'
 import Expert from './Expert'
 import { Link } from 'react-router-dom'
+import UpvoteDownVoteExpert from './UpvoteDownVoteExpert'
 
 function ExpertCard(props) {
     const {expert} = props
@@ -29,11 +30,15 @@ function ExpertCard(props) {
           <div className='expert-category'>
             <p>{expert.categories[0].category}</p>
           </div>
-          <div className='expert-voting'>
+
+          <p className='expert-rating'>{expert.categories[0].rating}</p>
+          {/* <div className='expert-voting'>
             <img className='upvote-icon' src={playSolid} alt='upvote' />
-            <p className='expert-rating'>{expert.categories[0].rating}</p>
+            
             <img className='downvote-icon' src={playSolid} alt='downvote' />
-          </div>
+          </div> */}
+
+          <UpvoteDownVoteExpert expertid={expert._id} category={expert.categories[0].category} />
         </div>
     </div>
   );

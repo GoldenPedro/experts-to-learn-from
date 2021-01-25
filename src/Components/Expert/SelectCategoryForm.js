@@ -5,12 +5,18 @@ const defaultCategorySearch = {
     category: ''
 }
 
+const defaultNewCategoryText = {
+    newCategory: ''
+}
+
 const categories = []
 
 const SelectCategoryForm = (props) =>{
     const {values, handleChange, nextStep, saveCategory} = props
     const [categorySearch, setCategorySearch] = useState(defaultCategorySearch)
     const [categoriesState, setCategoriesState] = useState(categories)
+    const [newCategorySearch, setNewCategorySearch] = useState(false)
+    const [newCategoryText, setNewCategoryText] = useState(defaultNewCategoryText)
 
     // const [categorySearch, setCategorySearch] = useState(defaultCategorySearch)
 
@@ -21,7 +27,7 @@ const SelectCategoryForm = (props) =>{
     //     })
     //   }, []);
 
-      const search = (evt) => {
+    const search = (evt) => {
         evt.preventDefault();
         console.log(defaultCategorySearch.category)
         axios.post('http://www.expertstolearnfrom.com/api/categories', categorySearch)
@@ -36,9 +42,20 @@ const SelectCategoryForm = (props) =>{
         setCategorySearch({ ...categorySearch, [name]: value });
     }
 
+    const handleNewCategoryChanges = (evt) => {
+        const { name, value } = evt.target;
+        setNewCategoryText({ ...categorySearch, [name]: value });
+    }
+
     const selectCategory = (evt) => {
         console.log(evt.target.id)
         saveCategory(evt.target.id)
+        nextStep()
+    }
+
+    const submitNewCategory = (evt) => {
+        console.log(evt.target.id)
+        saveCategory(newCategoryText.newCategory)
         nextStep()
     }
 
@@ -56,6 +73,18 @@ const SelectCategoryForm = (props) =>{
                         <p id={item} onClick={selectCategory}>{item}</p>
                 ))
             }
+
+
+                <div className='new-category-wrapper'>
+                  <p onClick={() => setNewCategorySearch(!newCategorySearch)}>Click here if you would like to add a new category</p>
+                </div>
+
+                { 
+                    newCategorySearch ? <form onSubmit={submitNewCategory}>
+                        <input value={newCategoryText.newCategory} onChange={handleNewCategoryChanges} placeholder="Enter new category" name="newCategory" type="text"/>
+                        <button>Add new Category</button>
+                    </form> : null 
+                }
         </div>
 
     )
