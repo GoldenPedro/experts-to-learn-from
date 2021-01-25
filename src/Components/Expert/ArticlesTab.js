@@ -3,13 +3,15 @@ import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom'
 import { useParams } from 'react-router'
 import Article from './Article'
+import { connect } from 'react-redux';
+import saveUserInfoReducer from '../../Store/Reducers'
 
 const defaultValues = {
     articleLink: ''
 }
 
 const ArticlesTab = (props) =>{
-const {articles, id} = props
+const {articles, id, userinfo} = props
 const [formValues, setFormValues] = useState(defaultValues);
 const [savedFormInfo, setSavedFormInfo] = useState([]);
 
@@ -30,6 +32,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
                 rating: 1
             },
             id: id,
+            userid: userinfo,
             name: "articles"            
         }
         console.log(newData)
@@ -49,23 +52,26 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
 
 
     return(
-            <div>
-            
-            <div>
-                <form onSubmit={submit}>
-                    <input onChange={handleChanges} placeholder="Enter link here" value={formValues.articleLink} name="articleLink"></input>
-                    <button>Submit</button>
-                </form>
-            </div>
-                
-            {articles.map(article => (
-                <Article article={article} />
-            ))}
-
+            <div className="">
+                <div>
+                    <form onSubmit={submit}>
+                        <input onChange={handleChanges} placeholder="Enter link here" value={formValues.articleLink} name="articleLink"></input>
+                        <button>Submit</button>
+                    </form>
+                </div>
+                    
+                {articles.map(article => (
+                    <Article article={article} />
+                ))}
             </div>
         
     )
 }
 
-
-export default ArticlesTab
+const mapStateToProps = state => {
+    return {
+      userinfo: state.saveUserInfoReducer.userinfo.id
+    }
+  }
+  
+export default connect(mapStateToProps, {saveUserInfoReducer})(ArticlesTab);

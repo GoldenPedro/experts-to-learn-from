@@ -3,14 +3,15 @@ import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom'
 import { useParams } from 'react-router'
 import Tweets from './Tweets'
-
+import { connect } from 'react-redux';
+import saveUserInfoReducer from '../../Store/Reducers'
 
 const defaultValues = {
     tweetLink: ''
 }
 
 const TweetsTab = (props) =>{
-const {tweets, id} = props
+const {tweets, id, userinfo} = props
 const [formValues, setFormValues] = useState(defaultValues);
 const [savedFormInfo, setSavedFormInfo] = useState([]);
 
@@ -31,6 +32,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
                 rating: 1
             },
             id: id,
+            userid: userinfo,
             name: "tweets"            
         }
         console.log(newData)
@@ -68,5 +70,10 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
     )
 }
 
-
-export default TweetsTab
+const mapStateToProps = state => {
+    return {
+      userinfo: state.saveUserInfoReducer.userinfo.id
+    }
+  }
+  
+export default connect(mapStateToProps, {saveUserInfoReducer})(TweetsTab);
