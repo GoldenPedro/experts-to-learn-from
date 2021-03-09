@@ -44,6 +44,7 @@ async function data(callback){
     const users = await client.db('mydatabase').collection('users');
     const experts = await client.db('mydatabase').collection('experts');
     const categories = await client.db('mydatabase').collection('categories');
+    const details = await client.db('mydatabase').collection('details');
 
     passport.serializeUser((user, done) => {
       done(null, user._id);
@@ -181,18 +182,30 @@ async function data(callback){
     });
 
     app.post("/api/NewExpert", (req, res) => {
-      experts.findOne({ name: req.body.name }, function (err, expert) {
-        if (err) {
-          return res.status(500).json({
-            err: err
-          });
+      // experts.findOne({ name: req.body.name }, function (err, expert) {
+      //   if (err) {
+      //     return res.status(500).json({
+      //       err: err
+      //     });
           
-        } else if (expert) {
-          return res.status(200).json({
-            message: "This expert already exist"
-          })
+      //   } else if (expert) {
+      //     return res.status(200).json({
+      //       message: "This expert already exist"
+      //     })
 
-        } else {
+      //   } else {
+
+      for (var [key, value] of Object.entries(req.body)) {
+        if (key == "descriptions" || key == "twitterLinks" || key == "youtubeChannels"  || key == "blogs" ) {
+          details.insertOne(value, (err,doc)=>{
+            // if (err) {
+            //   return res.status(500).json({
+            //     err: err
+            //   });
+            value["_id"] = doc["ops"][0]["_id"].toString()
+          })
+        }
+      }
 
           experts.insertOne(
             {
@@ -210,20 +223,33 @@ async function data(callback){
               for (var [key, value] of Object.entries(req.body)) {
 
                 if (key !== "name" && key !== "user" ) {
-
-                  var info = {
-                    id: doc["ops"][0]["_id"],
-                    field: key,
-                    tag : Object.values(value)[0]
-                  }
                   
-                  subfield = Object.keys(value)[0]
+
+                  if (key == "categories") {
+                    var info = {
+                      id: doc["ops"][0]["_id"].toString(),
+                      field: key,
+                      tag : Object.values(value)[0]
+                    }
+                  }
+                  else{
+                    var info = {
+                      id: doc["ops"][0]["_id"].toString(),
+                      field: key,
+                      tag : Object.values(value)[0],
+                      expertdetailid: Object.values(value)[2].toString()
+                    }
+                  }
+                     
+                  field = info.field.concat(".$.rating");
+                  subfield = info.field.concat("." + Object.keys(value)[0])
 
                   users.updateOne({ _id: new ObjectID(req.body.user)},{
                     $addToSet: {
                         ["upvotes"]: info
                     }}, (err,result) => {
                     if (err) {
+                      //TODO update this to use id
                       experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
                         $inc: {
                           [field]: -1
@@ -239,22 +265,22 @@ async function data(callback){
               })
             }
           });
-        }
-      });
+      //   }
+      // });
     });
     
 
     app.get("/api/expertlist/:category", (req, res) => {
-      experts.find({'categories.category': req.params.category}).toArray(function (err, expert) {
+      experts.find({'categories.category': req.params.category}).sort({"categories.rating": -1}).toArray(function(err, expert) {  
         if (err) {
           return res.status(500).json({
             err: err
-          });
+          });  
         }
         else{
           return res.status(200).json(expert);
         }
-    });
+      })
   });
 
     app.post("/api/categories", (req, res) => {
@@ -299,6 +325,15 @@ async function data(callback){
 
 
     app.post("/api/addexpertdetails/", (req, res) => {
+
+      details.insertOne(req.body.value, (err,doc)=>{
+        // if (err) {
+        //   return res.status(500).json({
+        //     err: err
+        //   });
+        req.body.value["_id"] = doc["ops"][0]["_id"].toString()
+      })
+  
       experts.updateOne({ _id: new ObjectID(req.body.id)}, {$push: {[req.body.name]: req.body.value}}, function(err, expert){
         if (err) {
           return res.status(500).json({
@@ -306,14 +341,32 @@ async function data(callback){
           });  
         }
         else{
+
+          
+          // if (req.body.name == "categories") {
+          //   var info = {
+          //     id: req.body.id,
+          //     field: req.body.name,
+          //     tag :  Object.values(req.body.value)[0]
+          //   }
+          // }
+          // else{
+          //   var info = {
+          //     id: req.body.id,
+          //     field: req.body.name,
+          //     tag :  Object.values(req.body.value)[0],
+          //     expertdetailid: Object.values(req.body.value)[2].toString()
+          //   }
+          // }
+
           var info = {
             id: req.body.id,
             field: req.body.name,
             tag :  Object.values(req.body.value)[0]
           }
           
-          subfield = Object.keys(req.body.value)[0]
-
+          field = info.field.concat(".$.rating");
+          subfield = info.field.concat("." + Object.keys(req.body.value)[0])
 
           users.updateOne({ _id: new ObjectID(req.body.userid)},{
             $addToSet: {
@@ -334,6 +387,22 @@ async function data(callback){
     });
     
     app.post("/api/vote/", (req, res) => {
+      
+      // if (req.body.field == "categories") {
+      //   var info = {
+      //     id: req.body.expertid,
+      //     field: req.body.field,
+      //     tag: req.body.tag
+      //   }
+      // }
+      // else{
+      //   var info = {
+      //     id: req.body.expertid,
+      //     field: req.body.field,
+      //     tag: req.body.tag,
+      //     expertdetailid: req.body.expertdetailid
+      //   }
+      // }
 
       var info = {
         id: req.body.expertid,
@@ -342,14 +411,8 @@ async function data(callback){
       }
 
       field = info.field.concat(".$.rating");
-      subfield = req.body.subfield
-
-
-      // console.log(info)
-      // console.log(field)
-      // console.log(subfield)
-      // console.log(req.body.userid)
-      // console.log(req.body.votetype)
+      subfield = info.field.concat("." + req.body.subfield)
+      
 
       if (req.body.votetype === "") {
         users.updateOne({ _id: new ObjectID(req.body.userid)},{
@@ -390,12 +453,12 @@ async function data(callback){
             "downvotes" : info
           }}, (err,result) => {
 
-          if (result.modifiedCount > 0) {
-              counterInc = 2;
-          }
-          else{
+          // if (result.modifiedCount > 0) {
+          //     counterInc = 2;
+          // }
+          // else{
               counterInc = 1;
-          }
+          // }
         });
       }
       else if (req.body.votetype === "downvote") {
@@ -404,12 +467,12 @@ async function data(callback){
           $pull: {
             "upvotes" : info
           }}, (err,result) => {
-          if (result.modifiedCount > 0) {
-            counterInc = -2;
-          }
-          else{
+          // if (result.modifiedCount > 0) {
+          //   counterInc = -2;
+          // }
+          // else{
             counterInc = -1;
-          }
+          // }
         });
       }
  
@@ -418,7 +481,23 @@ async function data(callback){
             $addToSet: {
                 [voterType]: info
             }}, (err,result) => {
-            if (result.modifiedCount > 0){
+            if (result.modifiedCount > 0) {
+
+              // if (req.body.field == "categories") {
+              //   experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
+              //     $inc: {
+              //       [field]: counterInc
+              //     }
+              //  });
+              // }
+              // else{
+              //   experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.expertdetailid},{
+              //     $inc: {
+              //       [field]: counterInc
+              //     }
+              //  });
+              // }
+
               experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
                 $inc: {
                   [field]: counterInc
