@@ -6,6 +6,8 @@ import saveUserInfoReducer from '../../Store/Reducers'
 import axios from 'axios'
 
 
+let useridLocal = window.localStorage.getItem('userid')
+
 export class CreateExpertForm extends Component {
 
   state = {
@@ -71,7 +73,7 @@ export class CreateExpertForm extends Component {
     evt.preventDefault();
     // Packages an easy-to-use payload to put onto state
     const newData = {...this.submitData,
-      user: this.props.userinfo.id,
+      user: useridLocal,
       name: this.state.name, 
       descriptions: {description: this.state.description, rating: 1},
       twitterLinks: {twitterLink: this.state.twitterLink, rating: 1},

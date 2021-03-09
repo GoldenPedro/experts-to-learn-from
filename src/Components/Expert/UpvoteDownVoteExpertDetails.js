@@ -1,13 +1,23 @@
 // import React, {useState, useEffect} from 'react'
 // import axios from 'axios'
-// import { Link, useHistory } from 'react-router-dom'
-// import { useParams } from 'react-router'
-
 // import playSolid from '../../Assets/playSolid.svg'
+
+// let useridLocal = window.localStorage.getItem('userid')
 
 
 // const UpvoteDownVoteExpertDetails = (props) =>{
 // // const {article} = props
+
+// const defaultUpvoteInfo = {
+//     expertid: expertid,
+//     userid: useridLocal,
+//     field: 'articles',
+//     subfield: 'article',
+//     tag: category,
+//     votetype: 'upvote'
+// }
+
+// const [upvoteInfo, setUpvoteInfo] = useState(defaultUpvoteInfo)
 
 // const upvote = () => {
 //     axios.post('http://www.expertstolearnfrom.com/api/vote', upvoteInfo)
@@ -15,6 +25,17 @@
 //             console.log(res.data);
 //         })
 // }
+
+// const defaultDownvoteInfo = {
+//     expertid: expertid,
+//     userid: useridLocal,
+//     field: 'categories',
+//     subfield: 'category',
+//     tag: category,
+//     votetype: 'downvote'
+// }
+
+// const [downvoteInfo, setDownvoteInfo] = useState(defaultDownvoteInfo)
 
 // const downvote = () => {
 //     axios.post('http://www.expertstolearnfrom.com/api/vote', downvoteInfo)
