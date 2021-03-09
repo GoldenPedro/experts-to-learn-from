@@ -14,7 +14,7 @@ function ExpertCard(props) {
       
     <div className="expert">
         <div className='expert-img-container'>
-          <img className='expert-img' src="" alt='Expert'/>
+          <img className='expert-img' src="https://picsum.photos/400" alt='Expert'/>
         </div>
         <div  className='expert-text'>
           <Link to={`/api/getexpert/${expert._id}`}>

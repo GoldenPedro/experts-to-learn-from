@@ -1,31 +1,18 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Link, useHistory } from 'react-router-dom'
-import { useParams } from 'react-router'
 import { connect } from 'react-redux';
 import saveUserInfoReducer from '../../Store/Reducers'
 import playSolid from '../../Assets/playSolid.svg'
 
 
-
-
-const defaultDownvoteInfo = {
-    expertid: '',
-    userid: '',
-    field: '',
-    subfield: '',
-    tag: '',
-    votetype: 'downvote'
-}
+let useridLocal = window.localStorage.getItem('userid')
 
 const UpvoteDownVoteExpert = (props) =>{
 const {expertid, category, userinfo} = props
 
-const [downvoteInfo, setDownvoteInfo] = useState(defaultDownvoteInfo)
-
 const defaultUpvoteInfo = {
     expertid: expertid,
-    userid: '5fea7082425082362f95672a',
+    userid: useridLocal,
     field: 'categories',
     subfield: 'category',
     tag: category,
@@ -42,7 +29,19 @@ const upvote = () => {
         })
 }
 
+const defaultDownvoteInfo = {
+    expertid: expertid,
+    userid: useridLocal,
+    field: 'categories',
+    subfield: 'category',
+    tag: category,
+    votetype: 'downvote'
+}
+
+const [downvoteInfo, setDownvoteInfo] = useState(defaultDownvoteInfo)
+
 const downvote = () => {
+    console.log(downvoteInfo)
     axios.post('http://www.expertstolearnfrom.com/api/vote', downvoteInfo)
         .then(res => {
             console.log(res.data);

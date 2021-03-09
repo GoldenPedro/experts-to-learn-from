@@ -32,12 +32,17 @@ const Login = (props) => {
     const { saveUserInfoAction } = props
     const history = useHistory();
 
+    const clearLocalStorage = () => {
+      window.localStorage.clear();
+    }
+
     // Form functions
     const handleChanges = (evt) => {
         const { name, value } = evt.target;
         validate(name, value);
         setFormValues({ ...formValues, [name]: value });
     }
+    
 
     const submit = (evt) => {
         evt.preventDefault();
@@ -50,7 +55,10 @@ const Login = (props) => {
         axios.post('http://www.expertstolearnfrom.com/api/login', formValues)
             .then((res) => {
                 console.log(res.data);
+                clearLocalStorage()
                 window.localStorage.setItem('token', res.data.token)
+                window.localStorage.setItem('userid', res.data.id)
+                window.localStorage.setItem('user', res.data.user)
                 saveUserInfoAction(res.data)
                 history.push('/')
             })

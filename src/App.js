@@ -23,7 +23,7 @@ function App() {
         <Route exact path='/login'>
           <Login />
         </Route>
-        <Route exact path='/signup'>
+        <Route exact path='/sign-up'>
           <Signup />
         </Route>
         <PrivateRoute exact path='/new-expert' component={CreateExpertForm} />

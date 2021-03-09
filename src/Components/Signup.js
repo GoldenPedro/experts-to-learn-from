@@ -40,6 +40,10 @@ function Login() {
         setFormValues({ ...formValues, [name]: value });
     }
 
+    const clearLocalStorage = () => {
+        window.localStorage.clear();
+      }
+
     const submit = (evt) => {
         evt.preventDefault();
         // Packages an easy-to-use payload to put onto state
@@ -54,7 +58,10 @@ function Login() {
         .then((res) => {
             console.log(res.data);
             console.log(res.data.token);
+            clearLocalStorage()
             window.localStorage.setItem('token', res.data.token)
+            window.localStorage.setItem('userid', res.data.id)
+            window.localStorage.setItem('user', res.data.user)
             history.push("/");
             }
         ).catch(err => {
