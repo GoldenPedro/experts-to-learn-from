@@ -90,17 +90,16 @@ const Login = (props) => {
       }, [formValues]);
 
     return (
-      <div className="login">
+      <div className="login-container">
           <h2>Log In</h2>
-          <form onSubmit={submit}>
-              <label>Email: &nbsp;
-                  <input value={formValues.email} onChange={handleChanges} placeholder='Enter email' name="email" type='email' />
-              </label>
+          <form onSubmit={submit} className='input-container'>
+            {/* <div className='input-wrapper'> */}
+              <input value={formValues.email} onChange={handleChanges} placeholder='Enter email' name="email" type='email' />
               {errors.email.length > 0 ? <p>{errors.email}</p> : null} 
-              <label>Password: &nbsp;
-                  <input value={formValues.password} onChange={handleChanges} placeholder='Enter password' name="password" type='password' />
-              </label>
+              <input value={formValues.password} onChange={handleChanges} placeholder='Enter password' name="password" type='password' />
               <button disabled={buttonDisabled}>Log in</button>
+            {/* </div> */}
+              
           </form>
       </div>
     );
