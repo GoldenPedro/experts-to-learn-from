@@ -89,21 +89,18 @@ const Login = (props) => {
         });
       }, [formValues]);
 
-    return (
-      <div className="login-container">
-          <h2>Log In</h2>
-          <form onSubmit={submit} className='input-container'>
-            {/* <div className='input-wrapper'> */}
-              <input value={formValues.email} onChange={handleChanges} placeholder='Enter email' name="email" type='email' />
-              {errors.email.length > 0 ? <p>{errors.email}</p> : null} 
-              <input value={formValues.password} onChange={handleChanges} placeholder='Enter password' name="password" type='password' />
-              <button disabled={buttonDisabled}>Log in</button>
-            {/* </div> */}
-              
-          </form>
-      </div>
-    );
-  }
+      return (
+        <div className="login-container">
+            <h2>Log In</h2>
+            <form onSubmit={submit} className='input-container'>
+                <input value={formValues.email} onChange={handleChanges} placeholder='Enter email' name="email" type='email' />
+                {errors.email.length > 0 ? <p id='error-text' >{errors.email}</p> : null} 
+                <input id='password-input' value={formValues.password} onChange={handleChanges} placeholder='Enter password' name="password" type='password' />
+                <button disabled={buttonDisabled}>Log in</button>                
+            </form>
+        </div>
+      );
+    }
 
   const mapStateToProps = state => {
     return {
