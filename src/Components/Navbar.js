@@ -14,7 +14,9 @@ function Navbar() {
   return (
     <div className="navbar">
       <div className='logo'>
-        <h3>ExpertsToLearnFrom</h3>
+        <Link to='/'>
+          <h3>ExpertsToLearnFrom</h3>
+        </Link>
       </div>
 
       <div className='nav-links'>
@@ -23,7 +25,7 @@ function Navbar() {
         <Link to='/sign-up' >Sign Up</Link>
         <Link to='/new-expert' >New Entry</Link>
         <a onClick={logout} href='/'>Logout </a>
-        <p>Hello, {username}</p>
+        {/* <p>Hello, {username}</p> */}
       </div>
       
     </div>
