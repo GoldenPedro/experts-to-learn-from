@@ -8,7 +8,7 @@ import playSolid from '../../Assets/playSolid.svg'
 
 
 const Article = (props) =>{
-const {article} = props
+const {article, expertId} = props
 
 
     return(
@@ -21,7 +21,7 @@ const {article} = props
                         <img className='upvote-icon' src={playSolid} alt='upvote' />
                         <img className='downvote-icon' src={playSolid} alt='downvote' />
                     </div> */}
-                    {/* <UpvoteDownVoteExpertDetails /> */}
+                    <UpvoteDownVoteExpertDetails field="articles" subfield="article" id={article._id} expertId={expertId} tag={article.article}/>
                 </div>
             </div>
         
