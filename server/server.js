@@ -173,7 +173,7 @@ async function data(callback){
             });
           }
           else{
-            return res.status(200).json({
+            return res.status(401).json({
               user: req.body.email,
               message: "User doesn't exist"
             });
@@ -212,7 +212,7 @@ async function data(callback){
             {
               name: req.body.name, descriptions: [req.body.descriptions], twitterLinks: [req.body.twitterLinks], 
               youtubeChannels: [req.body.youtubeChannels], blogs: [req.body.blogs], articles: [], bookRecommendations: [], tweets: [], videos: [],
-              quotes: [], categories: [req.body.categories]
+              quotes: [], otherLinks: [], categories: [req.body.categories]
             }, (err, doc) => {
             if (err) {
               return res.status(500).json({
@@ -301,7 +301,7 @@ async function data(callback){
   });
 
     app.post("/api/categories", (req, res) => {
-      categories.find().toArray(function(err, category) {
+      categories.find().sort({"name": 1}).toArray(function(err, category) {
         if (err) {
             return res.status(500).json({
               err: err
@@ -310,6 +310,9 @@ async function data(callback){
         else{
           var name = []
           category.forEach(element => {
+            if (name.length == 10){
+              return;
+            }
             if (element.name.startsWith(req.body.category.toLowerCase())){
               name.push(element.name)
             }
