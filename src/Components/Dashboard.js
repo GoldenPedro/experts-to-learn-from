@@ -57,17 +57,18 @@ const selectCategory = (evt) => {
 
     <div className='select-category-form'>
             <form onSubmit={search}>
-                <label>Which category would you like to add a new Expert in? * &nbsp;
                     <input value={categorySearch.category} onChange={handleSearchChanges} placeholder='Search category' name="category" type='text' />
-                </label>
                 <button>Search</button>
             </form>
+            <div className='category-list'>
+              {
+                  categoriesState.map((item) => (
+                          <p className="category" id={item} onClick={selectCategory}>{item}</p>
+                  ))
+              }
+            </div>
 
-            {
-                categoriesState.map((item) => (
-                        <p id={item} onClick={selectCategory}>{item}</p>
-                ))
-            }
+            
         </div>
 
         {experts.map(expert => (

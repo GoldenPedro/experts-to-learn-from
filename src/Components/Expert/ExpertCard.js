@@ -1,6 +1,4 @@
 import React from 'react';
-import playSolid from '../../Assets/playSolid.svg'
-import Expert from './Expert'
 import { Link } from 'react-router-dom'
 import UpvoteDownVoteExpert from './UpvoteDownVoteExpert'
 
