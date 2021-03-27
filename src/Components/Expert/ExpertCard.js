@@ -17,28 +17,28 @@ function ExpertCard(props) {
           <img className='expert-img' src="https://picsum.photos/400" alt='Expert'/>
         </div>
         <div  className='expert-text'>
-          <Link to={`/api/getexpert/${expert._id}`}>
+          <Link className='expert-name-link' to={`/api/getexpert/${expert._id}`}>
             <h4 className='expert-name'>{expert.name}</h4>
           </Link>
           
           <p className='expert-description'>{expert.descriptions[0].description}</p>
-          <a className='expert-twitter' href={expert.twitterLinks[0].twitterLink}>Twitter</a>       
-          <a className='expert-youtubeChannel' href={expert.youtubeChannels[0].youtubeChannel}>YouTube</a>
+          <div className='expert-socials'>
+            <a className='expert-twitter' href={expert.twitterLinks[0].twitterLink}>{expert.twitterLinks[0].twitterLink}</a>       
+            <a className='expert-youtubeChannel' href={expert.youtubeChannels[0].youtubeChannel}>{expert.youtubeChannels[0].youtubeChannel}</a>
+          </div>
         </div>
         
         <div className='expert-category-rating'>
           <div className='expert-category'>
             <p>{expert.categories[0].category}</p>
           </div>
-
-          <p className='expert-rating'>{expert.categories[0].rating}</p>
           {/* <div className='expert-voting'>
             <img className='upvote-icon' src={playSolid} alt='upvote' />
             
             <img className='downvote-icon' src={playSolid} alt='downvote' />
           </div> */}
 
-          <UpvoteDownVoteExpert expertid={expert._id} category={expert.categories[0].category} />
+          <UpvoteDownVoteExpert expertid={expert._id} category={expert.categories[0].category} rating={expert.categories[0].rating}/>
         </div>
     </div>
   );

@@ -11,16 +11,17 @@ import BookRecommendationsTab from './BookRecommendationsTab'
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import DescriptionsTab from './DescriptionsTab'
 
 
 const Expert = (props) =>{
     const [experts, setExperts] = useState([])
     const { id } = useParams()
-    const [articles, setArticles] = useState(false)
-    const [tweets, setTweets] = useState(false)
-    const [videos, setVideos] = useState(false)
-    const [quotes, setQuotes] = useState(false)
-    const [bookRecommendations, setBookRecommendations] = useState(false)
+    // const [articles, setArticles] = useState(false)
+    // const [tweets, setTweets] = useState(false)
+    // const [videos, setVideos] = useState(false)
+    // const [quotes, setQuotes] = useState(false)
+    // const [bookRecommendations, setBookRecommendations] = useState(false)
 
     useEffect(() => {
         axios.get(`http://www.expertstolearnfrom.com/api/getexpert/${id}`)
@@ -52,19 +53,35 @@ const Expert = (props) =>{
                       <Tab>Videos</Tab>
                       <Tab>Quotes</Tab>
                       <Tab>Book Recommendations</Tab>
+                      <Tab>Descriptions</Tab>
+                      <Tab>Twitter Accounts</Tab>
+                      <Tab>YouTube Channels</Tab>
+                      <Tab>Other Links</Tab>
                     </TabList>
 
                     <TabPanel>
-                      <ArticlesTab articles={experts.articles} id={experts._id}/>
+                      <ArticlesTab articles={experts.articles} expertId={experts._id}/>
                     </TabPanel>
                     <TabPanel>
-                      <TweetsTab tweets={experts.tweets} id={experts._id} />
+                      <TweetsTab tweets={experts.tweets} expertId={experts._id} />
                     </TabPanel>
                     <TabPanel>
                       <VideosTab videos={experts.videos} id={experts._id} />
                     </TabPanel>
                     <TabPanel>
                       <QuotesTab quotes={experts.quotes} id={experts._id} />
+                    </TabPanel>
+                    <TabPanel>
+                      <DescriptionsTab descriptions={experts.descriptions} id={experts._id} />
+                    </TabPanel>
+                    <TabPanel>
+                      <BookRecommendationsTab bookRecommendations={experts.bookRecommendations} id={experts._id} />
+                    </TabPanel>
+                    <TabPanel>
+                      <BookRecommendationsTab bookRecommendations={experts.bookRecommendations} id={experts._id} />
+                    </TabPanel>
+                    <TabPanel>
+                      <BookRecommendationsTab bookRecommendations={experts.bookRecommendations} id={experts._id} />
                     </TabPanel>
                     <TabPanel>
                       <BookRecommendationsTab bookRecommendations={experts.bookRecommendations} id={experts._id} />

@@ -11,7 +11,7 @@ const defaultValues = {
 }
 
 const TweetsTab = (props) =>{
-const {tweets, id, userinfo} = props
+const {tweets, expertId, userinfo} = props
 const [formValues, setFormValues] = useState(defaultValues);
 const [savedFormInfo, setSavedFormInfo] = useState([]);
 
@@ -31,7 +31,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
                 tweet: formValues.tweetLink.trim(),
                 rating: 1
             },
-            id: id,
+            id: expertId,
             userid: userinfo,
             name: "tweets"            
         }

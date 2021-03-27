@@ -92,22 +92,29 @@ function Login() {
       }, [formValues]);
 
     return (
-      <div className="login">
-          <form onSubmit={submit}>
-              <label>email:
-                  <input value={formValues.email} onChange={handleChanges} placeholder='Enter email' name="email" type='text' />
-              </label>
-              {errors.email.length > 0 ? <p>{errors.email}</p> : null} 
-              <label>Username: &nbsp;
-                  <input value={formValues.username} onChange={handleChanges} placeholder='Enter username' name="username" type='username' />
-              </label>
-              {errors.username.length > 0 ? <p>{errors.username}</p> : null} 
-              <label>Password:
-                  <input value={formValues.password} onChange={handleChanges} placeholder='Enter password' name="password" type='password' />
-                  <input value={formValues.passwordConfirmation} onChange={handleChanges} placeholder='Enter password' name="passwordConfirmation" type='password' />
-                  {errors.password.length > 0 ? <p>{errors.password}</p> : null}              
-              </label>
-              <button disabled={buttonDisabled}>Log in</button>
+      <div className="signup-container">
+          <h2>Register</h2>
+          <form onSubmit={submit} className='input-container'>
+            <div className='email-container'>
+                <p>Email:</p>
+                <input value={formValues.email} onChange={handleChanges} placeholder='bob@gmail.com' name="email" type='text' />
+            </div>
+            <div className='username-container'>
+                <p>Username: </p>
+                <input value={formValues.username} onChange={handleChanges} placeholder='bob123' name="username" type='username' />
+            </div>
+            <div className='password-container'>
+                <p>Password:</p>
+                <input value={formValues.password} onChange={handleChanges} placeholder='password' name="password" type='password' />
+                <p>Confirm password:</p>
+                <input value={formValues.passwordConfirmation} onChange={handleChanges} placeholder='re-type password' name="passwordConfirmation" type='password' />
+            </div>
+            <div className='errors'>
+                {errors.email.length > 0 ? <p>{errors.email}</p> : null} 
+                {errors.username.length > 0 ? <p>{errors.username}</p> : null} 
+                {errors.password.length > 0 ? <p>{errors.password}</p> : null}              
+            </div>
+              <button className='signup-button' disabled={buttonDisabled}><span>Sign up</span></button>
           </form>
       </div>
     );

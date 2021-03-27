@@ -2,11 +2,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #efeff3;
+  height: 100vh;
 }
 
 * {
   font-family: 'Roboto', sans-serif;
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  color: #444444;
 }
 
 
@@ -24,6 +27,7 @@
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  /* position: absolute; */
 }
 
 .logo {
@@ -35,10 +39,15 @@
   font-size: 1.5rem;
 }
 
+.logo a {
+  text-decoration: none;
+}
+
 .nav-links {
-  width: 30%;
+  width: 40%;
+  padding: 1%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   font-size: 1.3rem;  
 }
 
@@ -54,50 +63,148 @@
 
 /* ======= LOGIN PAGE ======= */
 
-.login {
-  width: 70%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.login form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.login-container {
   width: 40%;
-}
-
-/* ======= DASHBOARD PAGE ======= */
-
-.select-category-form {
-  width: 100%;
+  height: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.category-list {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding: 1% 0;
-}
-
-.category {
-  color: rgb(138, 138, 138);
-  border-radius: 5%;
   background-color: white;
-  font-size: 1.1rem;
-  margin: 0 1%;
-  cursor: pointer;
-  padding: .5%;
+  border-radius: 5px;
 }
 
-.category:hover {
-  background-color: rgb(255, 221, 182); 
+.login-container h2 {
+  margin-bottom: 0%;
 }
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+}
+
+.input-container input {
+  height: 20px;
+  width: 100%;
+  font-size: 1rem;
+  border: 1px solid #CFD4DA;
+  border-radius: 5px;
+}
+
+.input-container p {
+  margin-bottom: 2%;
+}
+
+.email-container {
+  width: 100%;
+  height: 50%;
+  margin-bottom: 3%;
+}
+
+.password-container {
+  width: 100%;
+}
+
+.errors{
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  width: 100%;
+  margin-bottom: -3%;
+  font-size: .8rem;
+  color: rgb(255, 83, 83);
+}
+
+.errors p {
+  color:rgb(255, 83, 83);
+  padding: 1%;
+  margin-top: 0%;
+}
+
+.input-container button {
+  width: 100%;
+  font-size: 1.2rem;
+  background: #46cbcf;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10%;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.login-button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+  color: white;
+}
+
+.login-button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.login-button:hover span {
+  padding-right: 25px;
+}
+
+.login-button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+/* ======= SIGN UP PAGE ======= */
+
+.signup-container {
+  width: 40%;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.signup-container h2 {
+  margin-bottom: 0%;
+}
+
+.username-container {
+  width: 100%;
+}
+
+.signup-button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+  color: white;
+}
+
+.signup-button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.signup-button:hover span {
+  padding-right: 25px;
+}
+
+.signup-button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
 
 /* ======= EXPERT CARD ======= */
 
@@ -106,15 +213,14 @@
   justify-content: space-between;
   width: 90%;
   margin-bottom: 1.7%;
-  border: 1px solid #dedede;
+  border-radius: 5px;
+  background-color: white;
+  padding: .5%;
+  border: 1px solid transparent;
 }
 
 .expert:hover {
-  cursor: pointer;
-  transform: scale(1.005);
   border: 1px solid blue;
-  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
-  -webkit-transition: transform .03s ease-in-out;
 }
 
 .expert-img-container {
@@ -130,11 +236,30 @@
 }
 
 .expert-name {
-  font-size: 1.3rem;
+  font-size: 1.6rem;
+  margin: 0 0;
+  padding: 1% 0;
+}
+
+.expert-name-link {
+  text-decoration: none;
 }
 
 .expert-text {
   width: 60%;
+  display: flex;
+  flex-direction: column;
+}
+
+.expert-socials {
+  display: flex;
+  white-space: nowrap;
+  padding: 1% 0;
+}
+
+.expert-youtubeChannel {
+  margin-left: 15%;
+  white-space: nowrap;
 }
 
 .expert-category-rating {
@@ -151,13 +276,17 @@
   align-items: center;
 }
 
-.expert-voting {
+.expert-card-voting {
   width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
+}
+
+.expert-card-voting p {
+  margin: 5% 0;
 }
 
 .upvote-icon {
@@ -213,6 +342,20 @@
     padding: 1%;
 }
 
+/* ======= SELECTCATEGORY FORM ======= */
+.select-category-container {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
 
+.form-containers {
+  padding: 1%;
+}
+
+.select-categories {
+  display: flex;
+  flex-direction: column;
+}
 
 https://codepen.io/sosuke/pen/Pjoqqp

@@ -89,22 +89,26 @@ const Login = (props) => {
         });
       }, [formValues]);
 
-    return (
-      <div className="login">
-          <h2>Log In</h2>
-          <form onSubmit={submit}>
-              <label>Email: &nbsp;
-                  <input value={formValues.email} onChange={handleChanges} placeholder='Enter email' name="email" type='email' />
-              </label>
-              {errors.email.length > 0 ? <p>{errors.email}</p> : null} 
-              <label>Password: &nbsp;
-                  <input value={formValues.password} onChange={handleChanges} placeholder='Enter password' name="password" type='password' />
-              </label>
-              <button disabled={buttonDisabled}>Log in</button>
-          </form>
-      </div>
-    );
-  }
+      return (
+        <div className="login-container">
+            <h2>Log In</h2>
+            <form onSubmit={submit} className='input-container'>
+              <div className='email-container'>
+                <p>Email:</p>
+                <input value={formValues.email} onChange={handleChanges} placeholder='example@email.com' name="email" type='email' />
+              </div>
+              <div className='password-container'>
+                <p>Password:</p>
+                <input id='password-input' value={formValues.password} onChange={handleChanges} placeholder='password123' name="password" type='password' />
+              </div>
+              <div className='errors'>
+                {errors.email.length > 0 ? <p id='error-text' >{errors.email}</p> : null} 
+              </div>
+              <button className='login-button' disabled={buttonDisabled}><span>Login</span></button>                
+            </form>
+        </div>
+      );
+    }
 
   const mapStateToProps = state => {
     return {

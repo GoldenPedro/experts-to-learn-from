@@ -8,7 +8,7 @@ import playSolid from '../../Assets/playSolid.svg'
 let useridLocal = window.localStorage.getItem('userid')
 
 const UpvoteDownVoteExpert = (props) =>{
-const {expertid, category, userinfo} = props
+const {expertid, category, rating, userinfo} = props
 
 const defaultUpvoteInfo = {
     expertid: expertid,
@@ -49,11 +49,10 @@ const downvote = () => {
 }
 
     return(
-            <div className="expert-detail-voting">
-                    <div className='expert-detail-voting'>
-                        <img className='upvote-icon' onClick={upvote} src={playSolid} alt='upvote' />
-                        <img className='downvote-icon' onClick={downvote} src={playSolid} alt='downvote' />
-                    </div>
+            <div className="expert-card-voting">
+                <img className='upvote-icon' onClick={upvote} src={playSolid} alt='upvote' />
+                <p>{rating}</p>
+                <img className='downvote-icon' onClick={downvote} src={playSolid} alt='downvote' />
             </div>
         
     )

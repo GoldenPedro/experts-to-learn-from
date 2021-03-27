@@ -6,7 +6,7 @@ import saveUserInfoReducer from '../../Store/Reducers'
 import axios from 'axios'
 
 
-let useridLocal = window.localStorage.getItem('userid')
+let useridLocal = window.localStorage.getItem('userid');
 
 export class CreateExpertForm extends Component {
 
@@ -63,6 +63,7 @@ export class CreateExpertForm extends Component {
   // // Handle fields change
   handleChange = input => e => {
     this.setState({ [input]: e.target.value });
+    // console.log(useridLocal);
   };
 
   saveCategory = (payload) => {
@@ -82,6 +83,7 @@ export class CreateExpertForm extends Component {
       categories: {category: this.state.category.toLowerCase(), rating: 1}
     }
     console.log(newData)
+    // console.log(useridLocal);
     // Axios functionality
     axios.post('http://www.expertstolearnfrom.com/api/NewExpert', newData)
         .then((res) => {

@@ -60,33 +60,38 @@ const SelectCategoryForm = (props) =>{
     }
 
     return(
-        <div className='select-category-form'>
-            <form onSubmit={search}>
-                <label>Which category would you like to add a new Expert in? * &nbsp;
-                    <input value={categorySearch.category} onChange={handleSearchChanges} placeholder='Search category' name="category" type='text' />
-                </label>
-                <button>Search</button>
-            </form>
+        <div className='select-category-container'>
+            <h2>Add a new Expert!</h2>
+            <div className='form-containers'>
+                <div className='select-categories'>
+                    <form onSubmit={search}>
+                        <label>Which category would you like to add a new Expert in? * &nbsp;
+                            <input value={categorySearch.category} onChange={handleSearchChanges} placeholder='Search category' name="category" type='text' />
+                        </label>
+                        <button>Search</button>
+                    </form>
 
-            {
-                categoriesState.map((item) => (
-                        <p id={item} onClick={selectCategory}>{item}</p>
-                ))
-            }
-
-
-                <div className='new-category-wrapper'>
-                  <p onClick={() => setNewCategorySearch(!newCategorySearch)}>Click here if you would like to add a new category</p>
+                    {
+                        categoriesState.map((item) => (
+                                <p id={item} onClick={selectCategory}>{item}</p>
+                        ))
+                    }
                 </div>
 
-                { 
-                    newCategorySearch ? <form onSubmit={submitNewCategory}>
-                        <input value={newCategoryText.newCategory} onChange={handleNewCategoryChanges} placeholder="Enter new category" name="newCategory" type="text"/>
-                        <button>Add new Category</button>
-                    </form> : null 
-                }
-        </div>
 
+
+                    <div className='new-category-wrapper'>
+                    <p onClick={() => setNewCategorySearch(!newCategorySearch)}>Click here if you would like to add a new category</p>
+                    </div>
+
+                    { 
+                        newCategorySearch ? <form onSubmit={submitNewCategory}>
+                            <input value={newCategoryText.newCategory} onChange={handleNewCategoryChanges} placeholder="Enter new category" name="newCategory" type="text"/>
+                            <button>Add new Category</button>
+                        </form> : null 
+                    }
+            </div>
+        </div>
     )
 }
 

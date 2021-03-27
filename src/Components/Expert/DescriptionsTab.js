@@ -1,17 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Link, useHistory } from 'react-router-dom'
-import { useParams } from 'react-router'
-import Article from './Article'
+import Description from './Description'
 import { connect } from 'react-redux';
 import saveUserInfoReducer from '../../Store/Reducers'
 
 const defaultValues = {
-    articleLink: ''
+    descriptions: ''
 }
 
-const ArticlesTab = (props) =>{
-const {articles, expertId, userinfo} = props
+const DescriptionsTab = (props) =>{
+const {descriptions, id, userinfo} = props
 const [formValues, setFormValues] = useState(defaultValues);
 const [savedFormInfo, setSavedFormInfo] = useState([]);
 
@@ -28,12 +26,12 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
         // Packages an easy-to-use payload to put onto state
         var newData = {
             value: {
-                article: formValues.articleLink.trim(),
+                description: formValues.descriptionLink.trim(),
                 rating: 1
             },
-            id: expertId,
+            id: id,
             userid: userinfo,
-            name: "articles"            
+            name: "descriptions"            
         }
         console.log(newData)
         // Axios functionality
@@ -55,13 +53,13 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
             <div className="">
                 <div>
                     <form onSubmit={submit}>
-                        <input onChange={handleChanges} placeholder="Enter link here" value={formValues.articleLink} name="articleLink"></input>
+                        <input onChange={handleChanges} placeholder="Enter link here" value={formValues.descriptions} name="descriptions"></input>
                         <button>Submit</button>
                     </form>
                 </div>
                     
-                {articles.map(article => (
-                    <Article expertId={expertId} article={article} />
+                {descriptions.map(description => (
+                    <Description description={description} />
                 ))}
             </div>
         
@@ -74,4 +72,4 @@ const mapStateToProps = state => {
     }
   }
   
-export default connect(mapStateToProps, {saveUserInfoReducer})(ArticlesTab);
+export default connect(mapStateToProps, {saveUserInfoReducer})(DescriptionsTab);
