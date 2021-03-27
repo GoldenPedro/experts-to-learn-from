@@ -174,7 +174,8 @@ async function data(callback){
           }
           else{
             return res.status(200).json({
-              user: req.body.email
+              user: req.body.email,
+              message: "User doesn't exist"
             });
           }
         }
@@ -202,7 +203,7 @@ async function data(callback){
             //   return res.status(500).json({
             //     err: err
             //   });
-            value["_id"] = doc["ops"][0]["_id"].toString()
+            // value["_id"] = doc["ops"][0]["_id"].toString()
           })
         }
       }
@@ -233,13 +234,14 @@ async function data(callback){
                     }
                   }
                   else{
-                    var info = {
+                   var info = {
                       id: doc["ops"][0]["_id"].toString(),
                       field: key,
                       tag : Object.values(value)[0],
-                      expertdetailid: Object.values(value)[2].toString()
+                      expertdetailid: new ObjectID(Object.values(value)[2].toString())
                     }
-                  }
+                    subid = info.field.concat("._id");
+                  } 
                      
                   field = info.field.concat(".$.rating");
                   subfield = info.field.concat("." + Object.keys(value)[0])
@@ -249,12 +251,27 @@ async function data(callback){
                         ["upvotes"]: info
                     }}, (err,result) => {
                     if (err) {
-                      //TODO update this to use id
-                      experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
-                        $inc: {
-                          [field]: -1
-                        }
-                      })
+
+                      if (info.field == "categories") {
+                        experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
+                          $inc: {
+                            [field]: -1
+                          }
+                       });
+                      }
+                      else{
+                        experts.updateOne({ _id: new ObjectID(info.id),[subid] : info.expertdetailid},{
+                          $inc: {
+                            [field]: -1
+                          }
+                       });
+                      }
+
+                      // experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
+                      //   $inc: {
+                      //     [field]: -1
+                      //   }
+                      // })
                     }
                   });
                 }
@@ -331,7 +348,7 @@ async function data(callback){
         //   return res.status(500).json({
         //     err: err
         //   });
-        req.body.value["_id"] = doc["ops"][0]["_id"].toString()
+        // req.body.value["_id"] = doc["ops"][0]["_id"].toString()
       })
   
       experts.updateOne({ _id: new ObjectID(req.body.id)}, {$push: {[req.body.name]: req.body.value}}, function(err, expert){
@@ -342,28 +359,26 @@ async function data(callback){
         }
         else{
 
-          
-          // if (req.body.name == "categories") {
-          //   var info = {
-          //     id: req.body.id,
-          //     field: req.body.name,
-          //     tag :  Object.values(req.body.value)[0]
-          //   }
-          // }
-          // else{
-          //   var info = {
-          //     id: req.body.id,
-          //     field: req.body.name,
-          //     tag :  Object.values(req.body.value)[0],
-          //     expertdetailid: Object.values(req.body.value)[2].toString()
-          //   }
-          // }
-
-          var info = {
-            id: req.body.id,
-            field: req.body.name,
-            tag :  Object.values(req.body.value)[0]
+          if (req.body.name == "categories") {
+            var info = {
+              id: req.body.id,
+              field: req.body.name,
+              tag :  Object.values(req.body.value)[0]
+            }
           }
+          else{
+            var info = {
+              id: req.body.id,
+              field: req.body.name,
+              tag :  Object.values(req.body.value)[0],
+              expertdetailid: new ObjectID(Object.values(req.body.value)[2].toString())
+            }
+
+            subid = info.field.concat("._id");
+          }
+
+          
+
           
           field = info.field.concat(".$.rating");
           subfield = info.field.concat("." + Object.keys(req.body.value)[0])
@@ -373,11 +388,28 @@ async function data(callback){
                 ["upvotes"]: info
             }}, (err,result) => {
             if (err) {
-              experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
-                $inc: {
-                  [field]: -1
-                }
-              })
+
+              if (info.field == "categories") {
+                experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
+                  $inc: {
+                    [field]: -1
+                  }
+               });
+              }
+              else{
+                experts.updateOne({ _id: new ObjectID(info.id),[subid] : info.expertdetailid},{
+                  $inc: {
+                    [field]: -1
+                  }
+               });
+              }
+
+
+              // experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
+              //   $inc: {
+              //     [field]: -1
+              //   }
+              // })
             }
           });
 
@@ -388,27 +420,28 @@ async function data(callback){
     
     app.post("/api/vote/", (req, res) => {
       
-      // if (req.body.field == "categories") {
-      //   var info = {
-      //     id: req.body.expertid,
-      //     field: req.body.field,
-      //     tag: req.body.tag
-      //   }
-      // }
-      // else{
-      //   var info = {
-      //     id: req.body.expertid,
-      //     field: req.body.field,
-      //     tag: req.body.tag,
-      //     expertdetailid: req.body.expertdetailid
-      //   }
-      // }
-
-      var info = {
-        id: req.body.expertid,
-        field: req.body.field,
-        tag : req.body.tag
+      if (req.body.field == "categories") {
+        var info = {
+          id: req.body.expertid,
+          field: req.body.field,
+          tag: req.body.tag
+        }
       }
+      else{
+        var info = {
+          id: req.body.expertid,
+          field: req.body.field,
+          tag: req.body.tag,
+          expertdetailid: new ObjectID(req.body.expertdetailid)
+        }
+        subid = info.field.concat("._id");
+      }
+
+      // var info = {
+      //   id: req.body.expertid,
+      //   field: req.body.field,
+      //   tag : req.body.tag
+      // }
 
       field = info.field.concat(".$.rating");
       subfield = info.field.concat("." + req.body.subfield)
@@ -483,26 +516,21 @@ async function data(callback){
             }}, (err,result) => {
             if (result.modifiedCount > 0) {
 
-              // if (req.body.field == "categories") {
-              //   experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
-              //     $inc: {
-              //       [field]: counterInc
-              //     }
-              //  });
-              // }
-              // else{
-              //   experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.expertdetailid},{
-              //     $inc: {
-              //       [field]: counterInc
-              //     }
-              //  });
-              // }
+              if (req.body.field == "categories") {
+                experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
+                  $inc: {
+                    [field]: counterInc
+                  }
+               });
+              }
+              else{
 
-              experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
-                $inc: {
-                  [field]: counterInc
-                }
-             });
+                experts.updateOne({ _id: new ObjectID(info.id),[subid] : info.expertdetailid},{
+                  $inc: {
+                    [field]: counterInc
+                  }
+               });
+              }
             }
         });
       }
