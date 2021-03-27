@@ -1,8 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import axios from 'axios'
-import { Link, useHistory } from 'react-router-dom'
-import { useParams } from 'react-router'
-import Tweets from './Tweets'
+import Tweet from './Tweet'
 import { connect } from 'react-redux';
 import saveUserInfoReducer from '../../Store/Reducers'
 
@@ -62,7 +60,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
             </div>
                 
             {tweets.map(tweet => (
-                <Tweets tweet={tweet} />
+                <Tweet tweet={tweet} expertId={expertId} />
             ))}
 
             </div>

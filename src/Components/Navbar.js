@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 // import '../App.css';
 import { Link } from 'react-router-dom'
 
 function Navbar() {
 
-  let username = window.localStorage.getItem('user')
+  // let username = window.localStorage.getItem('user')
   
 
   const logout = () => {

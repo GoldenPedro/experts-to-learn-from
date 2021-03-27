@@ -64,11 +64,11 @@ const Login = (props) => {
             })
             .catch(err => {
                 console.log(err);
+                alert(err)
             })
         // Adds new data to state & clears form
         setSavedFormInfo([...savedFormInfo, newData]);
         setFormValues(defaultValues);
-        history.push('/');
     }
 
     const validate = (name, value) => {
