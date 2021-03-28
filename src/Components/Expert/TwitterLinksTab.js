@@ -8,8 +8,10 @@ const defaultValues = {
     twitterLink: ''
 }
 
+let useridLocal = window.localStorage.getItem('userid');
+
 const TwitterLinksTab = (props) =>{
-const {twitterLinks, expertId, userinfo} = props
+const {twitterLinks, expertId} = props
 const [formValues, setFormValues] = useState(defaultValues);
 const [savedFormInfo, setSavedFormInfo] = useState([]);
 
@@ -30,7 +32,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
                 rating: 1
             },
             id: expertId,
-            userid: userinfo,
+            userid: useridLocal,
             name: "twitterLinks"            
         }
         console.log(newData)
@@ -68,10 +70,12 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
     )
 }
 
-const mapStateToProps = state => {
-    return {
-      userinfo: state.saveUserInfoReducer.userinfo.id
-    }
-  }
+export default TwitterLinksTab
+
+// const mapStateToProps = state => {
+//     return {
+//       userinfo: state.saveUserInfoReducer.userinfo.id
+//     }
+//   }
   
-export default connect(mapStateToProps, {saveUserInfoReducer})(TwitterLinksTab);
+// export default connect(mapStateToProps, {saveUserInfoReducer})(TwitterLinksTab);
