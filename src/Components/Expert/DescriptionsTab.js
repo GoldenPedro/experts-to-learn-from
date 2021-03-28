@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 import saveUserInfoReducer from '../../Store/Reducers'
 
 const defaultValues = {
-    descriptions: ''
+    descriptionText: ''
 }
 
 const DescriptionsTab = (props) =>{
-const {descriptions, id, userinfo} = props
+const {descriptions, expertId, userinfo} = props
 const [formValues, setFormValues] = useState(defaultValues);
 const [savedFormInfo, setSavedFormInfo] = useState([]);
 
@@ -26,10 +26,10 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
         // Packages an easy-to-use payload to put onto state
         var newData = {
             value: {
-                description: formValues.descriptionLink.trim(),
+                description: formValues.descriptionText.trim(),
                 rating: 1
             },
-            id: id,
+            id: expertId,
             userid: userinfo,
             name: "descriptions"            
         }
@@ -53,13 +53,13 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
             <div className="">
                 <div>
                     <form onSubmit={submit}>
-                        <input onChange={handleChanges} placeholder="Enter link here" value={formValues.descriptions} name="descriptions"></input>
+                        <input onChange={handleChanges} placeholder="Enter link here" value={formValues.descriptionText} name="descriptionText"></input>
                         <button>Submit</button>
                     </form>
                 </div>
                     
                 {descriptions.map(description => (
-                    <Description description={description} />
+                    <Description description={description} expertId={expertId} />
                 ))}
             </div>
         

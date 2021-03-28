@@ -1,16 +1,15 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import Quote from './Quote'
+import TwitterLink from './TwitterLink'
 import { connect } from 'react-redux';
 import saveUserInfoReducer from '../../Store/Reducers'
 
-
 const defaultValues = {
-    quote: ''
+    twitterLink: ''
 }
 
-const QuotesTab = (props) =>{
-const {quotes, expertId, userinfo} = props
+const TwitterLinksTab = (props) =>{
+const {twitterLinks, expertId, userinfo} = props
 const [formValues, setFormValues] = useState(defaultValues);
 const [savedFormInfo, setSavedFormInfo] = useState([]);
 
@@ -27,12 +26,12 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
         // Packages an easy-to-use payload to put onto state
         var newData = {
             value: {
-                quote: formValues.quote.trim(),
+                tweet: formValues.twitterLink.trim(),
                 rating: 1
             },
             id: expertId,
             userid: userinfo,
-            name: "quotes"            
+            name: "twitterLinks"            
         }
         console.log(newData)
         // Axios functionality
@@ -55,13 +54,13 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
             
             <div>
                 <form onSubmit={submit}>
-                    <input onChange={handleChanges} placeholder="Enter link here" value={formValues.quote} name="quote"></input>
+                    <input onChange={handleChanges} placeholder="Enter link here" value={formValues.twitterLink} name="twitterLink"></input>
                     <button>Submit</button>
                 </form>
             </div>
                 
-            {quotes.map(quote => (
-                <Quote quote={quote} expertId={expertId} />
+            {twitterLinks.map(twitterLink => (
+                <TwitterLink twitterLink={twitterLink} expertId={expertId} />
             ))}
 
             </div>
@@ -75,4 +74,4 @@ const mapStateToProps = state => {
     }
   }
   
-export default connect(mapStateToProps, {saveUserInfoReducer})(QuotesTab);
+export default connect(mapStateToProps, {saveUserInfoReducer})(TwitterLinksTab);

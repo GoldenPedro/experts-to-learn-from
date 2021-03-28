@@ -4,24 +4,15 @@ import UpvoteDownVoteExpertDetails from './UpvoteDownVoteExpertDetails';
 import playSolid from '../../Assets/playSolid.svg'
 
 const Quote = (props) =>{
-    const {quote} = props
+    const {quote, expertId} = props
 
 
     return(
             <div className="expert-detail-card">
                 
                 <p>{quote.quote}</p>
-                
-
-                <div className="expert-detail-voting-rating-wrapper">
                     <p>{quote.rating}</p>
-
-                    <div className='expert-detail-voting'>
-                        <img className='upvote-icon' src={playSolid} alt='upvote' />
-                        <img className='downvote-icon' src={playSolid} alt='downvote' />
-                    </div>
-                </div>
-                
+                    <UpvoteDownVoteExpertDetails field="quotes" subfield="quote" id={quote._id} expertId={expertId} tag={quote.quote}/>
             </div>
         
     )

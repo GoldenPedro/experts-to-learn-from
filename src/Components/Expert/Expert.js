@@ -7,6 +7,7 @@ import TweetsTab from './TweetsTab'
 import VideosTab from './VideosTab'
 import QuotesTab from './QuotesTab'
 import BookRecommendationsTab from './BookRecommendationsTab'
+import TwitterLinksTab from './TwitterLinksTab'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DescriptionsTab from './DescriptionsTab'
@@ -47,8 +48,8 @@ const Expert = (props) =>{
                       <Tab>Book Recommendations</Tab>
                       <Tab>Descriptions</Tab>
                       <Tab>Twitter Accounts</Tab>
-                      <Tab>YouTube Channels</Tab>
-                      <Tab>Other Links</Tab>
+                      {/* <Tab>YouTube Channels</Tab>
+                      <Tab>Other Links</Tab> */}
                     </TabList>
 
                     <TabPanel>
@@ -64,20 +65,20 @@ const Expert = (props) =>{
                       <QuotesTab quotes={experts.quotes} expertId={experts._id} />
                     </TabPanel>
                     <TabPanel>
+                      <BookRecommendationsTab bookRecommendations={experts.bookRecommendations} expertId={experts._id} />
+                    </TabPanel>
+                    <TabPanel>
                       <DescriptionsTab descriptions={experts.descriptions} expertId={experts._id} />
                     </TabPanel>
                     <TabPanel>
+                      <TwitterLinksTab twitterLinks={experts.twitterLinks} expertId={experts._id} />
+                    </TabPanel>
+                    {/* <TabPanel>
                       <BookRecommendationsTab bookRecommendations={experts.bookRecommendations} expertId={experts._id} />
                     </TabPanel>
                     <TabPanel>
                       <BookRecommendationsTab bookRecommendations={experts.bookRecommendations} expertId={experts._id} />
-                    </TabPanel>
-                    <TabPanel>
-                      <BookRecommendationsTab bookRecommendations={experts.bookRecommendations} expertId={experts._id} />
-                    </TabPanel>
-                    <TabPanel>
-                      <BookRecommendationsTab bookRecommendations={experts.bookRecommendations} expertId={experts._id} />
-                    </TabPanel>
+                    </TabPanel> */}
                   </Tabs>
                 </div>
             </div>

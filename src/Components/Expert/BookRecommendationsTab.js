@@ -1,7 +1,5 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import axios from 'axios'
-import { Link, useHistory } from 'react-router-dom'
-import { useParams } from 'react-router'
 import BookRecommendation from './BookRecommendation'
 import { connect } from 'react-redux';
 import saveUserInfoReducer from '../../Store/Reducers'
@@ -12,7 +10,7 @@ const defaultValues = {
 }
 
 const BookRecommendationsTab = (props) =>{
-const {bookRecommendations, id, userinfo} = props
+const {bookRecommendations, expertId, userinfo} = props
 const [formValues, setFormValues] = useState(defaultValues);
 const [savedFormInfo, setSavedFormInfo] = useState([]);
 
@@ -32,7 +30,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
                 bookRecommendation: formValues.bookRecommendation.trim(),
                 rating: 1
             },
-            id: id,
+            id: expertId,
             userid: userinfo,
             name: "bookRecommendations"            
         }
@@ -63,7 +61,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
             </div>
                 
             {bookRecommendations.map(bookRecommendation => (
-                <BookRecommendation bookRecommendation={bookRecommendation} />
+                <BookRecommendation bookRecommendation={bookRecommendation} expertId={expertId} />
             ))}
 
             </div>

@@ -9,7 +9,7 @@ const defaultValues = {
 }
 
 const VideosTab = (props) =>{
-const {videos, id, userinfo} = props
+const {videos, expertId, userinfo} = props
 const [formValues, setFormValues] = useState(defaultValues);
 const [savedFormInfo, setSavedFormInfo] = useState([]);
 
@@ -29,7 +29,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
                 video: formValues.videoLink.trim(),
                 rating: 1
             },
-            id: id,
+            id: expertId,
             userid: userinfo,
             name: "videos"            
         }
@@ -60,7 +60,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
             </div>
                 
             {videos.map(video => (
-                <Video video={video} />
+                <Video video={video} expertId={expertId} />
             ))}
 
             </div>
