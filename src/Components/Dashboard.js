@@ -56,10 +56,13 @@ const selectCategory = (evt) => {
        
 
     <div className='select-category-form'>
-            <form onSubmit={search}>
-                    <input value={categorySearch.category} onChange={handleSearchChanges} placeholder='Search category' name="category" type='text' />
-                <button>Search</button>
-            </form>
+      <div className='select-category-search-form'>
+          <form onSubmit={search}>
+                <input value={categorySearch.category} onChange={handleSearchChanges} placeholder='Search category' name="category" type='text' />
+              <button>Search</button>
+          </form>
+      </div>
+            
             <div className='category-list'>
               {
                   categoriesState.map((item) => (
