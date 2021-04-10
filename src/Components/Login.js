@@ -60,7 +60,7 @@ const Login = (props) => {
                 window.localStorage.setItem('userid', res.data.id)
                 window.localStorage.setItem('user', res.data.user)
                 saveUserInfoAction(res.data)
-                history.push('/')
+                window.location.href="/";
             })
             .catch(err => {
                 console.log(err);
