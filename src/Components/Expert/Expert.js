@@ -11,6 +11,7 @@ import TwitterLinksTab from './TwitterLinksTab'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DescriptionsTab from './DescriptionsTab'
+import YoutubeChannelsTab from './YoutubeChannelsTab'
 
 
 const Expert = (props) =>{
@@ -48,8 +49,8 @@ const Expert = (props) =>{
                       <Tab>Book Recommendations</Tab>
                       <Tab>Descriptions</Tab>
                       <Tab>Twitter Accounts</Tab>
-                      {/* <Tab>YouTube Channels</Tab>
-                      <Tab>Other Links</Tab> */}
+                      <Tab>YouTube Channels</Tab>
+                      <Tab>Other Links</Tab>
                     </TabList>
 
                     <TabPanel>
@@ -73,12 +74,12 @@ const Expert = (props) =>{
                     <TabPanel>
                       <TwitterLinksTab twitterLinks={experts.twitterLinks} expertId={experts._id} />
                     </TabPanel>
-                    {/* <TabPanel>
-                      <BookRecommendationsTab bookRecommendations={experts.bookRecommendations} expertId={experts._id} />
+                    <TabPanel>
+                      <YoutubeChannelsTab youtubeChannels={experts.youtubeChannels} expertId={experts._id} />
                     </TabPanel>
                     <TabPanel>
                       <BookRecommendationsTab bookRecommendations={experts.bookRecommendations} expertId={experts._id} />
-                    </TabPanel> */}
+                    </TabPanel>
                   </Tabs>
                 </div>
             </div>

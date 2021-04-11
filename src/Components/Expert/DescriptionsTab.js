@@ -8,6 +8,8 @@ const defaultValues = {
     descriptionText: ''
 }
 
+let useridLocal = window.localStorage.getItem('userid');
+
 const DescriptionsTab = (props) =>{
 const {descriptions, expertId, userinfo} = props
 const [formValues, setFormValues] = useState(defaultValues);
@@ -30,7 +32,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
                 rating: 1
             },
             id: expertId,
-            userid: userinfo,
+            userid: useridLocal,
             name: "descriptions"            
         }
         console.log(newData)
@@ -66,10 +68,12 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
     )
 }
 
-const mapStateToProps = state => {
-    return {
-      userinfo: state.saveUserInfoReducer.userinfo.id
-    }
-  }
+export default DescriptionsTab
+
+// const mapStateToProps = state => {
+//     return {
+//       userinfo: state.saveUserInfoReducer.userinfo.id
+//     }
+//   }
   
-export default connect(mapStateToProps, {saveUserInfoReducer})(DescriptionsTab);
+// export default connect(mapStateToProps, {saveUserInfoReducer})(DescriptionsTab);

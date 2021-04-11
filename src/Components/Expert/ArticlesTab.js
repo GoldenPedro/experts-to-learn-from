@@ -10,6 +10,8 @@ const defaultValues = {
     articleLink: ''
 }
 
+let useridLocal = window.localStorage.getItem('userid');
+
 const ArticlesTab = (props) =>{
 const {articles, expertId, userinfo} = props
 const [formValues, setFormValues] = useState(defaultValues);
@@ -32,7 +34,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
                 rating: 1
             },
             id: expertId,
-            userid: userinfo,
+            userid: useridLocal,
             name: "articles"            
         }
         console.log(newData)
@@ -68,10 +70,12 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
     )
 }
 
-const mapStateToProps = state => {
-    return {
-      userinfo: state.saveUserInfoReducer.userinfo.id
-    }
-  }
+export default ArticlesTab;
+
+// const mapStateToProps = state => {
+//     return {
+//       userinfo: state.saveUserInfoReducer.userinfo.id
+//     }
+//   }
   
-export default connect(mapStateToProps, {saveUserInfoReducer})(ArticlesTab);
+// export default connect(mapStateToProps, {saveUserInfoReducer})(ArticlesTab);

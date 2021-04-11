@@ -1,17 +1,17 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import Video from './Video'
+import YoutubeChannel from './YoutubeChannel'
 import { connect } from 'react-redux';
 import saveUserInfoReducer from '../../Store/Reducers'
 
 const defaultValues = {
-    videoLink: ''
+    youtubeChannelLink: ''
 }
 
 let useridLocal = window.localStorage.getItem('userid');
 
-const VideosTab = (props) =>{
-const {videos, expertId, userinfo} = props
+const YoutubeChannelsTab = (props) =>{
+const {youtubeChannels, expertId, userinfo} = props
 const [formValues, setFormValues] = useState(defaultValues);
 const [savedFormInfo, setSavedFormInfo] = useState([]);
 
@@ -28,12 +28,12 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
         // Packages an easy-to-use payload to put onto state
         var newData = {
             value: {
-                video: formValues.videoLink.trim(),
+                youtubeChannel: formValues.youtubeChannelLink.trim(),
                 rating: 1
             },
             id: expertId,
             userid: useridLocal,
-            name: "videos"            
+            name: "youtubeChannels"            
         }
         console.log(newData)
         // Axios functionality
@@ -56,13 +56,13 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
             
             <div>
                 <form onSubmit={submit}>
-                    <input onChange={handleChanges} placeholder="Enter link here" value={formValues.videoLink} name="videoLink"></input>
+                    <input onChange={handleChanges} placeholder="Enter link here" value={formValues.youtubeChannelLink} name="youtubeChannelLink"></input>
                     <button>Submit</button>
                 </form>
             </div>
                 
-            {videos.map(video => (
-                <Video video={video} expertId={expertId} />
+            {youtubeChannels.map(youtubeChannel => (
+                <YoutubeChannel youtubeChannel={youtubeChannel} expertId={expertId} />
             ))}
 
             </div>
@@ -70,7 +70,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
     )
 }
 
-export default VideosTab;
+export default YoutubeChannelsTab;
 
 // const mapStateToProps = state => {
 //     return {
@@ -78,4 +78,4 @@ export default VideosTab;
 //     }
 //   }
   
-// export default connect(mapStateToProps, {saveUserInfoReducer})(VideosTab);
+// export default connect(mapStateToProps, {saveUserInfoReducer})(YoutubeChannelsTab);
