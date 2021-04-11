@@ -10,7 +10,7 @@ var cors = require('cors')
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const jwt = require('jsonwebtoken');
-const { info } = require('console');
+const { info, timeStamp } = require('console');
 
 
 const URI = process.env.MONGO_URI;
@@ -183,36 +183,41 @@ async function data(callback){
     });
 
     app.post("/api/NewExpert", (req, res) => {
-      // experts.findOne({ name: req.body.name }, function (err, expert) {
-      //   if (err) {
-      //     return res.status(500).json({
-      //       err: err
-      //     });
-          
-      //   } else if (expert) {
-      //     return res.status(200).json({
-      //       message: "This expert already exist"
-      //     })
 
-      //   } else {
-
-      for (var [key, value] of Object.entries(req.body)) {
-        if (key == "descriptions" || key == "twitterLinks" || key == "youtubeChannels"  || key == "blogs" ) {
-          details.insertOne(value, (err,doc)=>{
-            // if (err) {
-            //   return res.status(500).json({
-            //     err: err
-            //   });
-            // value["_id"] = doc["ops"][0]["_id"].toString()
-          })
+      users.findOne({ _id: new ObjectID(req.body.user)}, function (err, user) {
+        if (err) {
+          return res.status(500).json({
+            err: err
+          });
+        } 
+        if (!user) {
+          return res.status(401).json({
+            message: "User doesn't exist"
+          });
         }
-      }
+        else{
+          const timeStamp = new Date()
+
+          for (var [key, value] of Object.entries(req.body)) {
+            req.body[key].submitted = user.username
+            req.body[key].createdAt = timeStamp
+            if (key == "descriptions" || key == "twitterLinks" || key == "youtubeChannels"  || key == "blogs" ) {
+              details.insertOne(value, (err,doc)=>{
+                // if (err) {
+                //   return res.status(500).json({
+                //     err: err
+                //   });
+                // value["_id"] = doc["ops"][0]["_id"].toString()
+              })
+            }
+          }
+
 
           experts.insertOne(
             {
               name: req.body.name, descriptions: [req.body.descriptions], twitterLinks: [req.body.twitterLinks], 
               youtubeChannels: [req.body.youtubeChannels], blogs: [req.body.blogs], articles: [], bookRecommendations: [], tweets: [], videos: [],
-              quotes: [], otherLinks: [], categories: [req.body.categories]
+              quotes: [], otherLinks: [], categories: [req.body.categories], submitted: user.username, createdAt: timeStamp, updatedAt: timeStamp
             }, (err, doc) => {
             if (err) {
               return res.status(500).json({
@@ -234,15 +239,15 @@ async function data(callback){
                     }
                   }
                   else{
-                   var info = {
+                  var info = {
                       id: doc["ops"][0]["_id"].toString(),
                       field: key,
                       tag : Object.values(value)[0],
-                      expertdetailid: new ObjectID(Object.values(value)[2].toString())
+                      expertdetailid: new ObjectID(Object.values(value)[4].toString())
                     }
                     subid = info.field.concat("._id");
                   } 
-                     
+                    
                   field = info.field.concat(".$.rating");
                   subfield = info.field.concat("." + Object.keys(value)[0])
 
@@ -257,23 +262,18 @@ async function data(callback){
                           $inc: {
                             [field]: -1
                           }
-                       });
+                      });
                       }
                       else{
                         experts.updateOne({ _id: new ObjectID(info.id),[subid] : info.expertdetailid},{
                           $inc: {
                             [field]: -1
                           }
-                       });
-                      }
-
-                      // experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
-                      //   $inc: {
-                      //     [field]: -1
-                      //   }
-                      // })
+                      });
+                      } 
                     }
                   });
+                  
                 }
               }
 
@@ -282,8 +282,8 @@ async function data(callback){
               })
             }
           });
-      //   }
-      // });
+        }
+      }); 
     });
     
 
@@ -332,6 +332,12 @@ async function data(callback){
             });  
           }
           else{
+            for (var [key, value] of Object.entries(expert)) {
+              if (Array.isArray(value)) {
+                value.sort((a, b) => b.rating - a.rating)
+              }
+            }
+
             return res.status(200).json(expert);
           }
         });
@@ -346,197 +352,230 @@ async function data(callback){
 
     app.post("/api/addexpertdetails/", (req, res) => {
 
-      details.insertOne(req.body.value, (err,doc)=>{
-        // if (err) {
-        //   return res.status(500).json({
-        //     err: err
-        //   });
-        // req.body.value["_id"] = doc["ops"][0]["_id"].toString()
-      })
-  
-      experts.updateOne({ _id: new ObjectID(req.body.id)}, {$push: {[req.body.name]: req.body.value}}, function(err, expert){
+      users.findOne({ _id: new ObjectID(req.body.userid)}, function (err, user) {
         if (err) {
           return res.status(500).json({
             err: err
-          });  
-        }
-        else{
-
-          if (req.body.name == "categories") {
-            var info = {
-              id: req.body.id,
-              field: req.body.name,
-              tag :  Object.values(req.body.value)[0]
-            }
-          }
-          else{
-            var info = {
-              id: req.body.id,
-              field: req.body.name,
-              tag :  Object.values(req.body.value)[0],
-              expertdetailid: new ObjectID(Object.values(req.body.value)[2].toString())
-            }
-
-            subid = info.field.concat("._id");
-          }
-
-          
-
-          
-          field = info.field.concat(".$.rating");
-          subfield = info.field.concat("." + Object.keys(req.body.value)[0])
-
-          users.updateOne({ _id: new ObjectID(req.body.userid)},{
-            $addToSet: {
-                ["upvotes"]: info
-            }}, (err,result) => {
-            if (err) {
-
-              if (info.field == "categories") {
-                experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
-                  $inc: {
-                    [field]: -1
-                  }
-               });
-              }
-              else{
-                experts.updateOne({ _id: new ObjectID(info.id),[subid] : info.expertdetailid},{
-                  $inc: {
-                    [field]: -1
-                  }
-               });
-              }
-
-
-              // experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
-              //   $inc: {
-              //     [field]: -1
-              //   }
-              // })
-            }
           });
+        } 
+        if (!user) {
+           return res.status(401).json({
+             message: "User does not exist"
+           });
+         } 
+        else{
+          const timeStamp = new Date()
+          req.body.value.submitted = user.username;
+          req.body.value.createdAt = timeStamp
+          details.insertOne(req.body.value, (err,doc)=>{
+            // if (err) {
+            //   return res.status(500).json({
+            //     err: err
+            //   });
+            // req.body.value["_id"] = doc["ops"][0]["_id"].toString()
+          })
 
-          return res.status(200).json(expert);
-        }
-      });
-    });
-    
-    app.post("/api/vote/", (req, res) => {
-      
-      if (req.body.field == "categories") {
-        var info = {
-          id: req.body.expertid,
-          field: req.body.field,
-          tag: req.body.tag
-        }
-      }
-      else{
-        var info = {
-          id: req.body.expertid,
-          field: req.body.field,
-          tag: req.body.tag,
-          expertdetailid: new ObjectID(req.body.expertdetailid)
-        }
-        subid = info.field.concat("._id");
-      }
-
-      // var info = {
-      //   id: req.body.expertid,
-      //   field: req.body.field,
-      //   tag : req.body.tag
-      // }
-
-      field = info.field.concat(".$.rating");
-      subfield = info.field.concat("." + req.body.subfield)
-      
-
-      if (req.body.votetype === "") {
-        users.updateOne({ _id: new ObjectID(req.body.userid)},{
-          $pull: {
-            "downvotes" : info
-          }}, (err,result) => {
-            if (result.modifiedCount > 0) {
-              experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
-                $inc: {
-                    [field]: 1
-                }
-              });
+          experts.updateOne({ _id: new ObjectID(req.body.id)}, {$set: {updatedAt: timeStamp }, $push: {[req.body.name]: req.body.value}}, function(err, expert){
+            if (err) {
+              return res.status(500).json({
+                err: err
+              });  
             }
             else{
+
+              if (req.body.name == "categories") {
+                var info = {
+                  id: req.body.id,
+                  field: req.body.name,
+                  tag :  Object.values(req.body.value)[0]
+                }
+              }
+              else{
+                var info = {
+                  id: req.body.id,
+                  field: req.body.name,
+                  tag :  Object.values(req.body.value)[0],
+                  expertdetailid: new ObjectID(Object.values(req.body.value)[4].toString())
+                }
+
+                subid = info.field.concat("._id");
+              }
+
+              
+
+              
+              field = info.field.concat(".$.rating");
+              subfield = info.field.concat("." + Object.keys(req.body.value)[0])
+
               users.updateOne({ _id: new ObjectID(req.body.userid)},{
-                $pull: {
-                  "upvotes": info
-                }}, (err, result) => {
-                  if (result.modifiedCount > 0) {
+                $addToSet: {
+                    ["upvotes"]: info
+                }}, (err,result) => {
+                if (err) {
+
+                  if (info.field == "categories") {
                     experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
                       $inc: {
                         [field]: -1
                       }
                     });
                   }
-                });
+                  else{
+                    experts.updateOne({ _id: new ObjectID(info.id),[subid] : info.expertdetailid},{
+                      $inc: {
+                        [field]: -1
+                      }
+                    });
+                  }
+                }
+              });
+
+              return res.status(200).json(expert);
             }
-         });
-      }
+          });
+        }
+      });
+    });
 
-      counterInc = 0; 
-      voterType = "";
+    
+    app.post("/api/vote/", (req, res) => {
 
-      if (req.body.votetype === "upvote") {
-        voterType = "upvotes"
-        users.updateOne({ _id: new ObjectID(req.body.userid)},{
-          $pull: {
-            "downvotes" : info
-          }}, (err,result) => {
+      users.findOne({ _id: new ObjectID(req.body.userid)}, function (err, user) {
+        if (err) {
+          return res.status(500).json({
+            err: err
+          });
+        } 
+        if (!user) {
+           return res.status(401).json({
+             message: "User does not exist"
+           });
+         } 
+        else{
 
-          // if (result.modifiedCount > 0) {
-          //     counterInc = 2;
-          // }
-          // else{
-              counterInc = 1;
-          // }
-        });
-      }
-      else if (req.body.votetype === "downvote") {
-        voterType = "downvotes"
-        users.updateOne({ _id: new ObjectID(req.body.userid)},{
-          $pull: {
-            "upvotes" : info
-          }}, (err,result) => {
-          // if (result.modifiedCount > 0) {
-          //   counterInc = -2;
-          // }
-          // else{
+          if (req.body.field == "categories") {
+            var info = {
+              id: req.body.expertid,
+              field: req.body.field,
+              tag: req.body.tag
+            }
+          }
+          else{
+            var info = {
+              id: req.body.expertid,
+              field: req.body.field,
+              tag: req.body.tag,
+              expertdetailid: new ObjectID(req.body.expertdetailid)
+            }
+            subid = info.field.concat("._id");
+          }
+
+          field = info.field.concat(".$.rating");
+          subfield = info.field.concat("." + req.body.subfield)
+        
+
+          if (req.body.votetype === "") {
+            users.updateOne({ _id: new ObjectID(req.body.userid)},{
+              $pull: {
+                "downvotes" : info
+              }}, (err,result) => {
+                if (result.modifiedCount > 0) {
+                  experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
+                    $inc: {
+                        [field]: 1
+                    }
+                  });
+                }
+                else{
+                  users.updateOne({ _id: new ObjectID(req.body.userid)},{
+                    $pull: {
+                      "upvotes": info
+                    }}, (err, result) => {
+                      if (result.modifiedCount > 0) {
+                        experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
+                          $inc: {
+                            [field]: -1
+                          }
+                        });
+                      }
+                    });
+                }
+            });
+          }
+
+          counterInc = 0; 
+          voterType = "";
+
+          if (req.body.votetype === "upvote") {
+            voterType = "upvotes"
+            counterInc = 1;
+            users.updateOne({ _id: new ObjectID(req.body.userid)},{
+              $pull: {
+                "downvotes" : info
+              }}, (err,result) => {
+
+              // if (result.modifiedCount > 0) {
+              //     counterInc = 2;
+              // }
+              // else{
+                if(err){
+                  console.log(err)
+                }
+                console.log("upvote");
+              // }
+            });
+          }
+          else if (req.body.votetype === "downvote") {
+            // check bug here count was zero for someone reason
+            voterType = "downvotes"
             counterInc = -1;
-          // }
-        });
-      }
- 
-      if (req.body.votetype !== "") {
-        users.updateOne({ _id: new ObjectID(req.body.userid)},{
-            $addToSet: {
-                [voterType]: info
-            }}, (err,result) => {
-            if (result.modifiedCount > 0) {
 
-              if (req.body.field == "categories") {
-                experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
-                  $inc: {
-                    [field]: counterInc
-                  }
-               });
-              }
-              else{
+            users.updateOne({ _id: new ObjectID(req.body.userid)},{
+              $pull: {
+                "upvotes" : info
+              }}, (err,result) => {
+                if(err){
+                  console.log(err)
+                }
+                console.log("downvote")
+              // if (result.modifiedCount > 0) {
+              //   counterInc = -2;
+              // }
+              // else{
+              // }
+            });
+          }
+  
+          if (req.body.votetype !== "") {
+            users.updateOne({ _id: new ObjectID(req.body.userid)},{
+                $addToSet: {
+                    [voterType]: info
+                }}, (err,result) => {
+                if (result.modifiedCount > 0) {
 
-                experts.updateOne({ _id: new ObjectID(info.id),[subid] : info.expertdetailid},{
-                  $inc: {
-                    [field]: counterInc
+                  if (req.body.field == "categories") {
+                    experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
+                      $inc: {
+                        [field]: counterInc
+                      }
+                  });
                   }
-               });
-              }
-            }
-        });
-      }
+                  else{
+                    console.log(subid)
+                    console.log(counterInc)
+                    console.log(info.expertdetailid)
+
+                    experts.updateOne({ _id: new ObjectID(info.id),[subid] : info.expertdetailid},{
+                      $inc: {
+                        [field]: counterInc
+                      }
+                  });
+                  }
+                }
+            });
+          }
+        }
+      });
     });
 
     app.get("/api/getrankedexpert/", (req, res) => {
