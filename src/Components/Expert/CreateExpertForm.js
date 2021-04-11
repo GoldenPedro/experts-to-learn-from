@@ -84,14 +84,20 @@ export class CreateExpertForm extends Component {
     }
     console.log(newData)
     // console.log(useridLocal);
-    // Axios functionality
-    axios.post('http://www.expertstolearnfrom.com/api/NewExpert', newData)
-        .then((res) => {
-            console.log(res.data);
-        })
-        .catch(err => {
-            console.log(err);
-        })
+
+    if (this.state.name.length == 0 || this.state.description.length == 0) {
+      alert("Please enter a name and description.")
+    } else {
+      // Axios functionality
+      axios.post('http://www.expertstolearnfrom.com/api/NewExpert', newData)
+      .then((res) => {
+          console.log(res.data);
+      })
+      .catch(err => {
+          console.log(err);
+      })
+    }
+    
     // Adds new data to state & clears form
     // setSavedFormInfo([...savedFormInfo, newData]);
     // setFormValues(defaultValues);

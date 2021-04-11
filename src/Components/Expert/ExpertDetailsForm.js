@@ -107,6 +107,15 @@ const NewExpert = (props) => {
     //     });
     //   }, [formValues]);
 
+    // const validate = () => {
+    //     if (values.name == null && values.description == null) {
+    //         setButtonDisabled(true);
+    //         console.log("setButtonDisabled = true")
+    //     } else {
+    //         console.log("setButtonDisabled = false")
+    //     }
+    // }
+
     return (
       <div className="new-expert">
           <h2>Submit a new Expert!</h2>
@@ -129,7 +138,7 @@ const NewExpert = (props) => {
               </label>
               <button
             //    disabled={buttonDisabled}
-              >
+            >
                   Submit</button>
           </form>
       </div>

@@ -36,14 +36,18 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
             name: "twitterLinks"            
         }
         console.log(newData)
-        // Axios functionality
-        axios.post('http://www.expertstolearnfrom.com/api/addexpertdetails/', newData)
-            .then((res) => {
-                console.log(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        if (formValues.twitterLink.length == 0) {
+            alert("Input cannot be empty")
+        } else {
+            // Axios functionality
+            axios.post('http://www.expertstolearnfrom.com/api/addexpertdetails/', newData)
+                .then((res) => {
+                    console.log(res.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
         // Adds new data to state & clears form
         setSavedFormInfo([...savedFormInfo, newData]);
         setFormValues(defaultValues);

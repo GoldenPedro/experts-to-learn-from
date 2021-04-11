@@ -12,6 +12,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DescriptionsTab from './DescriptionsTab'
 import YoutubeChannelsTab from './YoutubeChannelsTab'
+import OtherLinksTab from './OtherLinksTab'
 
 
 const Expert = (props) =>{
@@ -78,7 +79,7 @@ const Expert = (props) =>{
                       <YoutubeChannelsTab youtubeChannels={experts.youtubeChannels} expertId={experts._id} />
                     </TabPanel>
                     <TabPanel>
-                      <BookRecommendationsTab bookRecommendations={experts.bookRecommendations} expertId={experts._id} />
+                      <OtherLinksTab otherLinks={experts.otherLinks} expertId={experts._id} />
                     </TabPanel>
                   </Tabs>
                 </div>
