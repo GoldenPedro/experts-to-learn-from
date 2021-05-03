@@ -38,24 +38,34 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
             name: "articles"            
         }
         console.log(newData)
-        // Axios functionality
-        axios.post('http://www.expertstolearnfrom.com/api/addexpertdetails/', newData)
-            .then((res) => {
-                console.log(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        if (formValues.articleLink.length == 0) {
+            alert("Input cannot be empty")
+        } else {
+            // Axios functionality
+            axios.post('http://www.expertstolearnfrom.com/api/addexpertdetails/', newData)
+                .then((res) => {
+                    console.log(res.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+        
         // Adds new data to state & clears form
         setSavedFormInfo([...savedFormInfo, newData]);
         setFormValues(defaultValues);
         // history.push('/');
     }
 
+    // const detailForm = document.getElementById("detailForm")
+    // if (useridLocal.length == 0) {
+    //     detailForm.style.display = "none"
+    // }
+    // Trying to only show this if user if logged in ^^^^^^^^^^^^^^^^^^^^^^^
 
     return(
             <div className="">
-                <div>
+                <div id="detailForm">
                     <form onSubmit={submit}>
                         <input onChange={handleChanges} placeholder="Enter link here" value={formValues.articleLink} name="articleLink"></input>
                         <button>Submit</button>
