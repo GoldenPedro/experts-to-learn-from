@@ -6,7 +6,7 @@ const http = require('http');
 // const mongoose = require('mongoose');
 const { MongoClient, ObjectID } = require('mongodb');
 var cors = require('cors')
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const jwt = require('jsonwebtoken');
@@ -38,7 +38,7 @@ async function data(callback){
         console.error(e);
         throw new Error('Unable to Connect to Database')
       }
-    }
+  }
 
   data(async (client) => {
     const users = await client.db('mydatabase').collection('users');
@@ -64,6 +64,7 @@ async function data(callback){
         users.findOne({ email: username }, function (err, user) {
           if (err) { return done(err); }
           if (!user) { return done(null, false); }
+          // if (!bcrypt.compareSync(password, user.password)) {return done(null, false); }
           if (password !== user.password) { return done(null, false); }
           return done(null, user);
         });
@@ -84,38 +85,9 @@ async function data(callback){
         }
       });
     }
+ 
 
-    // function automaticUpvote(body, expert) {
-    //    for (var [key, value] of Object.entries(body)) {
-    //       if (key !== "name" && key !== "user" ) {
-  
-    //         var info = {
-    //           id: expert,
-    //           field: key,
-    //           tag : Object.values(value)[0]
-    //         }
-            
-    //         field = info.field.concat(".$.rating");
-    //         subfield = Object.keys(value)[0]
-  
-    //         users.updateOne({ _id: new ObjectID(body.user)},{
-    //           $addToSet: {
-    //               ["upvotes"]: info
-    //           }}, (err,result) => {
-    //           if (err) {
-    //             experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
-    //               $inc: {
-    //                 [field]: -1
-    //               }
-    //             })
-    //           }
-    //         });
-    //       }
-    //     }
-    //   }
-    
     app.post("/api/users", (req, res, next) => {
-      // const hash = bcrypt.hashSync(req.body.password, 12);
       users.findOne({ email: req.body.email }, function (err, email) {
         if (err) {
           return res.status(500).json({
@@ -136,6 +108,7 @@ async function data(callback){
                 message: "user already exist"
               });
             } else {
+              //const hash = bcrypt.hashSync(req.body.password, 12);
               users.insertOne({ email: req.body.email, username: req.body.username, password: req.body.password }, (err, doc) => {
                 if (err) {
                   return res.status(500).json({
@@ -349,6 +322,32 @@ async function data(callback){
       } 
     });
 
+    app.get("/api/getexpert/:id/recent", (req, res) => {
+      try {
+        experts.findOne({ _id: new ObjectID(req.params.id)}, function (err, expert) {
+          if (err) {
+            return res.status(500).json({
+              err: err
+            });  
+          }
+          else{
+            for (var [key, value] of Object.entries(expert)) {
+              if (Array.isArray(value)) {
+                value.sort((a, b) => b.creatdAt - a.creatdAt)
+              }
+            }
+
+            return res.status(200).json(expert);
+          }
+        });
+      }
+      catch(err) {
+        return res.status(500).json({
+          err: err
+        });  
+      } 
+    });
+
 
     app.post("/api/addexpertdetails/", (req, res) => {
 
@@ -513,15 +512,14 @@ async function data(callback){
               $pull: {
                 "downvotes" : info
               }}, (err,result) => {
-
+              // if (err){
+              //   console.log(err)
+              // }
               // if (result.modifiedCount > 0) {
               //     counterInc = 2;
               // }
               // else{
-                if(err){
-                  console.log(err)
-                }
-                console.log("upvote");
+                  // counterInc = 1;
               // }
             });
           }
@@ -534,14 +532,14 @@ async function data(callback){
               $pull: {
                 "upvotes" : info
               }}, (err,result) => {
-                if(err){
-                  console.log(err)
-                }
-                console.log("downvote")
+                // if (err){
+                //   console.log(err)
+                // }
               // if (result.modifiedCount > 0) {
               //   counterInc = -2;
               // }
               // else{
+                 // counterInc = -1;
               // }
             });
           }
@@ -580,6 +578,19 @@ async function data(callback){
 
     app.get("/api/getrankedexpert/", (req, res) => {
       experts.find().sort({"categories.rating": -1}).toArray(function(err, expert) {  
+        if (err) {
+          return res.status(500).json({
+            err: err
+          });  
+        }
+        else{
+          return res.status(200).json(expert);
+        }
+      })
+    });
+
+    app.get("/api/getrecentexpert/", (req, res) => {
+      experts.find().sort({"categories.createdAt": -1}).toArray(function(err, expert) {  
         if (err) {
           return res.status(500).json({
             err: err
