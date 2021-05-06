@@ -24,6 +24,7 @@ function Navbar() {
         <Link to='/Login' >Login</Link>
         <Link to='/sign-up' >Sign Up</Link>
         <Link to='/new-expert' >New Entry</Link>
+        <Link to='/about' >About</Link>
         <a onClick={logout} href='/'>Logout </a>
         {/* <p>Hello, {username}</p> */}
       </div>

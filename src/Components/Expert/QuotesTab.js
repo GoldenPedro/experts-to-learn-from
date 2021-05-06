@@ -1,8 +1,9 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import Quote from './Quote'
 import { connect } from 'react-redux';
 import saveUserInfoReducer from '../../Store/Reducers'
+import './Tabs.css'
 
 
 const defaultValues = {
@@ -55,11 +56,17 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
         // history.push('/');
     }
 
+    useEffect(() => {
+        if (useridLocal != null) {
+            document.getElementById("detailForm").style.visibility = "visible";
+        }
+    }, [])
+
 
     return(
             <div>
             
-            <div>
+            <div id="detailForm">
                 <form onSubmit={submit}>
                     <input onChange={handleChanges} placeholder="Enter link here" value={formValues.quote} name="quote"></input>
                     <button>Submit</button>

@@ -6,6 +6,8 @@ import Article from './Article'
 import { connect } from 'react-redux';
 import saveUserInfoReducer from '../../Store/Reducers'
 
+import './Tabs.css'
+
 const defaultValues = {
     articleLink: ''
 }
@@ -62,6 +64,14 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
     //     detailForm.style.display = "none"
     // }
     // Trying to only show this if user if logged in ^^^^^^^^^^^^^^^^^^^^^^^
+
+    useEffect(() => {
+        if (useridLocal != null) {
+            document.getElementById("detailForm").style.visibility = "visible";
+        }
+    }, [])
+
+    
 
     return(
             <div className="">

@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import BookRecommendation from './BookRecommendation'
 import { connect } from 'react-redux';
 import saveUserInfoReducer from '../../Store/Reducers'
-
+import './Tabs.css'
 
 const defaultValues = {
     bookRecommendation: ''
@@ -55,11 +55,17 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
         // history.push('/');
     }
 
+    useEffect(() => {
+        if (useridLocal != null) {
+            document.getElementById("detailForm").style.visibility = "visible";
+        }
+    }, [])
+
 
     return(
             <div>
             
-            <div>
+            <div id="detailForm">
                 <form onSubmit={submit}>
                     <input onChange={handleChanges} placeholder="Enter link here" value={formValues.bookRecommendation} name="bookRecommendation"></input>
                     <button>Submit</button>
