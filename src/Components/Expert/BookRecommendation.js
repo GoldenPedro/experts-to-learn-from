@@ -12,6 +12,7 @@ const BookRecommendation = (props) =>{
             <div className="expert-detail-card">
                 
                 <p>{bookRecommendation.bookRecommendation}</p>
+                <p>{bookRecommendation.amazonLink}</p>
 
                     <p>{bookRecommendation.rating}</p>
                     <UpvoteDownVoteExpertDetails field="bookRecommendations" subfield="bookRecommendation" id={bookRecommendation._id} expertId={expertId} tag={bookRecommendation.bookRecommendation}/>

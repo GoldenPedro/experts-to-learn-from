@@ -6,7 +6,8 @@ import saveUserInfoReducer from '../../Store/Reducers'
 import './Tabs.css'
 
 const defaultValues = {
-    bookRecommendation: ''
+    bookRecommendation: '',
+    amazonLink: ''
 }
 
 let useridLocal = window.localStorage.getItem('userid');
@@ -30,7 +31,8 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
         var newData = {
             value: {
                 bookRecommendation: formValues.bookRecommendation.trim(),
-                rating: 1
+                rating: 1,
+                amazonLink: formValues.amazonLink.trim()
             },
             id: expertId,
             userid: useridLocal,
@@ -67,7 +69,8 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
             
             <div id="detailForm">
                 <form onSubmit={submit}>
-                    <input onChange={handleChanges} placeholder="Enter link here" value={formValues.bookRecommendation} name="bookRecommendation"></input>
+                    <input onChange={handleChanges} placeholder="Enter book title here" value={formValues.bookRecommendation} name="bookRecommendation"></input>
+                    <input onChange={handleChanges} placeholder="Enter amazon link here" value={formValues.amazonLink} name="amazonLink"></input>
                     <button>Submit</button>
                 </form>
             </div>
