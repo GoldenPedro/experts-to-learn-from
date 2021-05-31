@@ -13,6 +13,7 @@ import 'react-tabs/style/react-tabs.css';
 import DescriptionsTab from './DescriptionsTab'
 import YoutubeChannelsTab from './YoutubeChannelsTab'
 import OtherLinksTab from './OtherLinksTab'
+import './Expert.css'
 
 
 const Expert = (props) =>{

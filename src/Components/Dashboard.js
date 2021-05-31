@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ExpertCard from './Expert/ExpertCard'
 import axios from 'axios';
-import { get } from 'mongoose';
-import e from 'cors';
-
+import './Dashboard.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const defaultCategorySearch = {
   category: ''
@@ -83,27 +82,25 @@ const selectCategory = (evt) => {
 
   return (
     <div className="dashboard">
-        <h1>Experts To Learn From</h1>
-       
+        <h1 className='main-title'>Experts To Learn From</h1>
+        
 
-    <div className='select-category-form'>
-      <div className='select-category-search-form'>
-          <form onSubmit={search}>
-                <input value={categorySearch.category} onChange={handleSearchChanges} placeholder='Search category' name="category" type='text' />
-              <button>Search</button>
-          </form>
-      </div>
-            
-            <div className='category-list'>
-              {
-                  categoriesState.map((item) => (
-                          <p className="category" id={item} onClick={selectCategory}>{item}</p>
-                  ))
-              }
-            </div>
-
-            
+      <div className='select-category-form'>
+        <div className='select-category-search-form'>
+            <form onSubmit={search}>
+                  <input value={categorySearch.category} onChange={handleSearchChanges} placeholder='Search category' name="category" type='text' />
+                <button className='search-button'><FontAwesomeIcon  icon="search" /></button>
+            </form>
         </div>
+              
+              <div className='category-list'>
+                {
+                    categoriesState.map((item) => (
+                            <p className="category" id={item} onClick={selectCategory}>{item}</p>
+                    ))
+                }
+              </div>
+      </div>
 
         {experts.map(expert => (
           <ExpertCard expert={expert} key={expert._id} />

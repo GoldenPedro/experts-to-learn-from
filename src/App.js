@@ -12,6 +12,10 @@ import CreateExpertForm from './Components/Expert/CreateExpertForm'
 import Expert from './Components/Expert/Expert';
 import About from './Components/About';
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faSearch)
 
 function App() {
   return (

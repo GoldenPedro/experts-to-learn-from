@@ -1,0 +1,97 @@
+/* ======= EXPERT CARD ======= */
+
+.expert {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin-bottom: 1.7%;
+    border-radius: 5px;
+    background-color: white;
+    padding: .5%;
+    filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.25));
+  }
+  
+  .expert-img-container {
+    width: 13%;
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+  }
+  
+  .expert-img {
+    max-width: 80%;
+    border-radius: 50%;
+  }
+  
+  .expert-name {
+    font-size: 1.6rem;
+    margin: 0 0;
+    padding: 1% 0;
+  }
+  
+  .expert-name-link {
+    text-decoration: none;
+  }
+  
+  .expert-text {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    padding: 1%;
+  }
+  
+  .expert-socials {
+    display: flex;
+    white-space: nowrap;
+    padding: 1% 0;
+  }
+  
+  .expert-youtubeChannel {
+    margin-left: 15%;
+    white-space: nowrap;
+  }
+  
+  .expert-category-rating {
+    display: flex;
+    justify-content: space-evenly;
+    width: 20%;
+  }
+  
+  .expert-category {
+    width: 50%;
+    padding: 1%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .expert-card-voting {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+  
+  .expert-card-voting p {
+    margin: 5% 0;
+  }
+  
+  .upvote-icon {
+    width: 20%;
+    transform: rotate(-90deg);
+  }
+  
+  .upvote-icon:hover {
+    filter: invert(10%) sepia(81%) saturate(4685%) hue-rotate(248deg) brightness(128%) contrast(159%);
+  }
+  
+  .downvote-icon {
+    width: 20%;
+    transform: rotate(90deg);
+  }
+  
+  .downvote-icon:hover {
+    filter: invert(31%) sepia(98%) saturate(6669%) hue-rotate(355deg) brightness(101%) contrast(130%);
+  }

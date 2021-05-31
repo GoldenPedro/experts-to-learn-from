@@ -1,0 +1,15 @@
+/* ======= SELECTCATEGORY FORM ======= */
+.select-category-container {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-containers {
+    padding: 1%;
+  }
+  
+  .select-categories {
+    display: flex;
+    flex-direction: column;
+  }
