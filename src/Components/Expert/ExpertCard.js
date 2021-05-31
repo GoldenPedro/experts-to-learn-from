@@ -6,6 +6,10 @@ function ExpertCard(props) {
     const {expert} = props
 
     console.log(expert.name)
+
+    const setViewExpertFlag = () => {
+      window.localStorage.setItem('viewExpertFlag', 'true')
+  }
     
 
   return (
@@ -15,9 +19,9 @@ function ExpertCard(props) {
           <img className='expert-img' src="https://picsum.photos/400" alt='Expert'/>
         </div>
         <div  className='expert-text'>
-          <Link className='expert-name-link' to={`/api/getexpert/${expert._id}`}>
-            <h4 className='expert-name'>{expert.name}</h4>
-          </Link>
+            <Link onClick={setViewExpertFlag} className='expert-name-link' to={`/api/getexpert/${expert._id}`}>
+              <h4 className='expert-name'>{expert.name}</h4>
+            </Link>          
           
           <p className='expert-description'>{expert.descriptions[0].description}</p>
           <div className='expert-socials'>

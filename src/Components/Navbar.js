@@ -9,6 +9,7 @@ function Navbar() {
 
   const logout = () => {
     window.localStorage.clear();
+    window.sessionStorage.clear();
   }
 
   return (

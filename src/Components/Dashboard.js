@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ExpertCard from './Expert/ExpertCard'
 import axios from 'axios';
+import { get } from 'mongoose';
+import e from 'cors';
 
 
 const defaultCategorySearch = {
@@ -8,22 +10,50 @@ const defaultCategorySearch = {
 }
 
 const categories = []
-
-
+const defaultRandomCategory = ""
 
 
 function Dashboard() {
+  // const temp = [{
+  //   _id: "6070fde9fa8bb5a05dcff08e",
+  //   categories: [{category: "photography", rating: 1}],
+  //   descriptions: [{description: "Best coder ever", rating: 2, _id: "6070fde9fa8bb5a05dcff08a"}],
+  //   name: "Alejandro Garcia",
+  //   twitterLinks: [{twitterLink: "pedrocasuso", rating: 1, _id: "6070fde9fa8bb5a05dcff08b"}],
+  //   updatedAt: "2021-05-17T03:14:25.360Z",
+  //   youtubeChannels: [{youtubeChannel: "Lattice Gaming", rating: 1, _id: "6070fde9fa8bb5a05dcff08c"}]
+  // }]
+
   const [experts, setExperts] = useState([])
   const [categorySearch, setCategorySearch] = useState(defaultCategorySearch)
-    const [categoriesState, setCategoriesState] = useState(categories)
+  const [categoriesState, setCategoriesState] = useState(categories)
 
   useEffect(() => {
-    axios.get('http://www.expertstolearnfrom.com/api/expertlist/photography')
-      .then((res) => {
-        console.log(res.data)
-        setExperts(res.data)
-        console.log(experts)
-      })
+    // if (window.localStorage.getItem('viewExpertFlag') == 'true') {
+    //   return
+    // } else {
+      const fetchData = async () => { 
+        const getRandomCategory = await axios.get('http://www.expertstolearnfrom.com/api/randomcategory');
+        const getExperts =  await axios.get(`http://www.expertstolearnfrom.com/api/expertlist/${getRandomCategory.data}`)
+        setExperts(getExperts.data)
+        window.sessionStorage.setItem('savedCategory', getRandomCategory.data)
+      }
+      if (window.sessionStorage.getItem('savedCategory') == null) {
+        fetchData();
+      } else {
+        const savedCategory = window.sessionStorage.getItem('savedCategory')
+        axios.get(`http://www.expertstolearnfrom.com/api/expertlist/${savedCategory}`)
+          .then(res => {
+            setExperts(res.data)
+          })
+      }
+      console.log("look here" + window.sessionStorage.getItem('savedCategory'))
+      console.log(experts)
+    // }
+
+    
+
+    window.localStorage.setItem('viewExpertFlag', '')
   }, []);
 
   const search = (evt) => {
@@ -47,6 +77,7 @@ const selectCategory = (evt) => {
     .then(res => {
       console.log(res.data)
       setExperts(res.data)
+      window.sessionStorage.setItem('savedCategory', evt.target.id)
     })
 }
 

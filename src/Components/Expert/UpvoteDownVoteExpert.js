@@ -27,6 +27,10 @@ const upvote = () => {
         .then(res => {
             console.log(res.data);
         })
+        .catch(err => {
+            console.log(err);
+            alert("Please login to upvote/downvote")
+        })
 }
 
 const defaultDownvoteInfo = {
@@ -48,7 +52,7 @@ const downvote = () => {
         })
         .catch(err => {
             console.log(err);
-            alert(err)
+            alert("Please login to upvote/downvote")
         })
 }
 
