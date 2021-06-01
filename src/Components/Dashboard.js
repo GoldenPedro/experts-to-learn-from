@@ -28,29 +28,12 @@ function Dashboard() {
   const [categoriesState, setCategoriesState] = useState(categories)
 
   useEffect(() => {
-    // if (window.localStorage.getItem('viewExpertFlag') == 'true') {
-    //   return
-    // } else {
-      const fetchData = async () => { 
-        const getRandomCategory = await axios.get('http://www.expertstolearnfrom.com/api/randomcategory');
-        const getExperts =  await axios.get(`http://www.expertstolearnfrom.com/api/expertlist/${getRandomCategory.data}`)
-        setExperts(getExperts.data)
-        window.sessionStorage.setItem('savedCategory', getRandomCategory.data)
-      }
-      if (window.sessionStorage.getItem('savedCategory') == null) {
-        fetchData();
-      } else {
-        const savedCategory = window.sessionStorage.getItem('savedCategory')
-        axios.get(`http://www.expertstolearnfrom.com/api/expertlist/${savedCategory}`)
+        axios.get(`http://www.expertstolearnfrom.com/api/expertlist/`)
           .then(res => {
             setExperts(res.data)
           })
-      }
-      console.log("look here" + window.sessionStorage.getItem('savedCategory'))
-      console.log(experts)
-    // }
 
-    
+      console.log(experts)
 
     window.localStorage.setItem('viewExpertFlag', '')
   }, []);
