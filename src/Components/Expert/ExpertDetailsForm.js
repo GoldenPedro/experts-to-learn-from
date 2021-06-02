@@ -121,11 +121,11 @@ const NewExpert = (props) => {
           <h2>Submit a new Expert!</h2>
           <form onSubmit={submit}>
               <label>Name: * &nbsp;
-                  <input value={values.name} onChange={handleChange('name')} placeholder='Enter name' name="name" type='name' />
+                  <input value={values.name} onChange={handleChange('name')} maxlength="70" placeholder='Enter name' name="name" type='name' />
               </label>
               {/* {errors.name.length > 0 ? <p>{errors.name}</p> : null}   */}
               <label>Description: * &nbsp;
-                  <input value={values.description} onChange={handleChange('description')} placeholder='Enter description' name="description" />
+                  <textarea value={values.description} onChange={handleChange('description')} maxlength="200" placeholder='Enter description' name="description" />
               </label>
               <label>Twitter Handle: &nbsp;
                   <input value={values.twitterLink} onChange={handleChange('twitterLink')} placeholder='Enter twitterLink' name="twitterLink" />
