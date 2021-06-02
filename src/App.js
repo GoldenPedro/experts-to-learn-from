@@ -11,6 +11,7 @@ import NewExpertForm from './Components/Expert/NewExpertForm'
 import CreateExpertForm from './Components/Expert/CreateExpertForm'
 import Expert from './Components/Expert/Expert';
 import About from './Components/About';
+import NotFound from './Components/NotFound'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
@@ -38,6 +39,7 @@ function App() {
         <Route exact path='/about'>
           <About />
         </Route>
+        <Route component={NotFound} />
       </Switch>
     </div>
   );
