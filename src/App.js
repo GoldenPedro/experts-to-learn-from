@@ -14,9 +14,10 @@ import About from './Components/About';
 import NotFound from './Components/NotFound'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faSearch} from '@fortawesome/free-solid-svg-icons'
+import { faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons'
 
-library.add(faSearch)
+library.add(faSearch, faTwitter, faYoutube)
 
 function App() {
   return (

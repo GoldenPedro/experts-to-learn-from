@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import UpvoteDownVoteExpert from './UpvoteDownVoteExpert'
 import './ExpertCard.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function ExpertCard(props) {
     const {expert} = props
@@ -29,8 +30,14 @@ function ExpertCard(props) {
 
           <div className='expert-socials'>
             <div className='expert-socials-links'>
-              <a className='expert-twitter' href={expert.twitterLinks[0].twitterLink}>{expert.twitterLinks[0].twitterLink}</a>       
-              <a className='expert-youtubeChannel' href={expert.youtubeChannels[0].youtubeChannel}>{expert.youtubeChannels[0].youtubeChannel}</a>
+              <div className='expert-twitter'>
+                <FontAwesomeIcon className='twitter-icon' icon={['fab', 'twitter']} />
+                <a href={`https://twitter.com/${expert.twitterLinks[0].twitterLink}`}>{expert.twitterLinks[0].twitterLink}</a>       
+              </div>
+              <div className='expert-youtubeChannel'>
+                <FontAwesomeIcon className='youtube-icon' icon={['fab', 'youtube']}/> 
+                <a href={expert.youtubeChannels[0].youtubeChannel}> {expert.youtubeChannels[0].youtubeChannel}</a>
+              </div>
             </div>
           </div>
 
