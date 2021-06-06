@@ -1,5 +1,7 @@
 import React from 'react';
 import UpvoteDownVoteExpertDetails from './UpvoteDownVoteExpertDetails';
+import './ExpertDetailsCardStyle.css'
+
 
 import playSolid from '../../Assets/playSolid.svg'
 
@@ -9,8 +11,10 @@ const OtherLink = (props) =>{
 
     return(
             <div className="expert-detail-card">
+                <div className="left-content">
+                    <p>{otherLink.otherLink}</p>
+                </div>
                 
-                <p>{otherLink.otherLink}</p>
                
 
                 <div className="expert-detail-voting-rating-wrapper">

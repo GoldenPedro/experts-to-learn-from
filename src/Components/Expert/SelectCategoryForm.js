@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './SelectCategoryForm.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 
 const defaultCategorySearch = {
     category: ''
@@ -63,20 +65,22 @@ const SelectCategoryForm = (props) =>{
     return(
         <div className='select-category-container'>
             <h2>Add a new Expert!</h2>
-            <div className='form-containers'>
-                <div className='select-categories'>
+            <div className='select-category-form'>
+                <div className='select-category-search-form'>
                     <form onSubmit={search}>
-                        <label>Which category would you like to add a new Expert in? * &nbsp;
-                            <input value={categorySearch.category} onChange={handleSearchChanges} placeholder='Search category' name="category" type='text' />
-                        </label>
-                        <button>Search</button>
+                        <p>Which category would you like to add a new Expert in? * </p>
+                        <input value={categorySearch.category} onChange={handleSearchChanges} placeholder='Search category' name="category" type='text'></input>
+                        <button className='search-button'><FontAwesomeIcon  icon="search" />Search</button>
                     </form>
-
-                    {
-                        categoriesState.map((item) => (
-                                <p id={item} onClick={selectCategory}>{item}</p>
-                        ))
-                    }
+                    
+                    <div className='category-list'>
+                        {
+                            categoriesState.map((item) => (
+                                    <p className="category" id={item} onClick={selectCategory}>{item}</p>
+                            ))
+                        }
+                    </div>
+                    
                 </div>
 
 

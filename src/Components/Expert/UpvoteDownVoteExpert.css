@@ -1,0 +1,40 @@
+.expert-card-voting {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+  
+.expert-card-voting p {
+    margin: 5% 0;
+}
+
+.upvote-icon {
+    width: 20%;
+    transform: rotate(-90deg);
+    filter: invert(89%) sepia(10%) saturate(13%) hue-rotate(315deg) brightness(90%) contrast(84%);
+}
+
+.upvote-icon:hover {
+    filter: invert(32%) sepia(96%) saturate(2947%) hue-rotate(213deg) brightness(103%) contrast(101%);
+    cursor: pointer;
+}
+
+.downvote-icon {
+    width: 20%;
+    transform: rotate(90deg);
+    filter: invert(89%) sepia(10%) saturate(13%) hue-rotate(315deg) brightness(90%) contrast(84%);
+}
+
+.downvote-icon:hover {
+    cursor: pointer;
+    filter: invert(60%) sepia(65%) saturate(2803%) hue-rotate(343deg) brightness(102%) contrast(101%);
+}
+
+.updated-date {
+    display: flex;
+    padding: 0;
+    margin: 0;
+}

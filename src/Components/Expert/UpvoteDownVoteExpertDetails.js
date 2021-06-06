@@ -3,6 +3,7 @@ import axios from 'axios'
 import { connect } from 'react-redux';
 import saveUserInfoReducer from '../../Store/Reducers'
 import playSolid from '../../Assets/playSolid.svg'
+import './UpvoteDownVoteExpertDetails.css'
 
 
 let useridLocal = window.localStorage.getItem('userid')
