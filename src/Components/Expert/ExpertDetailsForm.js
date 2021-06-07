@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import * as yup from 'yup'
-// import '../../App.css';
+import './ExpertDetailsForm.css'
 
 // const defaultValues = {
 //     name: '',
@@ -119,23 +119,23 @@ const NewExpert = (props) => {
     return (
       <div className="new-expert">
           <h2>Submit a new Expert!</h2>
-          <form onSubmit={submit}>
-              <label>Name: * &nbsp;
+          <form className="expert-details-form" onSubmit={submit}>
+              <p>Name: *</p>
                   <input value={values.name} onChange={handleChange('name')} minLength="1" maxlength="70" placeholder='Enter name' name="name" type='name' />
-              </label>
+              
               {/* {errors.name.length > 0 ? <p>{errors.name}</p> : null}   */}
-              <label>Description: * &nbsp;
+              <p>Description: *</p>
                   <textarea value={values.description} onChange={handleChange('description')} minLength="10" maxlength="200" placeholder='Enter description' name="description" />
-              </label>
-              <label>Twitter Handle: &nbsp;
+              
+              <p>Twitter Handle:</p>
                   <input value={values.twitterLink} onChange={handleChange('twitterLink')} placeholder='Enter twitterLink' name="twitterLink" />
-              </label>
-              <label>YouTube Channel: &nbsp;
+              
+              <p>YouTube Channel:</p>
                   <input value={values.youtubeChannel} onChange={handleChange('youtubeChannel')} placeholder='Enter youtubeChannel' name="youtubeChannel" />
-              </label>
-              <label>Blog: &nbsp;
+              
+              <p>Blog:</p>
                   <input value={values.blog} onChange={handleChange('blog')} placeholder='Enter blog' name="blog" />
-              </label>
+              
               <button
             //    disabled={buttonDisabled}
             >

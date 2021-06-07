@@ -8,11 +8,13 @@
   
   .select-category-form {
     width: 100%;
+    display: flex;
+    flex-direction: column;
   }
   
   .select-category-search-form {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
   }
 
@@ -64,4 +66,13 @@
   .category:hover {
     cursor: pointer;
     background-color: rgb(197, 197, 197);
+  }
+
+  .new-category-wrapper {
+    display: flex;
+  }
+
+  .new-category-wrapper p:hover {
+    color: #2470ff;
+    cursor: pointer;
   }

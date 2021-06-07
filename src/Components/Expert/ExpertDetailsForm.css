@@ -1,0 +1,13 @@
+.new-expert {
+    width: 30%;
+}
+
+.experts-details-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.experts-details-form input {
+    width: 100%;
+}

@@ -70,7 +70,7 @@ const SelectCategoryForm = (props) =>{
                     <form onSubmit={search}>
                         <p>Which category would you like to add a new Expert in? * </p>
                         <input value={categorySearch.category} onChange={handleSearchChanges} placeholder='Search category' name="category" type='text'></input>
-                        <button className='search-button'><FontAwesomeIcon  icon="search" />Search</button>
+                        <button className='search-button'><FontAwesomeIcon  icon="search" />   Search</button>
                     </form>
                     
                     <div className='category-list'>
