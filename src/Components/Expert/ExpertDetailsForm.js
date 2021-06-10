@@ -118,29 +118,39 @@ const NewExpert = (props) => {
 
     return (
       <div className="new-expert">
-          <h2>Submit a new Expert!</h2>
-          <form className="expert-details-form" onSubmit={submit}>
-              <p>Name: *</p>
-                  <input value={values.name} onChange={handleChange('name')} minLength="1" maxlength="70" placeholder='Enter name' name="name" type='name' />
-              
-              {/* {errors.name.length > 0 ? <p>{errors.name}</p> : null}   */}
-              <p>Description: *</p>
-                  <textarea value={values.description} onChange={handleChange('description')} minLength="10" maxlength="200" placeholder='Enter description' name="description" />
-              
-              <p>Twitter Handle:</p>
-                  <input value={values.twitterLink} onChange={handleChange('twitterLink')} placeholder='Enter twitterLink' name="twitterLink" />
-              
-              <p>YouTube Channel:</p>
-                  <input value={values.youtubeChannel} onChange={handleChange('youtubeChannel')} placeholder='Enter youtubeChannel' name="youtubeChannel" />
-              
-              <p>Blog:</p>
-                  <input value={values.blog} onChange={handleChange('blog')} placeholder='Enter blog' name="blog" />
-              
-              <button
+        <h2>Submit a new Expert!</h2>
+        <form className="expert-details-form" onSubmit={submit}>
+            <div className="expert-details-form-input-container">
+                <p>Name: *</p>
+                <input value={values.name} onChange={handleChange('name')} minLength="1" maxlength="70" placeholder='Enter first and last name' name="name" type='name' />
+            </div>
+
+            <div className="expert-details-form-input-container">
+                <p>Description: *</p>
+                <textarea value={values.description} onChange={handleChange('description')} minLength="10" maxlength="200" placeholder='Enter description' name="description" />
+            </div>
+            
+            {/* {errors.name.length > 0 ? <p>{errors.name}</p> : null}   */}
+            <div className="expert-details-form-input-container">
+                <p>Twitter Handle:</p>
+                <input value={values.twitterLink} onChange={handleChange('twitterLink')} placeholder='Enter twitter handle' name="twitterLink" />
+            </div>
+            
+            <div className="expert-details-form-input-container">
+                <p>YouTube Channel:</p>
+                <input value={values.youtubeChannel} onChange={handleChange('youtubeChannel')} placeholder='Enter YouTube Channel URL' name="youtubeChannel" />          
+            </div>
+           
+            <div className="expert-details-form-input-container">
+                <p>Blog:</p>
+                <input value={values.blog} onChange={handleChange('blog')} placeholder='Enter blog URL' name="blog" />
+            </div>
+           
+            <button
             //    disabled={buttonDisabled}
             >
-                  Submit</button>
-          </form>
+                Submit</button>
+        </form>
       </div>
     );
   }
