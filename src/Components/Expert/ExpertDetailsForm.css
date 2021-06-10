@@ -1,5 +1,12 @@
 .new-expert {
     width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.new-expert form {
+    width: 80%;
 }
 
 .experts-details-form {
