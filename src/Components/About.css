@@ -1,0 +1,26 @@
+.about-container {
+    width: 70%
+}
+
+
+.about-title {
+    display: flex;
+    justify-content: center;
+}
+
+.about-title h1 {
+    color: #2470ff;
+}
+
+.about-profile-image {
+    width: 10%;
+}
+
+.developer-container {
+    display: flex;
+}
+
+.developer {
+    display: flex;
+    flex-direction: column;
+}
