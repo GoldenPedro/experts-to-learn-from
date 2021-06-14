@@ -10,7 +10,7 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const jwt = require('jsonwebtoken');
-const { info, timeStamp } = require('console');
+// const { info, timeStamp } = require('console');
 
 
 const URI = process.env.MONGO_URI;
@@ -64,8 +64,8 @@ async function data(callback){
         users.findOne({ email: username }, function (err, user) {
           if (err) { return done(err); }
           if (!user) { return done(null, false); }
-          // if (!bcrypt.compareSync(password, user.password)) {return done(null, false); }
-          if (password !== user.password) { return done(null, false); }
+          if (!bcrypt.compareSync(password, user.password)) {return done(null, false); }
+          // if (password !== user.password) { return done(null, false); }
           return done(null, user);
         });
       }
@@ -108,8 +108,8 @@ async function data(callback){
                 message: "user already exist"
               });
             } else {
-              //const hash = bcrypt.hashSync(req.body.password, 12);
-              users.insertOne({ email: req.body.email, username: req.body.username, password: req.body.password }, (err, doc) => {
+              const hash = bcrypt.hashSync(req.body.password, 12);
+              users.insertOne({ email: req.body.email, username: req.body.username, password: hash }, (err, doc) => {
                 if (err) {
                   return res.status(500).json({
                     err: err
@@ -156,7 +156,6 @@ async function data(callback){
     });
 
     app.post("/api/NewExpert", (req, res) => {
-
       users.findOne({ _id: new ObjectID(req.body.user)}, function (err, user) {
         if (err) {
           return res.status(500).json({
@@ -172,14 +171,16 @@ async function data(callback){
           const timeStamp = new Date()
 
           for (var [key, value] of Object.entries(req.body)) {
-            req.body[key].submitted = user.username
-            req.body[key].createdAt = timeStamp
             if (key == "descriptions" || key == "twitterLinks" || key == "youtubeChannels"  || key == "blogs" ) {
+              req.body[key].submitted = user.username
+              req.body[key].createdAt = timeStamp
+
               details.insertOne(value, (err,doc)=>{
-                // if (err) {
-                //   return res.status(500).json({
-                //     err: err
-                //   });
+                if (err) {
+                  return res.status(500).json({
+                    err: err
+                  });
+                }
                 // value["_id"] = doc["ops"][0]["_id"].toString()
               })
             }
@@ -216,7 +217,7 @@ async function data(callback){
                       id: doc["ops"][0]["_id"].toString(),
                       field: key,
                       tag : Object.values(value)[0],
-                      expertdetailid: new ObjectID(Object.values(value)[4].toString())
+                      expertdetailid: new ObjectID(value["_id"].toString())
                     }
                     subid = info.field.concat("._id");
                   } 
@@ -243,7 +244,11 @@ async function data(callback){
                             [field]: -1
                           }
                       });
-                      } 
+                      }
+
+                      return res.status(500).json({
+                        err: err
+                      });  
                     }
                   });
                   
@@ -271,30 +276,111 @@ async function data(callback){
           return res.status(200).json(expert);
         }
       })
-  });
-
-    app.post("/api/categories", (req, res) => {
-      categories.find().sort({"name": 1}).toArray(function(err, category) {
-        if (err) {
-            return res.status(500).json({
-              err: err
-            });
-        }
-        else{
-          var name = []
-          category.forEach(element => {
-            if (name.length == 10){
-              return;
-            }
-            if (element.name.startsWith(req.body.category.toLowerCase())){
-              name.push(element.name)
-            }
-         });
-          return res.status(200).json(name);
-        }
-      });
     });
 
+    app.get("/api/expertlist/:category/lowest", (req, res) => {
+      experts.find({'categories.category': req.params.category}).sort({"categories.rating": 1}).toArray(function(err, expert) {  
+        if (err) {
+          return res.status(500).json({
+            err: err
+          });  
+        }
+        else{
+          return res.status(200).json(expert);
+        }
+      })
+    });
+
+
+    app.get("/api/expertlist/:category/newest", (req, res) => {
+      experts.find({'categories.category': req.params.category}).sort({"createdAt": -1}).toArray(function(err, expert) {  
+        if (err) {
+          return res.status(500).json({
+            err: err
+          });  
+        }
+        else{
+          return res.status(200).json(expert);
+        }
+      })
+    });
+
+    app.get("/api/expertlist/:category/latest", (req, res) => {
+      experts.find({'categories.category': req.params.category}).sort({"updatedAt": -1}).toArray(function(err, expert) {  
+        if (err) {
+          return res.status(500).json({
+            err: err
+          });  
+        }
+        else{
+          return res.status(200).json(expert);
+        }
+      })
+    });
+
+    app.get("/api/expertlist/", (req, res) => {
+      experts.find()
+      .sort({"categories.rating": -1})
+      .limit(50)
+      .toArray(function(err, expert) {  
+        if (err) {
+          return res.status(500).json({
+            err: err
+          });  
+        }
+        else{
+          return res.status(200).json(expert);
+        }
+      })
+    });
+  
+    
+    app.post("/api/categories", (req, res) => {
+      const searched = req.body.category.toLowerCase()
+
+      if (searched === "") {
+        categories.find()
+        .sort({"name": 1})
+        .toArray(function(err, category) {
+          if (err) {
+              return res.status(500).json({
+                err: err
+              });
+          }
+          else{
+            return res.status(200).json(category.map(function(element) {return element.name}));
+          }
+        })
+      }
+      else{
+        categories.find( {name:{'$regex' : '^' + searched}})
+        .sort({"name": 1})
+        .limit(10)
+        .toArray(function(err, category) {
+          if (err) {
+              return res.status(500).json({
+                err: err
+              });
+          }
+          else{
+            return res.status(200).json(category.map(function(element) {return element.name}));
+          }
+        })
+      }
+    });
+
+    app.get("/api/randomcategory", (req, res) => {
+      categories.aggregate([{ $sample: { size: 1 } }]).toArray(function(err, category) {  
+        if (err) {
+          return res.status(500).json({
+            err: err
+          });  
+        }
+        else{
+          return res.status(200).json(category[0].name);
+        }
+      })
+    });
 
     app.get("/api/getexpert/:id", (req, res) => {
       try {
@@ -319,10 +405,10 @@ async function data(callback){
         return res.status(500).json({
           err: err
         });  
-      } 
-    });
+      }}
+    );
 
-    app.get("/api/getexpert/:id/recent", (req, res) => {
+    app.get("/api/getexpert/:id/newest", (req, res) => {
       try {
         experts.findOne({ _id: new ObjectID(req.params.id)}, function (err, expert) {
           if (err) {
@@ -345,8 +431,8 @@ async function data(callback){
         return res.status(500).json({
           err: err
         });  
-      } 
-    });
+      }}
+    );
 
 
     app.post("/api/addexpertdetails/", (req, res) => {
@@ -367,10 +453,11 @@ async function data(callback){
           req.body.value.submitted = user.username;
           req.body.value.createdAt = timeStamp
           details.insertOne(req.body.value, (err,doc)=>{
-            // if (err) {
-            //   return res.status(500).json({
-            //     err: err
-            //   });
+            if (err) {
+              return res.status(500).json({
+                err: err
+              });
+            }
             // req.body.value["_id"] = doc["ops"][0]["_id"].toString()
           })
 
@@ -381,7 +468,6 @@ async function data(callback){
               });  
             }
             else{
-
               if (req.body.name == "categories") {
                 var info = {
                   id: req.body.id,
@@ -394,7 +480,7 @@ async function data(callback){
                   id: req.body.id,
                   field: req.body.name,
                   tag :  Object.values(req.body.value)[0],
-                  expertdetailid: new ObjectID(Object.values(req.body.value)[4].toString())
+                  expertdetailid: new ObjectID(req.body.value["_id"].toString())
                 }
 
                 subid = info.field.concat("._id");
@@ -426,6 +512,10 @@ async function data(callback){
                       }
                     });
                   }
+
+                  return res.status(500).json({
+                    err: err
+                  }); 
                 }
               });
 
@@ -436,6 +526,7 @@ async function data(callback){
       });
     });
 
+    
     
     app.post("/api/vote/", (req, res) => {
 
@@ -505,106 +596,164 @@ async function data(callback){
           counterInc = 0; 
           voterType = "";
 
+          async function upvote(){
+            try {
+              const result = await users.updateOne({ _id: new ObjectID(req.body.userid)},{$pull: {"downvotes" : info}})
+          
+              if (result.modifiedCount > 0) {
+                counterInc =  2;
+              }
+              else{
+                counterInc =  1;
+              }
+
+              voting()
+              // console.log("test" + counterInc )
+              } catch (err) {
+                return res.status(500).json({
+                  err: err
+                });
+              }
+          }
+          
+          async function downvote(){
+            try {
+              const result = await users.updateOne({ _id: new ObjectID(req.body.userid)},{$pull: {"upvotes" : info}})
+
+          
+              if (result.modifiedCount > 0) {
+                counterInc =  -2;
+              }
+              else{
+                counterInc =  -1;
+              }
+
+              voting()
+              // console.log("test" + counterInc )
+              } catch (err) {
+                return res.status(500).json({
+                  err: err
+                });
+              }
+          }
+
+          async function voting(){
+            try {
+              const result = await users.updateOne({ _id: new ObjectID(req.body.userid)},{$addToSet: {[voterType]: info}})
+
+              if (result.modifiedCount > 0) {
+
+                // console.log(counterInc)
+
+                if (req.body.field == "categories") {
+
+                    await experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
+                    $inc: {
+                      [field]: counterInc
+                    }
+                  });
+                }
+                else{
+
+                  await experts.updateOne({ _id: new ObjectID(info.id),[subid] : info.expertdetailid},{
+                    $inc: {
+                      [field]: counterInc
+                    }
+                });
+                }
+              }
+              } catch (err) {
+                  return res.status(500).json({
+                    err: err
+                  });
+              }
+          }
+
           if (req.body.votetype === "upvote") {
             voterType = "upvotes"
-            counterInc = 1;
-            users.updateOne({ _id: new ObjectID(req.body.userid)},{
-              $pull: {
-                "downvotes" : info
-              }}, (err,result) => {
-              // if (err){
-              //   console.log(err)
-              // }
-              // if (result.modifiedCount > 0) {
-              //     counterInc = 2;
-              // }
-              // else{
-                  // counterInc = 1;
-              // }
-            });
           }
           else if (req.body.votetype === "downvote") {
-            // check bug here count was zero for someone reason
             voterType = "downvotes"
-            counterInc = -1;
-
-            users.updateOne({ _id: new ObjectID(req.body.userid)},{
-              $pull: {
-                "upvotes" : info
-              }}, (err,result) => {
-                // if (err){
-                //   console.log(err)
-                // }
-              // if (result.modifiedCount > 0) {
-              //   counterInc = -2;
-              // }
-              // else{
-                 // counterInc = -1;
-              // }
-            });
           }
   
           if (req.body.votetype !== "") {
-            users.updateOne({ _id: new ObjectID(req.body.userid)},{
-                $addToSet: {
-                    [voterType]: info
-                }}, (err,result) => {
-                if (result.modifiedCount > 0) {
-
-                  if (req.body.field == "categories") {
-                    experts.updateOne({ _id: new ObjectID(info.id),[subfield] : info.tag},{
-                      $inc: {
-                        [field]: counterInc
-                      }
-                  });
-                  }
-                  else{
-                    console.log(subid)
-                    console.log(counterInc)
-                    console.log(info.expertdetailid)
-
-                    experts.updateOne({ _id: new ObjectID(info.id),[subid] : info.expertdetailid},{
-                      $inc: {
-                        [field]: counterInc
-                      }
-                  });
-                  }
-                }
-            });
+            voterType ==="downvotes" ? downvote() : upvote()
           }
         }
       });
     });
 
-    app.get("/api/getrankedexpert/", (req, res) => {
-      experts.find().sort({"categories.rating": -1}).toArray(function(err, expert) {  
+    app.get("/api/uservotes/", (req, res) => {
+      //  try {
+      users.findOne({ _id: new ObjectID(req.body.userid)}, { projection: {
+        _id: false,
+        upvotes: true,
+        downvotes: true
+      }}, function (err, user) {
         if (err) {
           return res.status(500).json({
             err: err
-          });  
-        }
+          });
+        } 
+        if (!user) {
+           return res.status(401).json({
+             message: "User does not exist"
+           });
+         } 
         else{
-          return res.status(200).json(expert);
+          return res.status(200).json(user);
         }
       })
+      // }
+      // catch(err) {
+      //   return res.status(500).json({
+      //     err: err
+      //   });  
+      // }
     });
 
-    app.get("/api/getrecentexpert/", (req, res) => {
-      experts.find().sort({"categories.createdAt": -1}).toArray(function(err, expert) {  
-        if (err) {
-          return res.status(500).json({
-            err: err
-          });  
-        }
-        else{
-          return res.status(200).json(expert);
-        }
-      })
-    });
+    // app.get("/api/getrankedexpert/", (req, res) => {
+    //   experts.find().sort({"categories.rating": -1}).toArray(function(err, expert) {  
+    //     if (err) {
+    //       return res.status(500).json({
+    //         err: err
+    //       });  
+    //     }
+    //     else{
+    //       return res.status(200).json(expert);
+    //     }
+    //   })
+    // });
 
-    app.use((req, res, next) => {
-      res.sendFile(path.join(__dirname, "..", "build", "index.html"));
-    });
+    // app.get("/api/getnewestexpert/", (req, res) => {
+    //   experts.find().sort({"createdAt": -1}).toArray(function(err, expert) {  
+    //     if (err) {
+    //       return res.status(500).json({
+    //         err: err
+    //       });  
+    //     }
+    //     else{
+    //       return res.status(200).json(expert);
+    //     }
+    //   })
+    // });
+
+    // app.get("/api/getlatestexpert/", (req, res) => {
+    //   experts.find().sort({"updatedAt": -1}).toArray(function(err, expert) {  
+    //     if (err) {
+    //       return res.status(500).json({
+    //         err: err
+    //       });  
+    //     }
+    //     else{
+    //       return res.status(200).json(expert);
+    //     }
+    //   })
+    // });
+
+    // app.use((req, res, next) => {
+    //   res.sendFile(path.join(__dirname, "..", "build", "index.html"));
+    // });
     
     
   }).catch((e) => {
