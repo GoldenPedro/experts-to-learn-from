@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import UpvoteDownVoteExpertDetails from './UpvoteDownVoteExpertDetails';
-
-import playSolid from '../../Assets/playSolid.svg'
+import './ExpertDetailsCardStyle.css'
 
 const Video = (props) =>{
     const {video, expertId} = props
@@ -9,10 +8,14 @@ const Video = (props) =>{
 
     return(
             <div className="expert-detail-card">
+                <div className="left-content">
+                    <p className="expert-detail-card-url">{video.video}</p>
+                </div>
                 
-                <p>{video.video}</p>
-                <p>{video.rating}</p>
-                <UpvoteDownVoteExpertDetails field="videos" subfield="video" id={video._id} expertId={expertId} tag={video.video}/>         
+                <div className="expert-detail-voting-rating-wrapper">
+                    <p>{video.rating}</p>
+                    <UpvoteDownVoteExpertDetails field="videos" subfield="video" id={video._id} expertId={expertId} tag={video.video}/>         
+                </div>
             </div>
         
     )

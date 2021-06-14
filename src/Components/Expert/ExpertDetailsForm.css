@@ -1,0 +1,51 @@
+.new-expert {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.new-expert form {
+    width: 80%;
+}
+
+.experts-details-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.experts-details-form input {
+    width: 100%;
+}
+
+.expert-details-form-input-container input {
+    width: 100%;
+    height: 25px;
+    font-size: 1rem;
+    border: 1px solid #CFD4DA;
+    border-radius: 5px;
+}
+
+.expert-details-form-input-container textarea {
+    width: 100%;
+    font-size: 1rem;
+    border: 1px solid #CFD4DA;
+    border-radius: 5px;
+}
+
+.expert-details-form button {
+    width: 100%;
+    font-size: 1.2rem;
+    background: #2470ff;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10%;
+    cursor: pointer;
+    transition: all 0.5s;
+    color: white;
+}
+
+
+
+    

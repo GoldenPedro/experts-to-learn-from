@@ -3,6 +3,7 @@ import axios from 'axios'
 import { connect } from 'react-redux';
 import saveUserInfoReducer from '../../Store/Reducers'
 import playSolid from '../../Assets/playSolid.svg'
+import './UpvoteDownVoteExpertDetails.css'
 
 
 let useridLocal = window.localStorage.getItem('userid')
@@ -28,6 +29,10 @@ const upvote = () => {
         .then(res => {
             console.log(res.data);
         })
+        .catch(err => {
+            console.log(err);
+            alert("Please login to upvote/downvote")
+        })
 }
 
 const defaultDownvoteInfo = {
@@ -47,6 +52,10 @@ const downvote = () => {
     axios.post('http://www.expertstolearnfrom.com/api/vote', downvoteInfo)
         .then(res => {
             console.log(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+            alert("Please login to upvote/downvote")
         })
 }
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import UpvoteDownVoteExpertDetails from './UpvoteDownVoteExpertDetails';
+import './ExpertDetailsCardStyle.css'
 
 
 const Description = (props) =>{
@@ -8,13 +9,19 @@ const Description = (props) =>{
 
     return(
             <div className="expert-detail-card">
+                <div className="left-content">
+                    <p>{description.description}</p>
+                </div>
                 
-                <p>{description.description}</p>
                 
+                <div className="expert-detail-voting-rating-wrapper">
                     <p>{description.rating}</p>
 
                     <UpvoteDownVoteExpertDetails field="descriptions" subfield="description" id={description._id} expertId={expertId} tag={description.description}/>
 
+                </div>
+
+                  
                 
             </div>
         

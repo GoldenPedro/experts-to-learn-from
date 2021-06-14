@@ -1,5 +1,7 @@
 import React from 'react';
 import UpvoteDownVoteExpertDetails from './UpvoteDownVoteExpertDetails';
+import './ExpertDetailsCardStyle.css'
+
 
 const TwitterLink = (props) =>{
     const {twitterLink, expertId} = props
@@ -7,8 +9,11 @@ const TwitterLink = (props) =>{
 
     return(
             <div className="expert-detail-card">
+                <div className="left-content">
+                    <p>{twitterLink.twitterLink}</p>
+                </div>
                 
-                <p>{twitterLink.twitterLink}</p>
+                
                
 
                 <div className="expert-detail-voting-rating-wrapper">

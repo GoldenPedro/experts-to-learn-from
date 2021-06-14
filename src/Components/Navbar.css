@@ -1,0 +1,44 @@
+/* ======= NAVBAR ======= */
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    /* position: absolute; */
+  }
+  
+  .logo {
+    margin-left: 3%;
+    width: 20%;
+  }
+  
+  .logo h3 {
+    font-size: 1.5rem;
+  }
+
+  .logo h3:hover {
+    color: #2470ff;
+  }
+  .logo a {
+    text-decoration: none;
+  }
+  
+  .nav-links {
+    width: 40%;
+    padding: 1%;
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 1.3rem;  
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-links a:hover {
+    color: #2470ff;
+  }
+  

@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { saveUserInfoAction } from '../Store/Actions'
 import * as yup from 'yup'
-// import '../App.css';
+import './Login.css'
 
 const defaultValues = {
     email: '',

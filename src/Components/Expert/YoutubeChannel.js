@@ -1,7 +1,7 @@
 import React from 'react';
 import UpvoteDownVoteExpertDetails from './UpvoteDownVoteExpertDetails';
+import './ExpertDetailsCardStyle.css'
 
-import playSolid from '../../Assets/playSolid.svg'
 
 const YoutubeChannel = (props) =>{
     const {youtubeChannel, expertId} = props
@@ -9,8 +9,10 @@ const YoutubeChannel = (props) =>{
 
     return(
             <div className="expert-detail-card">
+                <div className="left-content">
+                    <p>{youtubeChannel.youtubeChannel}</p>
+                </div>
                 
-                <p>{youtubeChannel.youtubeChannel}</p>
                
 
                 <div className="expert-detail-voting-rating-wrapper">

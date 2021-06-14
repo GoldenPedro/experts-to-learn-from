@@ -1,6 +1,7 @@
 import React from 'react';
 // import '../App.css';
 import { Link } from 'react-router-dom'
+import './Navbar.css'
 
 function Navbar() {
 
@@ -9,6 +10,7 @@ function Navbar() {
 
   const logout = () => {
     window.localStorage.clear();
+    window.sessionStorage.clear();
   }
 
   return (
@@ -24,6 +26,7 @@ function Navbar() {
         <Link to='/Login' >Login</Link>
         <Link to='/sign-up' >Sign Up</Link>
         <Link to='/new-expert' >New Entry</Link>
+        <Link to='/about' >About</Link>
         <a onClick={logout} href='/'>Logout </a>
         {/* <p>Hello, {username}</p> */}
       </div>

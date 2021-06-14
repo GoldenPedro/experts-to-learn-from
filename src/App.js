@@ -10,7 +10,14 @@ import Signup from './Components/Signup'
 import NewExpertForm from './Components/Expert/NewExpertForm'
 import CreateExpertForm from './Components/Expert/CreateExpertForm'
 import Expert from './Components/Expert/Expert';
+import About from './Components/About';
+import NotFound from './Components/NotFound'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faSearch} from '@fortawesome/free-solid-svg-icons'
+import { faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons'
+
+library.add(faSearch, faTwitter, faYoutube)
 
 function App() {
   return (
@@ -30,6 +37,10 @@ function App() {
         <Route path='/api/getexpert/:id'>
           <Expert />
         </Route>
+        <Route exact path='/about'>
+          <About />
+        </Route>
+        <Route component={NotFound} />
       </Switch>
     </div>
   );

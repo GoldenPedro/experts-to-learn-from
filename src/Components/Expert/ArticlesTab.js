@@ -6,7 +6,10 @@ import Article from './Article'
 import { connect } from 'react-redux';
 import saveUserInfoReducer from '../../Store/Reducers'
 
+import './Tabs.css'
+
 const defaultValues = {
+    articleTitle: '',
     articleLink: ''
 }
 
@@ -31,11 +34,12 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
         var newData = {
             value: {
                 article: formValues.articleLink.trim(),
-                rating: 1
+                rating: 1,
+                articleTitle: formValues.articleTitle.trim()
             },
             id: expertId,
             userid: useridLocal,
-            name: "articles"            
+            name: "articles",        
         }
         console.log(newData)
         if (formValues.articleLink.length == 0) {
@@ -63,10 +67,19 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
     // }
     // Trying to only show this if user if logged in ^^^^^^^^^^^^^^^^^^^^^^^
 
+    useEffect(() => {
+        if (useridLocal != null) {
+            document.getElementById("detailForm").style.visibility = "visible";
+        }
+    }, [])
+
+    
+
     return(
             <div className="">
                 <div id="detailForm">
                     <form onSubmit={submit}>
+                        <input onChange={handleChanges} placeholder="Enter Title of Article here" value={formValues.articleTitle} name="articleTitle"></input>
                         <input onChange={handleChanges} placeholder="Enter link here" value={formValues.articleLink} name="articleLink"></input>
                         <button>Submit</button>
                     </form>

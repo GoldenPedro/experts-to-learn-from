@@ -1,8 +1,6 @@
 import React from 'react'
 import UpvoteDownVoteExpertDetails from './UpvoteDownVoteExpertDetails';
-
-import playSolid from '../../Assets/playSolid.svg'
-
+import './ExpertDetailsCardStyle.css'
 
 const BookRecommendation = (props) =>{
     const {bookRecommendation, expertId} = props
@@ -10,12 +8,20 @@ const BookRecommendation = (props) =>{
 
     return(
             <div className="expert-detail-card">
+                <div className="left-content">
+                    <p>{bookRecommendation.bookRecommendation}</p>
+                    <p>{bookRecommendation.amazonLink}</p>
+                </div>
                 
-                <p>{bookRecommendation.bookRecommendation}</p>
-
+                
+                <div className="expert-detail-voting-rating-wrapper">
                     <p>{bookRecommendation.rating}</p>
                     <UpvoteDownVoteExpertDetails field="bookRecommendations" subfield="bookRecommendation" id={bookRecommendation._id} expertId={expertId} tag={bookRecommendation.bookRecommendation}/>
                 
+                </div>
+
+
+                    
             </div>
         
     )

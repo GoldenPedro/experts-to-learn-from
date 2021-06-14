@@ -13,6 +13,7 @@ import 'react-tabs/style/react-tabs.css';
 import DescriptionsTab from './DescriptionsTab'
 import YoutubeChannelsTab from './YoutubeChannelsTab'
 import OtherLinksTab from './OtherLinksTab'
+import './Expert.css'
 
 
 const Expert = (props) =>{
@@ -39,6 +40,8 @@ const Expert = (props) =>{
                 <p>Description: {experts.descriptions[0].description}</p>
                 <p>Twitter: {experts.twitterLinks[0].twitterLink}</p>
                 <p>YouTube Channel: {experts.youtubeChannels[0].youtubeChannel}</p>
+                <p>Last Updated: {new Date(experts.updatedAt).toLocaleDateString('en-US')}</p>
+                <p>Submittet by: {experts.submitted} on {new Date(experts.createdAt).toLocaleDateString('en-US')}</p>
               </div>
                 <div className="tabs-component">
                 <Tabs>
