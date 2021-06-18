@@ -15,10 +15,11 @@ const OtherLink = (props) =>{
                     <p>{otherLink.otherLink}</p>
                 </div>
                 
-               
 
                 <div className="expert-detail-voting-rating-wrapper">
-                    <p>{otherLink.rating}</p>
+                    <div className="expert-detail-card-rating">
+                            <p>{otherLink.rating}</p>
+                    </div>
                     <UpvoteDownVoteExpertDetails field="otherLinks" subfield="otherLink" id={otherLink._id} expertId={expertId} tag={otherLink.otherLink}/>
                 </div>
 

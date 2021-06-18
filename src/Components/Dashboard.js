@@ -10,7 +10,7 @@ const defaultCategorySearch = {
 
 const categories = []
 const defaultRandomCategory = ""
-
+const defaultCurrentCategory = "Top 50 Experts"
 
 function Dashboard() {
   // const temp = [{
@@ -26,6 +26,7 @@ function Dashboard() {
   const [experts, setExperts] = useState([])
   const [categorySearch, setCategorySearch] = useState(defaultCategorySearch)
   const [categoriesState, setCategoriesState] = useState(categories)
+  const [currentCategory, setCurrentCategory] = useState(defaultCurrentCategory)
 
   useEffect(() => {
         axios.get(`http://www.expertstolearnfrom.com/api/expertlist/`)
@@ -61,6 +62,8 @@ const selectCategory = (evt) => {
       setExperts(res.data)
       window.sessionStorage.setItem('savedCategory', evt.target.id)
     })
+    setCurrentCategory(`${evt.target.id}`)
+    setCategoriesState(categories)
 }
 
   return (
@@ -83,6 +86,9 @@ const selectCategory = (evt) => {
                     ))
                 }
               </div>
+      </div>
+      <div className='results-options'>
+        <p>Showing category: {currentCategory}</p>
       </div>
 
         {experts.map(expert => (

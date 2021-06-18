@@ -15,7 +15,9 @@ const Quote = (props) =>{
                 </div>
                 
                     <div className="expert-detail-voting-rating-wrapper">
-                        <p>{quote.rating}</p>       
+                        <div className="expert-detail-card-rating">
+                            <p>{quote.rating}</p>
+                        </div>
                         <UpvoteDownVoteExpertDetails field="quotes" subfield="quote" id={quote._id} expertId={expertId} tag={quote.quote}/>
                     </div>
             </div>

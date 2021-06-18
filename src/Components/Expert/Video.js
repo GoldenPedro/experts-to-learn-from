@@ -13,7 +13,9 @@ const Video = (props) =>{
                 </div>
                 
                 <div className="expert-detail-voting-rating-wrapper">
-                    <p>{video.rating}</p>
+                    <div className="expert-detail-card-rating">
+                        <p>{video.rating}</p>
+                    </div>
                     <UpvoteDownVoteExpertDetails field="videos" subfield="video" id={video._id} expertId={expertId} tag={video.video}/>         
                 </div>
             </div>

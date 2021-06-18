@@ -72,4 +72,8 @@
     cursor: pointer;
     background-color: rgb(197, 197, 197);
   }
+
+  .results-options {
+    width: 91%;
+  }
   

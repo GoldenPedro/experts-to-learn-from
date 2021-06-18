@@ -16,7 +16,9 @@ const YoutubeChannel = (props) =>{
                
 
                 <div className="expert-detail-voting-rating-wrapper">
-                    <p>{youtubeChannel.rating}</p>
+                    <div className="expert-detail-card-rating">
+                            <p>{youtubeChannel.rating}</p>
+                    </div>
                     <UpvoteDownVoteExpertDetails field="youtubeChannels" subfield="youtubeChannel" id={youtubeChannel._id} expertId={expertId} tag={youtubeChannel.youtubeChannel}/>
                 </div>
 

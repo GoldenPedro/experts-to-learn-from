@@ -15,7 +15,9 @@ const Description = (props) =>{
                 
                 
                 <div className="expert-detail-voting-rating-wrapper">
-                    <p>{description.rating}</p>
+                    <div className="expert-detail-card-rating">
+                            <p>{description.rating}</p>
+                    </div>
 
                     <UpvoteDownVoteExpertDetails field="descriptions" subfield="description" id={description._id} expertId={expertId} tag={description.description}/>
 

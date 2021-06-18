@@ -12,12 +12,12 @@ const TwitterLink = (props) =>{
                 <div className="left-content">
                     <p>{twitterLink.twitterLink}</p>
                 </div>
-                
-                
-               
+            
 
                 <div className="expert-detail-voting-rating-wrapper">
-                    <p>{twitterLink.rating}</p>
+                    <div className="expert-detail-card-rating">
+                            <p>{twitterLink.rating}</p>
+                    </div>
                     <UpvoteDownVoteExpertDetails field="twitterLinks" subfield="twitterLink" id={twitterLink._id} expertId={expertId} tag={twitterLink.twitterLink}/>
                 </div>
 

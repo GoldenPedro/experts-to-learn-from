@@ -23,6 +23,12 @@
     width: 20%;
 }
 
+.expert-detail-card-rating {
+    display: flex;
+    align-items: center;
+    
+}
+
   
 
   

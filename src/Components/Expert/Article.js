@@ -11,10 +11,13 @@ const {article, expertId} = props
                 <div className="left-content">
                     <p className="expert-detail-card-title">{article.articleTitle}</p>
                     <p className="expert-detail-card-url">{article.article}</p>
+                    <p className="expert-detail-card-url">{article.submitted}</p>
                 </div>
 
                 <div className="expert-detail-voting-rating-wrapper">
-                    <p>{article.rating}</p>
+                    <div className="expert-detail-card-rating">
+                        <p>{article.rating}</p>
+                    </div>
                     <UpvoteDownVoteExpertDetails field="articles" subfield="article" id={article._id} expertId={expertId} tag={article.article}/>
                 </div>
             </div>
