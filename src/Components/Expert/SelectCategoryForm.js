@@ -86,15 +86,15 @@ const SelectCategoryForm = (props) =>{
 
 
                     <div className='new-category-wrapper'>
-                    <p onClick={() => setNewCategorySearch(!newCategorySearch)}>Click here if you would like to add a new category</p>
+                        <p onClick={() => setNewCategorySearch(!newCategorySearch)}>Click here if you would like to add a new category</p>
+                        
+                        { 
+                            newCategorySearch ? <form onSubmit={submitNewCategory}>
+                                <input value={newCategoryText.newCategory} onChange={handleNewCategoryChanges} placeholder="Enter new category" name="newCategory" type="text"/>
+                                <button>Add new Category</button>
+                            </form> : null 
+                        }
                     </div>
-
-                    { 
-                        newCategorySearch ? <form onSubmit={submitNewCategory}>
-                            <input value={newCategoryText.newCategory} onChange={handleNewCategoryChanges} placeholder="Enter new category" name="newCategory" type="text"/>
-                            <button>Add new Category</button>
-                        </form> : null 
-                    }
             </div>
         </div>
     )

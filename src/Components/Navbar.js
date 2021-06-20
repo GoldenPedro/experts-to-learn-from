@@ -4,12 +4,36 @@ import './Navbar.css'
 
 function Navbar() {
 
-  // let username = window.localStorage.getItem('user')
+  let username = window.localStorage.getItem('user')
   
 
   const logout = () => {
     window.localStorage.clear();
     window.sessionStorage.clear();
+  }
+
+  const renderLoginButton = () => {
+    if (username != null) {
+      return <p>Welcome, {username}</p>
+    } else {
+      return <Link to='/Login' >Login</Link> 
+    }
+  }
+
+  const renderSignInButton = () => {
+    if (username == null) {
+      return <Link to='/sign-up' >Sign Up</Link>
+    } else {
+      return
+    }
+  }
+
+  const renderLogoutButton = () => {
+    if (username != null) {
+      return <a onClick={logout} href='/'>Logout </a>
+    } else {
+      return
+    }
   }
 
   return (
@@ -21,13 +45,12 @@ function Navbar() {
       </div>
 
       <div className='nav-links'>
+        {renderLoginButton()}
         <Link to='/' >Dashboard</Link>
-        <Link to='/Login' >Login</Link>
-        <Link to='/sign-up' >Sign Up</Link>
         <Link to='/new-expert' >New Entry</Link>
         <Link to='/about' >About</Link>
-        <a onClick={logout} href='/'>Logout </a>
-        {/* <p>Hello, {username}</p> */}
+        {renderSignInButton()}
+        {renderLogoutButton()}
       </div>
       
     </div>
