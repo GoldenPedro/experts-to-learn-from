@@ -9,7 +9,7 @@ const Video = (props) =>{
     return(
             <div className="expert-detail-card">
                 <div className="left-content">
-                    <p className="expert-detail-card-url">{video.video}</p>
+                    <a href={video.video} className="expert-detail-card-url">{video.video}</a>
                 </div>
                 
                 <div className="expert-detail-voting-rating-wrapper">

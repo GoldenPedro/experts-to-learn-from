@@ -38,10 +38,10 @@ const Expert = (props) =>{
               <div className='expert-info-container'>
                 <h2 className="expert-component-name">{experts.name}</h2>
                 <p>Description: {experts.descriptions[0].description}</p>
-                <p>Twitter: {experts.twitterLinks[0].twitterLink}</p>
+                <p>Twitter: @{experts.twitterLinks[0].twitterLink}</p>
                 <p>YouTube Channel: {experts.youtubeChannels[0].youtubeChannel}</p>
                 <p>Last Updated: {new Date(experts.updatedAt).toLocaleDateString('en-US')}</p>
-                <p>Submittet by: {experts.submitted} on {new Date(experts.createdAt).toLocaleDateString('en-US')}</p>
+                <p>Submitted by: {experts.submitted} on {new Date(experts.createdAt).toLocaleDateString('en-US')}</p>
               </div>
                 <div className="tabs-component">
                 <Tabs>

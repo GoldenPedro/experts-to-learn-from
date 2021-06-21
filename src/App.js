@@ -34,7 +34,7 @@ function App() {
           <Signup />
         </Route>
         <PrivateRoute exact path='/new-expert' component={CreateExpertForm} />
-        <Route path='/api/getexpert/:id'>
+        <Route path='/getexpert/:id'>
           <Expert />
         </Route>
         <Route exact path='/about'>

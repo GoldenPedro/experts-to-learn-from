@@ -92,6 +92,7 @@ export class CreateExpertForm extends Component {
       axios.post('http://www.expertstolearnfrom.com/api/NewExpert', newData)
       .then((res) => {
           console.log(res.data);
+          window.location.href="/";
       })
       .catch(err => {
           console.log(err);

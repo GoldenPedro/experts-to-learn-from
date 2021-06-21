@@ -26,7 +26,7 @@ const schema = yup.object().shape({
 })
 
 
-function Login() {
+function Signup() {
     // State
     const [formValues, setFormValues] = useState(defaultValues);
     const [savedFormInfo, setSavedFormInfo] = useState([]);
@@ -63,7 +63,7 @@ function Login() {
             window.localStorage.setItem('token', res.data.token)
             window.localStorage.setItem('userid', res.data.id)
             window.localStorage.setItem('user', res.data.user)
-            history.push("/");
+            window.location.href="/";
             }
         ).catch(err => {
             console.log(err);
@@ -121,4 +121,4 @@ function Login() {
     );
   }
   
-  export default Login;
+  export default Signup;

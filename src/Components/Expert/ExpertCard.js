@@ -22,7 +22,7 @@ function ExpertCard(props) {
         </div> */}
         <div className='left-content'>
           <div  className='expert-text'>
-              <Link onClick={setViewExpertFlag} className='expert-name-link' to={`/api/getexpert/${expert._id}`}>
+              <Link onClick={setViewExpertFlag} className='expert-name-link' to={`/getexpert/${expert._id}`}>
                 <h4 className='expert-name'>{expert.name}</h4>
               </Link>          
             <p className='expert-description'>{expert.descriptions[0].description}</p>
@@ -32,7 +32,7 @@ function ExpertCard(props) {
             <div className='expert-socials-links'>
               <div className='expert-twitter'>
                 <FontAwesomeIcon className='twitter-icon' icon={['fab', 'twitter']} />
-                <a href={`https://twitter.com/${expert.twitterLinks[0].twitterLink}`}>{expert.twitterLinks[0].twitterLink}</a>       
+                <a href={`https://twitter.com/${expert.twitterLinks[0].twitterLink}`}>@{expert.twitterLinks[0].twitterLink}</a>       
               </div>
               <div className='expert-youtubeChannel'>
                 <FontAwesomeIcon className='youtube-icon' icon={['fab', 'youtube']}/> 

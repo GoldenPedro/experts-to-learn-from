@@ -27,13 +27,13 @@ const About = (props) =>{
                         <div className="developer">
                             <img className="about-profile-image" src="https://avatars.githubusercontent.com/u/28662425?v=4" />
                             <p>Pedro Casuso</p>
-                            <a href="pedrocasuuso.com">pedrocasuso.com</a>
+                            <a href="https://pedrocasuso.com">pedrocasuso.com</a>
                             <a href="https://github.com/GoldenPedro">https://github.com/GoldenPedro</a>
                         </div>
                         <div className="developer">
                             <img className="about-profile-image" src="https://avatars.githubusercontent.com/u/37386321?v=4" />
                             <p>Alejandro Garcia</p>
-                            <a href="pedrocasuuso.com">alejandrogarcia.com</a>
+                            <a href="https://argarcia.me/">argarcia.me</a>
                             <a href="https://github.com/Alegar917">https://github.com/Alegar917</a>
                         </div>
                     </div>
