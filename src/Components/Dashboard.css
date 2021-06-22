@@ -74,6 +74,9 @@
   }
 
   .results-options {
+    padding: 1%;
     width: 91%;
+    display: flex;
+    justify-content: space-between;
   }
   

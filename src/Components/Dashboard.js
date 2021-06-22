@@ -66,6 +66,24 @@ const selectCategory = (evt) => {
     setCategoriesState(categories)
 }
 
+const top50ExpertsButton = (evt) => {
+  window.location.href="/";
+}
+
+const randomCategoryButton = (evt) => {
+  axios.get("http://www.expertstolearnfrom.com/api/randomcategory")
+  .then(res => {
+    console.log(res.data)
+    let randomCategory = res.data
+    axios.get(`http://www.expertstolearnfrom.com/api/expertlist/${randomCategory}`)
+      .then(response => {
+        setExperts(response.data)
+      })
+    setCurrentCategory(res.data)
+  })
+  
+}
+
   return (
     <div className="dashboard">
         <h1 className='main-title'>Experts To Learn From</h1>
@@ -89,6 +107,8 @@ const selectCategory = (evt) => {
       </div>
       <div className='results-options'>
         <p>Showing category: {currentCategory}</p>
+        <p onClick={top50ExpertsButton}>Top 50 Experts</p>
+        <p onClick={randomCategoryButton}>Random Category</p>
       </div>
 
         {experts.map(expert => (
