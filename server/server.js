@@ -6,12 +6,13 @@ const http = require('http');
 // const mongoose = require('mongoose');
 const { MongoClient, ObjectID } = require('mongodb');
 var cors = require('cors')
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const jwt = require('jsonwebtoken');
 // const { info, timeStamp } = require('console');
-
+const crypto = require('crypto');
+const nodemailer = require("nodemailer");
 
 const URI = process.env.MONGO_URI;
 
@@ -46,6 +47,19 @@ async function data(callback){
     const categories = await client.db('mydatabase').collection('categories');
     const details = await client.db('mydatabase').collection('details');
 
+    const transporter  = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      // service: 'gmail',
+      auth: {
+        user: "expertstolearnfrom@gmail.com", //process.env.EMAIL_USERNAME,
+        pass: "pedroalegar1" //process.env.EMAIL_PASSWORD,
+      }
+  });
+
+    const salt = process.env.SALT; 
+
     passport.serializeUser((user, done) => {
       done(null, user._id);
     });
@@ -64,7 +78,8 @@ async function data(callback){
         users.findOne({ email: username }, function (err, user) {
           if (err) { return done(err); }
           if (!user) { return done(null, false); }
-          if (!bcrypt.compareSync(password, user.password)) {return done(null, false); }
+          // if (!bcrypt.compareSync(password, user.password)) {return done(null, false); }
+          if (crypto.pbkdf2Sync(password, salt, 100, 64, `sha512`).toString(`hex`) !== user.password) {return done(null, false); }
           // if (password !== user.password) { return done(null, false); }
           return done(null, user);
         });
@@ -85,7 +100,32 @@ async function data(callback){
         }
       });
     }
- 
+    
+
+    // app.get("/api/email", (req,res) => {
+    //   const token = jwt.sign({id: "test"}, process.env.SESSION_SECRET, {expiresIn: "10m"})
+
+    //   var data = {
+    //     from: "expertstolearnfrom@gmail.com", // sender address (who sends)
+    //     to: 'alegar917@gmail.com', // list of receivers (who receives)
+    //     subject: 'Hello', // Subject line
+    //     text: 'Hello world ', // plaintext body
+    //     html: '<b>Hello world </b><br> This is the first email sent with Nodemailer in Node.js' // html body
+    // };
+
+    //   transporter.sendMail(data, function(err, info){
+    //     if (err){
+    //       console.log(err);
+    //     }
+
+    //     console.log('Message sent: ' + info.response);
+    //   });
+
+    //   return res.status(200).json({
+    //     token: token,
+    //   });
+
+    // })
 
     app.post("/api/users", (req, res, next) => {
       users.findOne({ email: req.body.email }, function (err, email) {
@@ -108,14 +148,35 @@ async function data(callback){
                 message: "user already exist"
               });
             } else {
-              const hash = bcrypt.hashSync(req.body.password, 12);
-              users.insertOne({ email: req.body.email, username: req.body.username, password: hash }, (err, doc) => {
+              // const hash = bcrypt.hashSync(req.body.password, 12);
+              const hash = crypto.pbkdf2Sync(req.body.password, salt, 100, 64, `sha512`).toString(`hex`); 
+              users.insertOne({ email: req.body.email, username: req.body.username, password: hash, verified: false }, (err, doc) => {
                 if (err) {
                   return res.status(500).json({
                     err: err
                   });
                 } else {
-                     const token = jwt.sign({id: req.body.email}, process.env.SESSION_SECRET)
+                    const token = jwt.sign({id: req.body.email}, process.env.SESSION_SECRET, {expiresIn: "10m"})
+
+                    const data = {
+                      from: "expertstolearnfrom@gmail.com",
+                      to: req.body.email,
+                      subject: "Your Activation Link for ExpertToLearnFrom",
+                      text: `Please use the following link within the next 10 minutes to activate your account: http://expertstolearnfrom.com/api/verify/${token}`,
+                      html: `<p>Please use the following link within the next 10 minutes to activate your account: <strong><a href="http://expertstolearnfrom.com/api/verify/${token}" target="_blank"> Verify email address</a></strong></p>`,
+                    };
+
+
+                    transporter.sendMail(data, function(err, info){
+                      if (err){
+                        console.log(err);
+                      }
+
+                      console.log('Message sent: ' + info.response);
+                    });
+                  // transporter.sendMail(data);
+
+                     
                      return res.status(200).json({
                       token: token,
                       id: doc["ops"][0]["_id"],
@@ -155,6 +216,39 @@ async function data(callback){
       })(req, res);
     });
 
+    // app.get("/api/verify/:token", (req, res) => {
+    //   token = req.params.token
+
+    //   if (!token) {
+    //     return res.status(401).json({ 
+    //         message: "Missing Token" 
+    //     });
+    //   }
+
+    //   let payload = null
+    //   try {
+    //     payload = jwt.verify(token, process.env.SESSION_SECRET);
+    //   } catch (err) {
+    //     return res.status(500).json({
+    //       err: err
+    //     });
+    //   }
+
+    //   users.updateOne({email: payload.id }, {$set: {verified: true }}, function(err, user){
+    //     if (user) {
+    //       return res.status(200).json({
+    //         message: "Account Verified" 
+    //       });
+    //     }
+    //     else{
+    //       return res.status(401).json({
+    //         user: payload.id,
+    //         message: "User doesn't exist"
+    //       });
+    //     }
+    //   })
+    // })
+
     app.post("/api/NewExpert", (req, res) => {
       users.findOne({ _id: new ObjectID(req.body.user)}, function (err, user) {
         if (err) {
@@ -171,27 +265,36 @@ async function data(callback){
           const timeStamp = new Date()
 
           for (var [key, value] of Object.entries(req.body)) {
-            if (key == "descriptions" || key == "twitterLinks" || key == "youtubeChannels"  || key == "blogs" ) {
-              req.body[key].submitted = user.username
-              req.body[key].createdAt = timeStamp
 
-              details.insertOne(value, (err,doc)=>{
-                if (err) {
-                  return res.status(500).json({
-                    err: err
-                  });
-                }
-                // value["_id"] = doc["ops"][0]["_id"].toString()
-              })
+            if (key == "descriptions" || key == "twitterLinks" || key == "youtubeChannels"  || key == "blogs" ) {
+
+              if (Object.values(value)[0] !== "") {
+                req.body[key].submitted = user.username
+                req.body[key].createdAt = timeStamp
+
+                details.insertOne(value, (err, doc)=>{
+                  if (err) {
+                    return res.status(500).json({
+                      err: err
+                    });
+                  }
+                  // value["_id"] = doc["ops"][0]["_id"].toString()
+                })
+              }
+              else{
+                req.body[key] =  null
+              }
             }
           }
 
 
           experts.insertOne(
             {
-              name: req.body.name, descriptions: [req.body.descriptions], twitterLinks: [req.body.twitterLinks], 
-              youtubeChannels: [req.body.youtubeChannels], blogs: [req.body.blogs], articles: [], bookRecommendations: [], tweets: [], videos: [],
-              quotes: [], otherLinks: [], categories: [req.body.categories], submitted: user.username, createdAt: timeStamp, updatedAt: timeStamp
+              name: req.body.name, descriptions: [req.body.descriptions], 
+              twitterLinks: (req.body.twitterLinks === null) ? []  : [req.body.twitterLinks], 
+              youtubeChannels: (req.body.youtubeChannels === null) ? []  : [req.body.youtubeChannels], 
+              blogs: (req.body.blogs === null) ? []  : [req.body.blogs], 
+              articles: [], bookRecommendations: [], tweets: [], videos: [], quotes: [], otherLinks: [], categories: [req.body.categories], submitted: user.username, createdAt: timeStamp, updatedAt: timeStamp
             }, (err, doc) => {
             if (err) {
               return res.status(500).json({
@@ -204,13 +307,15 @@ async function data(callback){
 
                 if (key !== "name" && key !== "user" ) {
                   
-
                   if (key == "categories") {
                     var info = {
                       id: doc["ops"][0]["_id"].toString(),
                       field: key,
                       tag : Object.values(value)[0]
                     }
+                  }
+                  else if (value === null){
+                    continue;
                   }
                   else{
                   var info = {
@@ -437,6 +542,10 @@ async function data(callback){
 
     app.post("/api/addexpertdetails/", (req, res) => {
 
+      // if (Object.values(req.body.value)[0] == "") {
+      //   return res.status(200).json({message: "value is empty"});
+      // }
+
       users.findOne({ _id: new ObjectID(req.body.userid)}, function (err, user) {
         if (err) {
           return res.status(500).json({
@@ -449,6 +558,7 @@ async function data(callback){
            });
          } 
         else{
+          // console.log(Object.values(req.body.value))
           const timeStamp = new Date()
           req.body.value.submitted = user.username;
           req.body.value.createdAt = timeStamp
@@ -486,9 +596,6 @@ async function data(callback){
                 subid = info.field.concat("._id");
               }
 
-              
-
-              
               field = info.field.concat(".$.rating");
               subfield = info.field.concat("." + Object.keys(req.body.value)[0])
 
@@ -526,6 +633,27 @@ async function data(callback){
       });
     });
 
+
+    // app.post("/api/deleteexpertdetails/", (req, res) => {
+    //   users.findOne({ _id: new ObjectID(req.body.user)}, function (err, user) {
+    //     if (err) {
+    //       return res.status(500).json({
+    //         err: err
+    //       });
+    //     } 
+    //     if (!user) {
+    //       return res.status(401).json({
+    //         message: "User doesn't exist"
+    //       });
+    //     }
+    //     else{
+
+    //       experts.update({ _id: new ObjectID(req.body.id)}, {$pull: {[req.body.name]: { _id: new ObjectID(req.body.detail)}}}, function(err, expert){
+    //         return res.status(200).json(expert);
+    //       })
+    //     }
+    //   })  
+    // })
     
     
     app.post("/api/vote/", (req, res) => {
