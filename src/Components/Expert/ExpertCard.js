@@ -31,12 +31,21 @@ function ExpertCard(props) {
           <div className='expert-socials'>
             <div className='expert-socials-links'>
               <div className='expert-twitter'>
-                <FontAwesomeIcon className='twitter-icon' icon={['fab', 'twitter']} />
-                <a href={`https://twitter.com/${expert.twitterLinks[0].twitterLink}`}>@{expert.twitterLinks[0].twitterLink}</a>       
+                {expert.twitterLinks[0].twitterLink.length > 0 &&
+                  <FontAwesomeIcon className='twitter-icon' icon={['fab', 'twitter']} />
+                }
+                {expert.twitterLinks[0].twitterLink.length > 0 &&
+                  <a href={`https://twitter.com/${expert.twitterLinks[0].twitterLink}`}>@{expert.twitterLinks[0].twitterLink}</a>
+                }            
               </div>
               <div className='expert-youtubeChannel'>
-                <FontAwesomeIcon className='youtube-icon' icon={['fab', 'youtube']}/> 
-                <a href={expert.youtubeChannels[0].youtubeChannel}> {expert.youtubeChannels[0].youtubeChannel}</a>
+                {expert.youtubeChannels[0].youtubeChannel.length > 0 &&
+                    <FontAwesomeIcon className='youtube-icon' icon={['fab', 'youtube']}/> 
+                }
+                {expert.youtubeChannels[0].youtubeChannel.length > 0 &&
+                    <a href={expert.youtubeChannels[0].youtubeChannel}>YouTube Channel</a>
+                }
+                
               </div>
             </div>
           </div>

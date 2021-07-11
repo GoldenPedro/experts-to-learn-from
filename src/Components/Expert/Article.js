@@ -10,7 +10,7 @@ const {article, expertId} = props
             <div className="expert-detail-card">
                 <div className="left-content">
                     <p className="expert-detail-card-title">{article.articleTitle}</p>
-                    <p className="expert-detail-card-url">{article.article}</p>
+                    <a href={article.article} className="expert-detail-card-url">{article.article}</a>
                     <p className="expert-detail-card-url">{article.submitted}</p>
                 </div>
 

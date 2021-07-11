@@ -10,7 +10,7 @@ const YoutubeChannel = (props) =>{
     return(
             <div className="expert-detail-card">
                 <div className="left-content">
-                    <p>{youtubeChannel.youtubeChannel}</p>
+                    <a href={youtubeChannel.youtubeChannel}>{youtubeChannel.youtubeChannel}</a>
                 </div>
                 
                

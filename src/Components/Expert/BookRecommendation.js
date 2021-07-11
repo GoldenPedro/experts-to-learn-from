@@ -10,7 +10,7 @@ const BookRecommendation = (props) =>{
             <div className="expert-detail-card">
                 <div className="left-content">
                     <p>{bookRecommendation.bookRecommendation}</p>
-                    <p>{bookRecommendation.amazonLink}</p>
+                    <a href={bookRecommendation.amazonLink} >{bookRecommendation.amazonLink}</a>
                 </div>
                 
                 

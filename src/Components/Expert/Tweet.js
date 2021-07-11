@@ -11,7 +11,7 @@ const Tweet = (props) =>{
     return(
             <div className="expert-detail-card">
                 <div className="left-content">
-                    <p className="expert-detail-card-url">{tweet.tweet}</p>
+                    <a href={tweet.tweet} className="expert-detail-card-url">{tweet.tweet}</a>
                 </div>
                 
                 

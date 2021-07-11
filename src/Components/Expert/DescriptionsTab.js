@@ -66,7 +66,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
             <div className="">
                 <div id="detailForm">
                     <form onSubmit={submit}>
-                        <input onChange={handleChanges} placeholder="Enter link here" value={formValues.descriptionText} name="descriptionText"></input>
+                        <input onChange={handleChanges} placeholder="Enter description here" value={formValues.descriptionText} name="descriptionText"></input>
                         <button>Submit</button>
                     </form>
                 </div>
