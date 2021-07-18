@@ -46,7 +46,7 @@ function Navbar() {
 
       <div className='nav-links'>
         {renderLoginButton()}
-        <Link to='/' >Dashboard</Link>
+        <Link to='/' >Home</Link>
         <Link to='/new-expert' >New Entry</Link>
         <Link to='/about' >About</Link>
         {renderSignInButton()}

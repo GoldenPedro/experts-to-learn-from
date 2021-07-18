@@ -41,4 +41,8 @@
   .nav-links a:hover {
     color: #2470ff;
   }
-  
+
+  .nav-links p {
+    display: flex;
+    align-items: center;
+  }

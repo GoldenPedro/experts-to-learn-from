@@ -107,8 +107,8 @@ const randomCategoryButton = (evt) => {
       </div>
       <div className='results-options'>
         <p>Showing category: {currentCategory}</p>
-        <p onClick={top50ExpertsButton}>Top 50 Experts</p>
-        <p onClick={randomCategoryButton}>Random Category</p>
+        <p className='clickable-filter' onClick={top50ExpertsButton}>Top 50 Experts</p>
+        <p className='clickable-filter' onClick={randomCategoryButton}>Random Category</p>
       </div>
 
         {experts.map(expert => (
