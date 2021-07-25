@@ -85,3 +85,13 @@
   .clickable-filter:hover {
     cursor: pointer;
   }
+
+  @media only screen and (max-width: 1000px) {
+    .dashboard {
+      width: 100%;
+    }
+
+    .main-title {
+      font-size: 2rem;
+    }
+  }

@@ -29,6 +29,31 @@
     
 }
 
+@media only screen and (max-width: 1000px) {
+    .expert-detail-card {
+        margin: 0;
+        padding: 0;
+        flex-direction: column;
+    }
+
+    .left-content {
+        width: 100%;
+    }
+
+    .expert-detail-card-url {
+        word-wrap: break-word;
+    }
+
+    .expert-detail-voting-rating-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 5%;
+    }
+}
+
   
 
   

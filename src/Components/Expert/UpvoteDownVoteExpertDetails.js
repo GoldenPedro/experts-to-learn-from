@@ -23,7 +23,7 @@ const defaultUpvoteInfo = {
 
 const [upvoteInfo, setUpvoteInfo] = useState(defaultUpvoteInfo)
 
-const upvote = () => {
+const upvote = (event) => {
     console.log(upvoteInfo)
     axios.post('http://www.expertstolearnfrom.com/api/vote', upvoteInfo)
         .then(res => {
@@ -33,6 +33,8 @@ const upvote = () => {
             console.log(err);
             alert("Please login to upvote/downvote")
         })
+    event.target.nextSibling.innerText = Number(event.target.nextSibling.innerText) + 1;
+
 }
 
 const defaultDownvoteInfo = {
@@ -47,7 +49,7 @@ const defaultDownvoteInfo = {
 
 const [downvoteInfo, setDownvoteInfo] = useState(defaultDownvoteInfo)
 
-const downvote = () => {
+const downvote = (event) => {
     console.log(downvoteInfo)
     axios.post('http://www.expertstolearnfrom.com/api/vote', downvoteInfo)
         .then(res => {
@@ -57,6 +59,8 @@ const downvote = () => {
             console.log(err);
             alert("Please login to upvote/downvote")
         })
+    event.target.previousSibling.innerText = Number(event.target.previousSibling.innerText) - 1;
+
 }
 
     return(

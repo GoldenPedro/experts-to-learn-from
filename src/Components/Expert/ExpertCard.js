@@ -20,7 +20,7 @@ function ExpertCard(props) {
         {/* <div className='expert-img-container'>
           <img className='expert-img' src="https://picsum.photos/400" alt='Expert'/>
         </div> */}
-        <div className='left-content'>
+        <div className='left-content-expert-card'>
           <div  className='expert-text'>
               <Link onClick={setViewExpertFlag} className='expert-name-link' to={`/getexpert/${expert._id}`}>
                 <h4 className='expert-name'>{expert.name}</h4>

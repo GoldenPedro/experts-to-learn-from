@@ -12,7 +12,7 @@
     filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.25));
   }
 
-  .left-content {
+  .left-content-expert-card {
     width: 70%;
     margin-left: 1%;
     padding: 1%;
@@ -123,3 +123,36 @@
     font-weight: 600;
   }
   
+  @media only screen and (max-width: 1000px) {
+    .expert {
+      display:flex;
+      flex-direction: column;
+      margin-bottom: 3%;
+    }
+
+   .left-content-expert-card {
+      flex-direction: column;
+      width: 97%;
+      margin-left: 1%;
+      padding: 1%;
+   }
+
+   .expert-socials-links {
+     justify-content: space-between;
+   }
+
+   .expert-youtubeChannel {
+     justify-content: flex-end;
+   }
+
+   .expert-category {
+     justify-content: flex-start;
+     margin-left: 1%;
+   }
+
+   .expert-category-rating {
+     width: 100%;
+     justify-content: space-between;
+     margin-top: 5%;
+   }
+  }

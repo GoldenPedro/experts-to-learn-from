@@ -46,6 +46,13 @@
     color: white;
 }
 
-
+@media only screen and (max-width: 1000px) {
+    .new-expert {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
 
     

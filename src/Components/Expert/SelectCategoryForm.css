@@ -81,3 +81,25 @@
     cursor: pointer;
   }
 
+  @media only screen and (max-width: 1000px) {
+    .select-category-container {
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 90%;
+    }
+
+    .select-category-search-form input{
+      width: 50%;
+      padding: .5%;
+      border: 2px solid #E7E7E7;
+    }
+
+    .search-button {
+      padding: .5%;
+      width: 25%;
+      border: 2px solid #E7E7E7;
+      border-left: none;
+    }
+  }
