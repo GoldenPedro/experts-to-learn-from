@@ -128,13 +128,19 @@
       display:flex;
       flex-direction: column;
       margin-bottom: 3%;
+      padding: 0;
     }
 
    .left-content-expert-card {
       flex-direction: column;
-      width: 97%;
-      margin-left: 1%;
-      padding: 1%;
+      width: 96%;
+      margin-left: 0%;
+      padding: 2%;
+   }
+
+   .expert-socials {
+     padding: 1%;
+     font-size: 12px;
    }
 
    .expert-socials-links {
@@ -147,12 +153,14 @@
 
    .expert-category {
      justify-content: flex-start;
-     margin-left: 1%;
+     margin-left: 2%;
+     padding: 0;
    }
 
    .expert-category-rating {
      width: 100%;
+     padding: 0;
      justify-content: space-between;
-     margin-top: 5%;
+     background-color: #f0f0f0;
    }
   }
