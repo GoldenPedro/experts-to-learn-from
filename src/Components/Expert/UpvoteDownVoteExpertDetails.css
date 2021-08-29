@@ -6,3 +6,30 @@
     justify-content: center;
     padding: 1%;
 }
+
+.expert-detail-voting p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.upvote-icon-details {
+    width: 15%;
+    transform: rotate(-90deg);
+    filter: invert(89%) sepia(10%) saturate(13%) hue-rotate(315deg) brightness(90%) contrast(84%);
+}
+
+.upvote-icon-details:hover {
+    filter: invert(32%) sepia(96%) saturate(2947%) hue-rotate(213deg) brightness(103%) contrast(101%);
+    cursor: pointer;
+}
+
+.downvote-icon-details {
+    width: 15%;
+    transform: rotate(90deg);
+    filter: invert(89%) sepia(10%) saturate(13%) hue-rotate(315deg) brightness(90%) contrast(84%);
+}
+
+.downvote-icon-details:hover {
+    cursor: pointer;
+    filter: invert(60%) sepia(65%) saturate(2803%) hue-rotate(343deg) brightness(102%) contrast(101%);
+}

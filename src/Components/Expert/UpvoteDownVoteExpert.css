@@ -43,7 +43,8 @@
     .expert-card-voting {
         width: 20%;
         margin-right: 1%;
-        flex-direction: row;
+        flex-direction: row-reverse;
+
     }
 
     .expert-card-voting p {

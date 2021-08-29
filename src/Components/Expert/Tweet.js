@@ -18,10 +18,7 @@ const Tweet = (props) =>{
                
 
                 <div className="expert-detail-voting-rating-wrapper">
-                    <div className="expert-detail-card-rating">
-                        <p>{tweet.rating}</p>
-                    </div>
-                    <UpvoteDownVoteExpertDetails field="tweets" subfield="tweet" id={tweet._id} expertId={expertId} tag={tweet.tweet}/>
+                    <UpvoteDownVoteExpertDetails field="tweets" subfield="tweet" rating={tweet.rating} id={tweet._id} expertId={expertId} tag={tweet.tweet}/>
                 </div>
 
                 

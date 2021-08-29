@@ -64,10 +64,10 @@ const downvote = (event) => {
 }
 
     return(
-            <div className="expert-card-voting">
-                <img className='upvote-icon' onClick={upvote} src={playSolid} alt='upvote' />
+            <div className="expert-detail-voting">
+                <img className='upvote-icon-details' onClick={upvote} src={playSolid} alt='upvote' />
                 <p>{rating}</p>
-                <img className='downvote-icon' onClick={downvote} src={playSolid} alt='downvote' />
+                <img className='downvote-icon-details' onClick={downvote} src={playSolid} alt='downvote' />
             </div>
         
     )

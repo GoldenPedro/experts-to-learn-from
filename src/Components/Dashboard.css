@@ -11,6 +11,7 @@
     color: #2470ff;
     font-size: 3rem;
     font-weight: 700;
+    text-align: center;
   }
   
   .select-category-form {
@@ -93,5 +94,9 @@
 
     .main-title {
       font-size: 2rem;
+    }
+
+    .results-options {
+      font-size: 14px;
     }
   }

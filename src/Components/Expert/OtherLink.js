@@ -2,9 +2,6 @@ import React from 'react';
 import UpvoteDownVoteExpertDetails from './UpvoteDownVoteExpertDetails';
 import './ExpertDetailsCardStyle.css'
 
-
-import playSolid from '../../Assets/playSolid.svg'
-
 const OtherLink = (props) =>{
     const {otherLink, expertId} = props
 
@@ -17,10 +14,7 @@ const OtherLink = (props) =>{
                 
 
                 <div className="expert-detail-voting-rating-wrapper">
-                    <div className="expert-detail-card-rating">
-                            <p>{otherLink.rating}</p>
-                    </div>
-                    <UpvoteDownVoteExpertDetails field="otherLinks" subfield="otherLink" id={otherLink._id} expertId={expertId} tag={otherLink.otherLink}/>
+                    <UpvoteDownVoteExpertDetails field="otherLinks" subfield="otherLink" rating={otherLink.rating} id={otherLink._id} expertId={expertId} tag={otherLink.otherLink}/>
                 </div>
 
                 
