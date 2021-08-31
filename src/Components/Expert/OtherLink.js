@@ -10,6 +10,7 @@ const OtherLink = (props) =>{
             <div className="expert-detail-card">
                 <div className="left-content">
                     <a href={otherLink.otherLink}>{otherLink.otherLink}</a>
+                    <p className="expert-detail-card-submitted">Submitted by: {otherLink.submitted}</p>
                 </div>
                 
 

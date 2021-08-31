@@ -5,7 +5,6 @@
     margin: 2% 5%; 
     filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.25));
     background-color: white;
-    padding: .5%;
 }
 
 .expert-detail-card-title {
@@ -14,15 +13,25 @@
 }
 
 .expert-detail-title-url {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     text-decoration: none;
     font-weight: 600;
     display: flex;
+    margin-top: 2%;
+}
+
+.expert-detail-title-url:hover {
+    color: rgb(128, 128, 128);
+}
+
+.expert-detail-card-submitted {
+    font-size: .8rem;
+    margin-bottom: 2%;
 }
 
 .left-content {
     width: 90%;
-    padding-left: 1%;
+    padding-left: 2%;
 }
 
 .expert-detail-voting-rating-wrapper {
@@ -30,6 +39,8 @@
     flex-direction: row;
     justify-content: center;
     width: 20%;
+    padding: 0;
+    margin: 0;
 }
 
 .expert-detail-card-rating {
@@ -49,7 +60,7 @@
         width: 100%;
     }
 
-    .expert-detail-card-url {
+    .expert-detail-card-submitted {
         word-wrap: break-word;
     }
 

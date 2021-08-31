@@ -11,6 +11,7 @@ const TwitterLink = (props) =>{
             <div className="expert-detail-card">
                 <div className="left-content">
                     <a href={`https://twitter.com/${twitterLink.twitterLink}`}>@{twitterLink.twitterLink}</a>
+                    <p className="expert-detail-card-submitted">Submitted by: {twitterLink.submitted}</p>
                 </div>
             
 

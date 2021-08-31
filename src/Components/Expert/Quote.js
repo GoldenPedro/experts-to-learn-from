@@ -10,6 +10,7 @@ const Quote = (props) =>{
             <div className="expert-detail-card">
                 <div className="left-content">
                     <p>{quote.quote}</p>
+                    <p className="expert-detail-card-submitted">Submitted by: {quote.submitted}</p>
                 </div>
                 
                     <div className="expert-detail-voting-rating-wrapper">

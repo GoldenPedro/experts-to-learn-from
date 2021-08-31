@@ -11,6 +11,7 @@ const BookRecommendation = (props) =>{
                 <div className="left-content">
                     <p>{bookRecommendation.bookRecommendation}</p>
                     <a href={bookRecommendation.amazonLink} >{bookRecommendation.amazonLink}</a>
+                    <p className="expert-detail-card-submitted">Submitted by: {bookRecommendation.submitted}</p>
                 </div>
                 
                 

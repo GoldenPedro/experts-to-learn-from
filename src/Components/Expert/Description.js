@@ -11,6 +11,7 @@ const Description = (props) =>{
             <div className="expert-detail-card">
                 <div className="left-content">
                     <p>{description.description}</p>
+                    <p className="expert-detail-card-submitted">Submitted by: {description.submitted}</p>
                 </div>
                 
                 
