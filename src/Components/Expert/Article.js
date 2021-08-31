@@ -9,8 +9,10 @@ const {article, expertId} = props
     return(
             <div className="expert-detail-card">
                 <div className="left-content">
-                    <p className="expert-detail-card-title">{article.articleTitle}</p>
-                    <a href={article.article} className="expert-detail-card-url">{article.article}</a>
+                    {/* <p className="expert-detail-card-title">{article.articleTitle}</p> */}
+                    {/* <a href={article.article} className="expert-detail-card-url">{article.article}</a>
+                    <br/> */}
+                    <a className="expert-detail-title-url" href={article.article}>{article.articleTitle}</a>
                     <p className="expert-detail-card-url">Submitted by: {article.submitted}</p>
                 </div>
 

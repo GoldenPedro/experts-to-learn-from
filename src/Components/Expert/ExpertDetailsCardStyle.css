@@ -13,8 +13,16 @@
     margin: 1% 0;
 }
 
+.expert-detail-title-url {
+    font-size: 1.4rem;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+}
+
 .left-content {
     width: 90%;
+    padding-left: 1%;
 }
 
 .expert-detail-voting-rating-wrapper {
