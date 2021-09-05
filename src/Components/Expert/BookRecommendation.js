@@ -5,12 +5,20 @@ import './ExpertDetailsCardStyle.css'
 const BookRecommendation = (props) =>{
     const {bookRecommendation, expertId} = props
 
+    const conditionalLinkRender = () => {
+        let link = ''
+        if (bookRecommendation.amazonLink.length !== 0) {
+            return <a className="expert-detail-card-url" href={bookRecommendation.amazonLink}>{bookRecommendation.bookRecommendation}</a>
+        } else {
+            return <p className="expert-detail-card-text">{bookRecommendation.bookRecommendation}</p>
+        }
+    }
 
     return(
             <div className="expert-detail-card">
                 <div className="left-content">
-                    <p>{bookRecommendation.bookRecommendation}</p>
-                    <a href={bookRecommendation.amazonLink} >{bookRecommendation.amazonLink}</a>
+
+                    {conditionalLinkRender()}
                     <p className="expert-detail-card-submitted">Submitted by: {bookRecommendation.submitted}</p>
                 </div>
                 

@@ -24,9 +24,25 @@
     color: rgb(128, 128, 128);
 }
 
+.expert-detail-card-url {
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 2%;
+    display: flex;
+    font-size: 1.3rem;
+}
+
+.expert-detail-card-url:hover {
+    color: rgb(128, 128, 128);
+}
+
 .expert-detail-card-submitted {
     font-size: .8rem;
     margin-bottom: 2%;
+}
+
+.expert-detail-card-text {
+    font-size: 1.3rem;
 }
 
 .left-content {
