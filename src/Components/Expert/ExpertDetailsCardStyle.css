@@ -28,12 +28,18 @@
     text-decoration: none;
     font-weight: 500;
     margin-top: 2%;
-    display: flex;
+    display: block;
     font-size: 1.3rem;
+    word-wrap: break-word;
 }
 
 .expert-detail-card-url:hover {
     color: rgb(128, 128, 128);
+}
+
+.expert-detail-card-author {
+    font-size: 1rem;
+    margin-top: .7%;
 }
 
 .expert-detail-card-submitted {
@@ -43,6 +49,7 @@
 
 .expert-detail-card-text {
     font-size: 1.3rem;
+    margin-bottom: 0;
 }
 
 .left-content {
@@ -66,17 +73,27 @@
 }
 
 @media only screen and (max-width: 1000px) {
+    #detailForm {
+        margin-bottom: 3%;
+    }
+
     .expert-detail-card {
         margin: 0;
-        padding: 0;
-        flex-direction: column;
+        margin-bottom: 3%;
+        padding: 1%;
+        /* flex-direction: column; */
     }
 
     .left-content {
-        width: 100%;
+        width: 90%;
+        word-wrap: break-word;
     }
 
     .expert-detail-card-submitted {
+        word-wrap: break-word;
+    }
+
+    .expert-detail-card-url {
         word-wrap: break-word;
     }
 
@@ -84,10 +101,9 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
-        justify-content: space-between;
-        width: 100%;
-        margin-top: 5%;
+        width: 30%;
     }
+    
 }
 
   

@@ -6,7 +6,6 @@ const BookRecommendation = (props) =>{
     const {bookRecommendation, expertId} = props
 
     const conditionalLinkRender = () => {
-        let link = ''
         if (bookRecommendation.amazonLink.length !== 0) {
             return <a className="expert-detail-card-url" href={bookRecommendation.amazonLink}>{bookRecommendation.bookRecommendation}</a>
         } else {
@@ -17,8 +16,8 @@ const BookRecommendation = (props) =>{
     return(
             <div className="expert-detail-card">
                 <div className="left-content">
-
                     {conditionalLinkRender()}
+                    <p className="expert-detail-card-author">by {bookRecommendation.author}</p>
                     <p className="expert-detail-card-submitted">Submitted by: {bookRecommendation.submitted}</p>
                 </div>
                 
