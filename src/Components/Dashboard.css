@@ -77,26 +77,36 @@
   }
 
   .results-options {
-    padding: 1%;
+    padding: 0% 1%;
     width: 91%;
     display: flex;
     justify-content: space-between;
   }
-  
-  .clickable-filter:hover {
-    cursor: pointer;
+
+.results-options p {
+  display: flex;
+  align-items: center;
+}
+
+#current-category {
+  font-weight: 600;
+  font-size: 16px;
+}  
+
+.clickable-filter:hover {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 1000px) {
+  .dashboard {
+    width: 100%;
   }
 
-  @media only screen and (max-width: 1000px) {
-    .dashboard {
-      width: 100%;
-    }
-
-    .main-title {
-      font-size: 2rem;
-    }
-
-    .results-options {
-      font-size: 14px;
-    }
+  .main-title {
+    font-size: 2rem;
   }
+
+  .results-options {
+    font-size: 14px;
+  }
+}

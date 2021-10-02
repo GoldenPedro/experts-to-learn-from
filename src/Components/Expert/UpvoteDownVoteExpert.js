@@ -9,7 +9,7 @@ import './UpvoteDownVoteExpert.css'
 let useridLocal = window.localStorage.getItem('userid')
 
 const UpvoteDownVoteExpert = (props) =>{
-const {expertid, category, rating, userinfo} = props
+const {expertid, category, rating, userinfo, upvotes, downvotes, uservotes} = props
 
 const defaultUpvoteInfo = {
     expertid: expertid,
@@ -60,11 +60,24 @@ const downvote = (event) => {
 
 }
 
+const checkUpvotes = () => {
+    // console.log(upvotes)
+    // console.log(uservotes.upvotes)
+    // console.log(uservotes.upvotes.filter(element => element.id === expertid))
+    // if (uservotes.upvotes.some(element => element.id === "test")) {
+    //     console.log("upvoted")
+    // } else {
+    //     console.log("downvoted HERE")
+
+    // }
+}
+
     return(
             <div className="expert-card-voting">
                 <img className='upvote-icon' onClick={upvote} src={playSolid} alt='upvote' />
                 <p>{rating}</p>
                 <img className='downvote-icon' onClick={downvote} src={playSolid} alt='downvote' />
+                {checkUpvotes()}
             </div>
         
     )

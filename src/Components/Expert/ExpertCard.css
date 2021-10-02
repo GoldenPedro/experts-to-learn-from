@@ -40,6 +40,12 @@
   .expert-name {
     font-size: 1.6rem;
     margin: 0 0;
+    color: #2470ff;
+    text-decoration: underline;
+  }
+
+  .expert-name:hover {
+    color: #444;
   }
   
   .expert-name-link {

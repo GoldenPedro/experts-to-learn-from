@@ -24,17 +24,29 @@ function Dashboard() {
   // }]
 
   const [experts, setExperts] = useState([])
+  const [uservotes, setUservotes] = useState()
   const [categorySearch, setCategorySearch] = useState(defaultCategorySearch)
   const [categoriesState, setCategoriesState] = useState(categories)
   const [currentCategory, setCurrentCategory] = useState(defaultCurrentCategory)
+  let useridLocal = window.localStorage.getItem('userid')
 
   useEffect(() => {
         axios.get(`http://www.expertstolearnfrom.com/api/expertlist/`)
           .then(res => {
             setExperts(res.data)
+            // console.log("expert res: " + res)
+            // console.log("expert res.data: " + res.data)
           })
 
-      console.log(experts)
+        axios.get(`http://www.expertstolearnfrom.com/api/uservotes/${useridLocal}`)
+          .then(res => {
+            setUservotes(res.data)
+            // console.log("uservotes res: " + res)
+            // console.log("uservotes res.data: " + JSON.stringify(res.data))
+          })
+
+      console.log("experts " + experts)
+      console.log("uservotes: " + uservotes)
 
     window.localStorage.setItem('viewExpertFlag', '')
   }, []);
@@ -106,13 +118,13 @@ const randomCategoryButton = (evt) => {
               </div>
       </div>
       <div className='results-options'>
-        <p>Showing category: {currentCategory}</p>
+        <p id="showing-category">Showing: <p id="current-category">&nbsp;{currentCategory}</p></p>
         <p className='clickable-filter' onClick={top50ExpertsButton}>Top 50 Experts</p>
         <p className='clickable-filter' onClick={randomCategoryButton}>Random Category</p>
       </div>
 
         {experts.map(expert => (
-          <ExpertCard expert={expert} key={expert._id} />
+          <ExpertCard uservotes={uservotes} upvotes={uservotes.upvotes} downvotes={uservotes.downvotes} expert={expert} key={expert._id} />
         ))}
     </div>
   );

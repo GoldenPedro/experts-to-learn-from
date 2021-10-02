@@ -5,7 +5,7 @@ import './ExpertCard.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function ExpertCard(props) {
-    const {expert} = props
+    const {expert, upvotes, downvotes, uservotes} = props
 
     console.log(expert.name)
 
@@ -59,7 +59,7 @@ function ExpertCard(props) {
               <div className='expert-category'>
                 <p>{expert.categories[0].category}</p>
               </div>
-              <UpvoteDownVoteExpert expertid={expert._id} category={expert.categories[0].category} rating={expert.categories[0].rating}/>
+              <UpvoteDownVoteExpert uservotes={uservotes} upvotes={upvotes} downvotes={downvotes} expertid={expert._id} category={expert.categories[0].category} rating={expert.categories[0].rating}/>
           </div>
 
 
