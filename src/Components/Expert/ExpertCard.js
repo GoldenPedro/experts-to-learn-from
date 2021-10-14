@@ -5,7 +5,7 @@ import './ExpertCard.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function ExpertCard(props) {
-    const {expert, upvotes, downvotes, uservotes} = props
+    const {expert, upvotes, downvotes} = props
 
     console.log(expert.name)
 
@@ -35,7 +35,7 @@ function ExpertCard(props) {
                   <FontAwesomeIcon className='twitter-icon' icon={['fab', 'twitter']} />
                 }
                 {expert.twitterLinks.length > 0 &&
-                  <a href={`https://twitter.com/${expert.twitterLinks[0].twitterLink}`}>@{expert.twitterLinks[0].twitterLink}</a>
+                  <a rel="noreferrer" target='_blank' href={`https://twitter.com/${expert.twitterLinks[0].twitterLink}`}>@{expert.twitterLinks[0].twitterLink}</a>
                 }            
               </div>
               
@@ -44,7 +44,7 @@ function ExpertCard(props) {
                     <FontAwesomeIcon className='youtube-icon' icon={['fab', 'youtube']}/> 
                 }
                 {expert.youtubeChannels.length > 0  &&
-                    <a href={expert.youtubeChannels[0].youtubeChannel}>YouTube Channel</a>
+                    <a rel="noreferrer" target='_blank' href={expert.youtubeChannels[0].youtubeChannel}>YouTube Channel</a>
                 }
                 
               </div>
@@ -59,7 +59,7 @@ function ExpertCard(props) {
               <div className='expert-category'>
                 <p>{expert.categories[0].category}</p>
               </div>
-              <UpvoteDownVoteExpert uservotes={uservotes} upvotes={upvotes} downvotes={downvotes} expertid={expert._id} category={expert.categories[0].category} rating={expert.categories[0].rating}/>
+              <UpvoteDownVoteExpert upvotes={upvotes} downvotes={downvotes} expertid={expert._id} category={expert.categories[0].category} rating={expert.categories[0].rating}/>
           </div>
 
 

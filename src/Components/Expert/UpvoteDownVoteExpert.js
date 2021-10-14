@@ -9,7 +9,7 @@ import './UpvoteDownVoteExpert.css'
 let useridLocal = window.localStorage.getItem('userid')
 
 const UpvoteDownVoteExpert = (props) =>{
-const {expertid, category, rating, userinfo, upvotes, downvotes, uservotes} = props
+const {expertid, category, rating, upvotes, userinfo, downvotes} = props
 
 const defaultUpvoteInfo = {
     expertid: expertid,
@@ -56,30 +56,43 @@ const downvote = (event) => {
             console.log(err);
             alert("Please login to upvote/downvote")
         })
-    event.target.previousSibling.innerText = Number(event.target.previousSibling.innerText) - 1;
+    // event.target.previousSibling.innerText = Number(event.target.previousSibling.innerText) - 1;
 
 }
 
 const checkUpvotes = () => {
-    // console.log(upvotes)
-    // console.log(uservotes.upvotes)
-    // console.log(uservotes.upvotes.filter(element => element.id === expertid))
-    // if (uservotes.upvotes.some(element => element.id === "test")) {
-    //     console.log("upvoted")
-    // } else {
-    //     console.log("downvoted HERE")
+    console.log(upvotes)
+    console.log(downvotes)
+    
+    if (upvotes) {
+        if (upvotes.find(element => element.id === expertid)) {
+            console.log("upvoted")
+            // apply color to arrow
+            return (<img className='upvote-icon-neutral upvote-icon-upvoted' onClick={upvote} src={playSolid} alt='upvote' />)
+        } else {
+            console.log("downvoted HERE")
+            return (<img className='upvote-icon-neutral' onClick={upvote} src={playSolid} alt='downvote' />)
+        }
+    }
+}
 
-    // }
+const checkDownvotes = () => { 
+    if (upvotes) {
+        if (downvotes.find(element => element.id === expertid)) {
+            return (<img className='downvote-icon-neutral downvote-icon-downvoted' onClick={downvote} src={playSolid} alt='downvote' />)
+        } else {
+            console.log("downvoted HERE")
+            return (<img className='downvote-icon-neutral' onClick={downvote} src={playSolid} alt='downvote' />)
+        }
+    }
 }
 
     return(
             <div className="expert-card-voting">
-                <img className='upvote-icon' onClick={upvote} src={playSolid} alt='upvote' />
-                <p>{rating}</p>
-                <img className='downvote-icon' onClick={downvote} src={playSolid} alt='downvote' />
                 {checkUpvotes()}
+                <p>{rating}</p>
+                {checkDownvotes()}
             </div>
-        
     )
 }
 

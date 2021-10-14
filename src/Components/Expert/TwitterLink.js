@@ -10,7 +10,7 @@ const TwitterLink = (props) =>{
     return(
             <div className="expert-detail-card">
                 <div className="left-content">
-                    <a className="expert-detail-card-url" href={`https://twitter.com/${twitterLink.twitterLink}`}>@{twitterLink.twitterLink}</a>
+                    <a rel="noreferrer" target='_blank' className="expert-detail-card-url" href={`https://twitter.com/${twitterLink.twitterLink}`}>@{twitterLink.twitterLink}</a>
                     <p className="expert-detail-card-submitted">Submitted by: {twitterLink.submitted}</p>
                 </div>
             

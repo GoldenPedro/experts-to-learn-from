@@ -11,24 +11,34 @@
     margin: 5% 0;
 }
 
-.upvote-icon {
+
+
+.upvote-icon-upvoted {
+    filter: invert(32%) sepia(96%) saturate(2947%) hue-rotate(213deg) brightness(103%) contrast(101%) !important;
+}
+
+.upvote-icon-neutral {
     width: 20%;
     transform: rotate(-90deg);
     filter: invert(89%) sepia(10%) saturate(13%) hue-rotate(315deg) brightness(90%) contrast(84%);
 }
 
-.upvote-icon:hover {
+.upvote-icon-neutral:hover {
     filter: invert(32%) sepia(96%) saturate(2947%) hue-rotate(213deg) brightness(103%) contrast(101%);
     cursor: pointer;
 }
 
-.downvote-icon {
+.downvote-icon-neutral {
     width: 20%;
     transform: rotate(90deg);
     filter: invert(89%) sepia(10%) saturate(13%) hue-rotate(315deg) brightness(90%) contrast(84%);
 }
 
-.downvote-icon:hover {
+.downvote-icon-downvoted {
+    filter: invert(60%) sepia(65%) saturate(2803%) hue-rotate(343deg) brightness(102%) contrast(101%) !important;
+}
+
+.downvote-icon-neutral:hover {
     cursor: pointer;
     filter: invert(60%) sepia(65%) saturate(2803%) hue-rotate(343deg) brightness(102%) contrast(101%);
 }

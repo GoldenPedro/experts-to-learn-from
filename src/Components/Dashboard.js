@@ -24,7 +24,9 @@ function Dashboard() {
   // }]
 
   const [experts, setExperts] = useState([])
-  const [uservotes, setUservotes] = useState()
+  // const [uservotes, setUservotes] = useState()
+  const [upvotes, setUpvotes] = useState()
+  const [downvotes, setDownvotes] = useState([])
   const [categorySearch, setCategorySearch] = useState(defaultCategorySearch)
   const [categoriesState, setCategoriesState] = useState(categories)
   const [currentCategory, setCurrentCategory] = useState(defaultCurrentCategory)
@@ -40,13 +42,24 @@ function Dashboard() {
 
         axios.get(`http://www.expertstolearnfrom.com/api/uservotes/${useridLocal}`)
           .then(res => {
-            setUservotes(res.data)
+            // setUservotes(res.data)
+            setUpvotes(res.data.upvotes);
+            setDownvotes(res.data.downvotes)
+            
             // console.log("uservotes res: " + res)
-            // console.log("uservotes res.data: " + JSON.stringify(res.data))
+            // console.log("uservotes res.ata: " + JSON.stringify(res.data))
           })
 
       console.log("experts " + experts)
-      console.log("uservotes: " + uservotes)
+      // console.log(upvotes.find(el => el.id == "60d00a357d8094223d6d6eb5"))
+      // if (upvotes) {
+      //   for (let i = 0; i < upvotes.length; i++) {
+      //     if(upvotes[i].id === '60d00a357d8094223d6d6eb5') {
+      //       console.log('FOUND UPVOTES: ' + upvotes[i])
+      //     }
+      //   }
+      // }
+      
 
     window.localStorage.setItem('viewExpertFlag', '')
   }, []);
@@ -124,7 +137,7 @@ const randomCategoryButton = (evt) => {
       </div>
 
         {experts.map(expert => (
-          <ExpertCard uservotes={uservotes} upvotes={uservotes.upvotes} downvotes={uservotes.downvotes} expert={expert} key={expert._id} />
+          <ExpertCard upvotes={upvotes} downvotes={downvotes} expert={expert} key={expert._id} />
         ))}
     </div>
   );

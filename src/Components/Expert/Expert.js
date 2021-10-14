@@ -41,12 +41,12 @@ const Expert = (props) =>{
                 
                 {
                   experts.twitterLinks.length > 0 &&
-                  <p>Twitter: <a href={`https://twitter.com/${experts.twitterLinks[0].twitterLink}`}>@{experts.twitterLinks[0].twitterLink}</a></p>
+                  <p>Twitter: <a rel="noreferrer" target='_blank' href={`https://twitter.com/${experts.twitterLinks[0].twitterLink}`}>@{experts.twitterLinks[0].twitterLink}</a></p>
                 }  
 
                 {
                   experts.youtubeChannels.length > 0  &&
-                    <p>YouTube Channel: <a href={experts.youtubeChannels[0].youtubeChannel}>{experts.youtubeChannels[0].youtubeChannel}</a></p> 
+                    <p>YouTube Channel: <a rel="noreferrer" target='_blank' href={experts.youtubeChannels[0].youtubeChannel}>{experts.youtubeChannels[0].youtubeChannel}</a></p> 
                 }
                 
                 <p>Last Updated: {new Date(experts.updatedAt).toLocaleDateString('en-US')}</p>
