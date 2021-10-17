@@ -162,8 +162,8 @@ async function data(callback){
                       from: "expertstolearnfrom@gmail.com",
                       to: req.body.email,
                       subject: "Your Activation Link for ExpertToLearnFrom",
-                      text: `Please use the following link within the next 10 minutes to activate your account: http://expertstolearnfrom.com/api/verify/${token}`,
-                      html: `<p>Please use the following link within the next 10 minutes to activate your account: <strong><a href="http://expertstolearnfrom.com/api/verify/${token}" target="_blank"> Verify email address</a></strong></p>`,
+                      text: `Please use the following link within the next 10 minutes to activate your account: https://expertstolearnfrom.com/api/verify/${token}`,
+                      html: `<p>Please use the following link within the next 10 minutes to activate your account: <strong><a href="https://expertstolearnfrom.com/api/verify/${token}" target="_blank"> Verify email address</a></strong></p>`,
                     };
 
 

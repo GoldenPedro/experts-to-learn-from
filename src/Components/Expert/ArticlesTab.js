@@ -46,7 +46,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
             alert("Input cannot be empty")
         } else {
             // Axios functionality
-            axios.post('http://www.expertstolearnfrom.com/api/addexpertdetails/', newData)
+            axios.post('https://www.expertstolearnfrom.com/api/addexpertdetails/', newData)
                 .then((res) => {
                     console.log(res.data);
                 })

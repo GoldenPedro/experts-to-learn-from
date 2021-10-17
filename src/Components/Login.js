@@ -52,7 +52,7 @@ const Login = (props) => {
             password: formValues.password,
         }
         // Axios functionality
-        axios.post('http://www.expertstolearnfrom.com/api/login', formValues)
+        axios.post('https://www.expertstolearnfrom.com/api/login', formValues)
             .then((res) => {
                 console.log(res.data);
                 clearLocalStorage()

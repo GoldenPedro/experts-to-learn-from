@@ -76,7 +76,7 @@ const NewExpert = (props) => {
 //     // Packages an easy-to-use payload to put onto state
 //     const newData = {...submitData, descriptions: {description: values.description}}
 //     // Axios functionality
-//     axios.post('http://www.expertstolearnfrom.com/api/NewExpert', newData)
+//     axios.post('https://www.expertstolearnfrom.com/api/NewExpert', newData)
 //         .then((res) => {
 //             console.log(res.data);
 //         })

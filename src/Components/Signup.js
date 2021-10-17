@@ -55,7 +55,7 @@ function Signup() {
             passwordConfirmation: formValues.password,
         }
         // Axios functionality
-        axios.post('http://www.expertstolearnfrom.com/api/users', formValues)
+        axios.post('https://www.expertstolearnfrom.com/api/users', formValues)
         .then((res) => {
             console.log(res.data);
             console.log(res.data.token);

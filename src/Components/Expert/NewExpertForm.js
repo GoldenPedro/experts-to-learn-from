@@ -59,7 +59,7 @@
 //             description: formValues.description.trim(),
 //         }
 //         // Axios functionality
-//         axios.post('http://www.expertstolearnfrom.com/api/NewExpert', newData)
+//         axios.post('https://www.expertstolearnfrom.com/api/NewExpert', newData)
 //             .then((res) => {
 //                 console.log(res.data);
 //             })
@@ -75,7 +75,7 @@
 //     const search = (evt) => {
 //         evt.preventDefault();
 //         console.log(formValues.category)
-//         axios.post('http://www.expertstolearnfrom.com/api/categories', categorySearch)
+//         axios.post('https://www.expertstolearnfrom.com/api/categories', categorySearch)
 //         .then(res => {
 //             console.log(res.data);
 //         })
