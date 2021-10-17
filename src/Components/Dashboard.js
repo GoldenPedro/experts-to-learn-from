@@ -33,14 +33,14 @@ function Dashboard() {
   let useridLocal = window.localStorage.getItem('userid')
 
   useEffect(() => {
-        axios.get(`http://www.expertstolearnfrom.com/api/expertlist/`)
+        axios.get(`https://www.expertstolearnfrom.com/api/expertlist/`)
           .then(res => {
             setExperts(res.data)
             // console.log("expert res: " + res)
             // console.log("expert res.data: " + res.data)
           })
 
-        axios.get(`http://www.expertstolearnfrom.com/api/uservotes/${useridLocal}`)
+        axios.get(`https://www.expertstolearnfrom.com/api/uservotes/${useridLocal}`)
           .then(res => {
             // setUservotes(res.data)
             setUpvotes(res.data.upvotes);
@@ -67,7 +67,7 @@ function Dashboard() {
   const search = (evt) => {
     evt.preventDefault();
     console.log(defaultCategorySearch.category)
-    axios.post('http://www.expertstolearnfrom.com/api/categories', categorySearch)
+    axios.post('https://www.expertstolearnfrom.com/api/categories', categorySearch)
     .then(res => {
         console.log(res.data);
         setCategoriesState(res.data)
@@ -81,7 +81,7 @@ const handleSearchChanges = (evt) => {
 
 const selectCategory = (evt) => {
     console.log(evt.target.id)
-    axios.get(`http://www.expertstolearnfrom.com/api/expertlist/${evt.target.id}`)
+    axios.get(`https://www.expertstolearnfrom.com/api/expertlist/${evt.target.id}`)
     .then(res => {
       console.log(res.data)
       setExperts(res.data)
@@ -96,11 +96,11 @@ const top50ExpertsButton = (evt) => {
 }
 
 const randomCategoryButton = (evt) => {
-  axios.get("http://www.expertstolearnfrom.com/api/randomcategory")
+  axios.get("https://www.expertstolearnfrom.com/api/randomcategory")
   .then(res => {
     console.log(res.data)
     let randomCategory = res.data
-    axios.get(`http://www.expertstolearnfrom.com/api/expertlist/${randomCategory}`)
+    axios.get(`https://www.expertstolearnfrom.com/api/expertlist/${randomCategory}`)
       .then(response => {
         setExperts(response.data)
       })

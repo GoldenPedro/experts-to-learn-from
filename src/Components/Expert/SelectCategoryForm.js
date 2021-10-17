@@ -24,7 +24,7 @@ const SelectCategoryForm = (props) =>{
     // const [categorySearch, setCategorySearch] = useState(defaultCategorySearch)
 
     // useEffect(() => {
-    //     axios.get('http://www.expertstolearnfrom.com/api/categories')
+    //     axios.get('https://www.expertstolearnfrom.com/api/categories')
     //     .then(res => {
     //         console.log(res.data);
     //     })
@@ -33,7 +33,7 @@ const SelectCategoryForm = (props) =>{
     const search = (evt) => {
         evt.preventDefault();
         console.log(defaultCategorySearch.category)
-        axios.post('http://www.expertstolearnfrom.com/api/categories', categorySearch)
+        axios.post('https://www.expertstolearnfrom.com/api/categories', categorySearch)
         .then(res => {
             console.log(res.data);
             setCategoriesState(res.data)

@@ -119,7 +119,21 @@ async function data(callback){
                     err: err
                   });
                 } else {
-                    const token = jwt.sign({id: req.body.email}, process.env.SESSION_SECRET)
+                    const token = jwt.sign({id: req.body.email}, process.env.SESSION_SECRET, {expiresIn: "10m"})
+
+                    // const data = {
+                    //   from: "expertstolearnfrom@gmail.com",
+                    //   to: req.body.email,
+                    //   subject: "Your Activation Link for ExpertToLearnFrom",
+                    //   text: `Please use the following link within the next 10 minutes to activate your account: https://expertstolearnfrom.com/api/verify/${token}`,
+                    //   html: `<p>Please use the following link within the next 10 minutes to activate your account: <strong><a href="https://expertstolearnfrom.com/api/verify/${token}" target="_blank"> Verify email address</a></strong></p>`,
+                    // };
+
+
+                    // transporter.sendMail(data, function(err, info){
+                    //   if (err){
+                    //     console.log(err);
+                    //   }});
 
                     return res.status(200).json({
                       token: token,

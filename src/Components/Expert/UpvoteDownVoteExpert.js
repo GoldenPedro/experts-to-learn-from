@@ -24,7 +24,7 @@ const [upvoteInfo, setUpvoteInfo] = useState(defaultUpvoteInfo)
 
 const upvote = (event) => {
     console.log(upvoteInfo)
-    axios.post('http://www.expertstolearnfrom.com/api/vote', upvoteInfo)
+    axios.post('https://www.expertstolearnfrom.com/api/vote', upvoteInfo)
         .then(res => {
             console.log(res.data);
         })
@@ -48,7 +48,7 @@ const [downvoteInfo, setDownvoteInfo] = useState(defaultDownvoteInfo)
 
 const downvote = (event) => {
     console.log(downvoteInfo)
-    axios.post('http://www.expertstolearnfrom.com/api/vote', downvoteInfo)
+    axios.post('https://www.expertstolearnfrom.com/api/vote', downvoteInfo)
         .then(res => {
             console.log(res.data);
         })

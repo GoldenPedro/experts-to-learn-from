@@ -21,7 +21,7 @@ const Expert = (props) =>{
     const { id } = useParams()
 
     useEffect(() => {
-        axios.get(`http://www.expertstolearnfrom.com/api/getexpert/${id}`)
+        axios.get(`https://www.expertstolearnfrom.com/api/getexpert/${id}`)
           .then((res) => {
             setExperts(res.data)
             

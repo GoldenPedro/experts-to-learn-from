@@ -89,7 +89,7 @@ export class CreateExpertForm extends Component {
       alert("Please enter a name and description.")
     } else {
       // Axios functionality
-      axios.post('http://www.expertstolearnfrom.com/api/NewExpert', newData)
+      axios.post('https://www.expertstolearnfrom.com/api/NewExpert', newData)
       .then((res) => {
           console.log(res.data);
           window.location.href="/";
