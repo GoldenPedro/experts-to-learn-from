@@ -12,7 +12,6 @@ const LocalStrategy = require('passport-local');
 const jwt = require('jsonwebtoken');
 // const { info, timeStamp } = require('console');
 const crypto = require('crypto');
-const nodemailer = require("nodemailer");
 
 const URI = process.env.MONGO_URI;
 
@@ -45,18 +44,7 @@ async function data(callback){
     const users = await client.db('mydatabase').collection('users');
     const experts = await client.db('mydatabase').collection('experts');
     const categories = await client.db('mydatabase').collection('categories');
-    const details = await client.db('mydatabase').collection('details');
-
-    const transporter  = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
-      // service: 'gmail',
-      auth: {
-        user: "expertstolearnfrom@gmail.com", //process.env.EMAIL_USERNAME,
-        pass: "pedroalegar1" //process.env.EMAIL_PASSWORD,
-      }
-  });
+    const details = await client.db('mydatabase').collection('details'); 
 
     const salt = process.env.SALT; 
 
@@ -102,31 +90,6 @@ async function data(callback){
     }
     
 
-    // app.get("/api/email", (req,res) => {
-    //   const token = jwt.sign({id: "test"}, process.env.SESSION_SECRET, {expiresIn: "10m"})
-
-    //   var data = {
-    //     from: "expertstolearnfrom@gmail.com", // sender address (who sends)
-    //     to: 'alegar917@gmail.com', // list of receivers (who receives)
-    //     subject: 'Hello', // Subject line
-    //     text: 'Hello world ', // plaintext body
-    //     html: '<b>Hello world </b><br> This is the first email sent with Nodemailer in Node.js' // html body
-    // };
-
-    //   transporter.sendMail(data, function(err, info){
-    //     if (err){
-    //       console.log(err);
-    //     }
-
-    //     console.log('Message sent: ' + info.response);
-    //   });
-
-    //   return res.status(200).json({
-    //     token: token,
-    //   });
-
-    // })
-
     app.post("/api/users", (req, res, next) => {
       users.findOne({ email: req.body.email }, function (err, email) {
         if (err) {
@@ -150,34 +113,15 @@ async function data(callback){
             } else {
               // const hash = bcrypt.hashSync(req.body.password, 12);
               const hash = crypto.pbkdf2Sync(req.body.password, salt, 100, 64, `sha512`).toString(`hex`); 
-              users.insertOne({ email: req.body.email, username: req.body.username, password: hash, verified: false }, (err, doc) => {
+              users.insertOne({ email: req.body.email, username: req.body.username, password: hash}, (err, doc) => {
                 if (err) {
                   return res.status(500).json({
                     err: err
                   });
                 } else {
-                    const token = jwt.sign({id: req.body.email}, process.env.SESSION_SECRET, {expiresIn: "10m"})
+                    const token = jwt.sign({id: req.body.email}, process.env.SESSION_SECRET)
 
-                    const data = {
-                      from: "expertstolearnfrom@gmail.com",
-                      to: req.body.email,
-                      subject: "Your Activation Link for ExpertToLearnFrom",
-                      text: `Please use the following link within the next 10 minutes to activate your account: http://expertstolearnfrom.com/api/verify/${token}`,
-                      html: `<p>Please use the following link within the next 10 minutes to activate your account: <strong><a href="http://expertstolearnfrom.com/api/verify/${token}" target="_blank"> Verify email address</a></strong></p>`,
-                    };
-
-
-                    transporter.sendMail(data, function(err, info){
-                      if (err){
-                        console.log(err);
-                      }
-
-                      console.log('Message sent: ' + info.response);
-                    });
-                  // transporter.sendMail(data);
-
-                     
-                     return res.status(200).json({
+                    return res.status(200).json({
                       token: token,
                       id: doc["ops"][0]["_id"],
                       user: doc["ops"][0]["username"]
@@ -216,38 +160,6 @@ async function data(callback){
       })(req, res);
     });
 
-    // app.get("/api/verify/:token", (req, res) => {
-    //   token = req.params.token
-
-    //   if (!token) {
-    //     return res.status(401).json({ 
-    //         message: "Missing Token" 
-    //     });
-    //   }
-
-    //   let payload = null
-    //   try {
-    //     payload = jwt.verify(token, process.env.SESSION_SECRET);
-    //   } catch (err) {
-    //     return res.status(500).json({
-    //       err: err
-    //     });
-    //   }
-
-    //   users.updateOne({email: payload.id }, {$set: {verified: true }}, function(err, user){
-    //     if (user) {
-    //       return res.status(200).json({
-    //         message: "Account Verified" 
-    //       });
-    //     }
-    //     else{
-    //       return res.status(401).json({
-    //         user: payload.id,
-    //         message: "User doesn't exist"
-    //       });
-    //     }
-    //   })
-    // })
 
     app.post("/api/NewExpert", (req, res) => {
       users.findOne({ _id: new ObjectID(req.body.user)}, function (err, user) {
@@ -811,33 +723,47 @@ async function data(callback){
       });
     });
 
-    app.get("/api/uservotes/", (req, res) => {
-      //  try {
-      users.findOne({ _id: new ObjectID(req.body.userid)}, { projection: {
-        _id: false,
-        upvotes: true,
-        downvotes: true
-      }}, function (err, user) {
-        if (err) {
+    app.get("/api/uservotes/:id", (req, res) => {
+      try {
+        users.findOne({ _id: new ObjectID(req.params.id)}, { projection: {
+          _id: false,
+          upvotes: true,
+          downvotes: true
+        }}, function (err, user) {
+          if (err) {
+            return res.status(500).json({
+              err: err
+            });
+          } 
+          if (!user) {
+            return res.status(401).json({
+              message: "User does not exist"
+            });
+          } 
+          else{
+            user.upvotes.forEach(function(obj) {
+              if (obj.expertdetailid) {
+                obj.id = obj.expertdetailid;
+                delete obj.expertdetailid;
+              }
+            });
+
+            user.downvotes.forEach(function(obj) {
+              if (obj.expertdetailid) {
+                obj.id = obj.expertdetailid;
+                delete obj.expertdetailid;
+              }
+            });
+
+            return res.status(200).json(user);
+          }
+        })
+        }
+        catch(err) {
           return res.status(500).json({
             err: err
-          });
-        } 
-        if (!user) {
-           return res.status(401).json({
-             message: "User does not exist"
-           });
-         } 
-        else{
-          return res.status(200).json(user);
+          });  
         }
-      })
-      // }
-      // catch(err) {
-      //   return res.status(500).json({
-      //     err: err
-      //   });  
-      // }
     });
 
     // app.get("/api/getrankedexpert/", (req, res) => {
