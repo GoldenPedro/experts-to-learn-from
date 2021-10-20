@@ -9,7 +9,7 @@ import './UpvoteDownVoteExpertDetails.css'
 let useridLocal = window.localStorage.getItem('userid')
 
 const UpvoteDownVoteExpertDetails = (props) =>{
-const {category, rating, id, field, subfield, tag, expertId, userinfo} = props
+const {category, rating, id, field, subfield, tag, expertId, upvotes} = props
 
 const defaultUpvoteInfo = {
     userid: useridLocal,
@@ -60,7 +60,22 @@ const downvote = (event) => {
             alert("Please login to upvote/downvote")
         })
     event.target.previousSibling.innerText = Number(event.target.previousSibling.innerText) - 1;
+}
 
+const checkUpvotes = () => {
+    
+    
+    if (upvotes) {
+        console.log(upvotes)
+        if (upvotes.find(element => element.id === expertId)) {
+            console.log("upvoted")
+            // apply color to arrow
+            return (<img className='upvote-icon-neutral upvote-icon-upvoted' onClick={upvote} src={playSolid} alt='upvote' />)
+        } else {
+            console.log("downvoted HERE")
+            return (<img className='upvote-icon-neutral' onClick={upvote} src={playSolid} alt='downvote' />)
+        }
+    }
 }
 
     return(

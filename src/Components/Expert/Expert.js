@@ -19,16 +19,28 @@ import './Expert.css'
 const Expert = (props) =>{
     const [experts, setExperts] = useState([])
     const { id } = useParams()
+    const [upvotes, setUpvotes] = useState()
+    const [downvotes, setDownvotes] = useState()
+    let useridLocal = window.localStorage.getItem('userid')
 
     useEffect(() => {
         axios.get(`https://www.expertstolearnfrom.com/api/getexpert/${id}`)
           .then((res) => {
             setExperts(res.data)
-            
+            console.log(experts)
           })
+
+        axios.get(`https://www.expertstolearnfrom.com/api/uservotes/${useridLocal}`)
+          .then(res => {
+            // setUservotes(res.data)
+            setUpvotes(res.data.upvotes);
+            setDownvotes(res.data.downvotes)
+            console.log('==> upvotes: ' + upvotes)
+          })
+
       }, []);
 
-      setTimeout(function(){console.log(experts) }, 2000);
+      
       if (!experts.descriptions) {
         return <span>Loading...</span>
       }
@@ -67,7 +79,7 @@ const Expert = (props) =>{
                     </TabList>
 
                     <TabPanel>
-                      <ArticlesTab articles={experts.articles} expertId={experts._id}/>
+                      <ArticlesTab upvotes={upvotes} articles={experts.articles} expertId={experts._id}/>
                     </TabPanel>
                     <TabPanel>
                       <TweetsTab tweets={experts.tweets} expertId={experts._id} />
