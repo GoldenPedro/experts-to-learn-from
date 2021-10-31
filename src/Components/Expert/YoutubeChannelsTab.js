@@ -12,7 +12,7 @@ const defaultValues = {
 let useridLocal = window.localStorage.getItem('userid');
 
 const YoutubeChannelsTab = (props) =>{
-const {youtubeChannels, expertId, userinfo} = props
+const {youtubeChannels, expertId, upvotes, downvotes} = props
 const [formValues, setFormValues] = useState(defaultValues);
 const [savedFormInfo, setSavedFormInfo] = useState([]);
 
@@ -73,7 +73,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
             </div>
                 
             {youtubeChannels.map(youtubeChannel => (
-                <YoutubeChannel youtubeChannel={youtubeChannel} expertId={expertId} />
+                <YoutubeChannel upvotes={upvotes} downvotes={downvotes} youtubeChannel={youtubeChannel} expertId={expertId} />
             ))}
 
             </div>

@@ -13,7 +13,7 @@ const defaultValues = {
 let useridLocal = window.localStorage.getItem('userid');
 
 const OtherLinksTab = (props) =>{
-const {otherLinks, expertId, userinfo} = props
+const {otherLinks, expertId, upvotes, downvotes} = props
 const [formValues, setFormValues] = useState(defaultValues);
 const [savedFormInfo, setSavedFormInfo] = useState([]);
 
@@ -74,7 +74,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
             </div>
                 
             {otherLinks.map(otherLink => (
-                <OtherLink otherLink={otherLink} expertId={expertId} />
+                <OtherLink upvotes={upvotes} downvotes={downvotes} otherLink={otherLink} expertId={expertId} />
             ))}
 
             </div>

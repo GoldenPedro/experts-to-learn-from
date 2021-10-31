@@ -12,7 +12,7 @@ const defaultValues = {
 let useridLocal = window.localStorage.getItem('userid');
 
 const TwitterLinksTab = (props) =>{
-const {twitterLinks, expertId} = props
+const {twitterLinks, expertId, upvotes, downvotes} = props
 const [formValues, setFormValues] = useState(defaultValues);
 const [savedFormInfo, setSavedFormInfo] = useState([]);
 
@@ -73,7 +73,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
             </div>
                 
             {twitterLinks.map(twitterLink => (
-                <TwitterLink twitterLink={twitterLink} expertId={expertId} />
+                <TwitterLink upvotes={upvotes} downvotes={downvotes} twitterLink={twitterLink} expertId={expertId} />
             ))}
 
             </div>

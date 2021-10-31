@@ -13,7 +13,7 @@ const defaultValues = {
 let useridLocal = window.localStorage.getItem('userid');
 
 const TweetsTab = (props) =>{
-const {tweets, expertId, userinfo} = props
+const {tweets, expertId, userinfo, upvotes, downvotes} = props
 const [formValues, setFormValues] = useState(defaultValues);
 const [savedFormInfo, setSavedFormInfo] = useState([]);
 
@@ -74,7 +74,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
             </div>
                 
             {tweets.map(tweet => (
-                <Tweet tweet={tweet} expertId={expertId} />
+                <Tweet upvotes={upvotes} downvotes={downvotes} tweet={tweet} expertId={expertId} />
             ))}
 
             </div>

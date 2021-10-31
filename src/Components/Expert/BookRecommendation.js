@@ -3,7 +3,7 @@ import UpvoteDownVoteExpertDetails from './UpvoteDownVoteExpertDetails';
 import './ExpertDetailsCardStyle.css'
 
 const BookRecommendation = (props) =>{
-    const {bookRecommendation, expertId} = props
+    const {bookRecommendation, expertId, upvotes, downvotes} = props
 
     const conditionalLinkRender = () => {
         if (bookRecommendation.amazonLink.length !== 0) {
@@ -23,7 +23,7 @@ const BookRecommendation = (props) =>{
                 
                 
                 <div className="expert-detail-voting-rating-wrapper">
-                    <UpvoteDownVoteExpertDetails field="bookRecommendations" subfield="bookRecommendation" rating={bookRecommendation.rating} id={bookRecommendation._id} expertId={expertId} tag={bookRecommendation.bookRecommendation}/>         
+                    <UpvoteDownVoteExpertDetails upvotes={upvotes} downvotes={downvotes} field="bookRecommendations" subfield="bookRecommendation" rating={bookRecommendation.rating} id={bookRecommendation._id} expertId={expertId} tag={bookRecommendation.bookRecommendation}/>         
                 </div>
 
 

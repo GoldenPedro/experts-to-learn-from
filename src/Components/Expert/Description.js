@@ -4,7 +4,7 @@ import './ExpertDetailsCardStyle.css'
 
 
 const Description = (props) =>{
-    const {description, expertId} = props
+    const {description, expertId, upvotes, downvotes} = props
 
 
     return(
@@ -16,7 +16,7 @@ const Description = (props) =>{
                 
                 
                 <div className="expert-detail-voting-rating-wrapper">
-                    <UpvoteDownVoteExpertDetails field="descriptions" subfield="description" rating={description.rating} id={description._id} expertId={expertId} tag={description.description}/>
+                    <UpvoteDownVoteExpertDetails upvotes={upvotes} downvotes={downvotes} field="descriptions" subfield="description" rating={description.rating} id={description._id} expertId={expertId} tag={description.description}/>
                 </div>
 
                   

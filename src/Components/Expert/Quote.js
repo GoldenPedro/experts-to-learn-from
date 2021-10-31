@@ -3,7 +3,7 @@ import UpvoteDownVoteExpertDetails from './UpvoteDownVoteExpertDetails';
 import './ExpertDetailsCardStyle.css'
 
 const Quote = (props) =>{
-    const {quote, expertId} = props
+    const {quote, expertId, upvotes, downvotes} = props
 
 
     return(
@@ -14,7 +14,7 @@ const Quote = (props) =>{
                 </div>
                 
                     <div className="expert-detail-voting-rating-wrapper">
-                        <UpvoteDownVoteExpertDetails field="quotes" subfield="quote" rating={quote.rating} id={quote._id} expertId={expertId} tag={quote.quote}/>
+                        <UpvoteDownVoteExpertDetails upvotes={upvotes} downvotes={downvotes} field="quotes" subfield="quote" rating={quote.rating} id={quote._id} expertId={expertId} tag={quote.quote}/>
                     </div>
             </div>
         

@@ -4,7 +4,7 @@ import './ExpertDetailsCardStyle.css'
 
 
 const TwitterLink = (props) =>{
-    const {twitterLink, expertId} = props
+    const {twitterLink, expertId, upvotes, downvotes} = props
 
 
     return(
@@ -16,7 +16,7 @@ const TwitterLink = (props) =>{
             
 
                 <div className="expert-detail-voting-rating-wrapper">
-                    <UpvoteDownVoteExpertDetails field="twitterLinks" subfield="twitterLink" rating={twitterLink.rating} id={twitterLink._id} expertId={expertId} tag={twitterLink.twitterLink}/>
+                    <UpvoteDownVoteExpertDetails upvotes={upvotes} downvotes={downvotes} field="twitterLinks" subfield="twitterLink" rating={twitterLink.rating} id={twitterLink._id} expertId={expertId} tag={twitterLink.twitterLink}/>
                 </div>
 
                 

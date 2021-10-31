@@ -4,7 +4,7 @@ import './ExpertDetailsCardStyle.css'
 
 
 const YoutubeChannel = (props) =>{
-    const {youtubeChannel, expertId} = props
+    const {youtubeChannel, expertId, upvotes, downvotes} = props
 
 
     return(
@@ -17,7 +17,7 @@ const YoutubeChannel = (props) =>{
                
 
                 <div className="expert-detail-voting-rating-wrapper">
-                    <UpvoteDownVoteExpertDetails field="youtubeChannels" subfield="youtubeChannel" rating={youtubeChannel.rating} id={youtubeChannel._id} expertId={expertId} tag={youtubeChannel.youtubeChannel}/>
+                    <UpvoteDownVoteExpertDetails upvotes={upvotes} downvotes={downvotes} field="youtubeChannels" subfield="youtubeChannel" rating={youtubeChannel.rating} id={youtubeChannel._id} expertId={expertId} tag={youtubeChannel.youtubeChannel}/>
                 </div>
 
                 

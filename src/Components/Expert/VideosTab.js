@@ -12,7 +12,7 @@ const defaultValues = {
 let useridLocal = window.localStorage.getItem('userid');
 
 const VideosTab = (props) =>{
-const {videos, expertId, userinfo} = props
+const {videos, expertId, upvotes, downvotes} = props
 const [formValues, setFormValues] = useState(defaultValues);
 const [savedFormInfo, setSavedFormInfo] = useState([]);
 
@@ -73,7 +73,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
             </div>
                 
             {videos.map(video => (
-                <Video video={video} expertId={expertId} />
+                <Video upvotes={upvotes} downvotes={downvotes} video={video} expertId={expertId} />
             ))}
 
             </div>

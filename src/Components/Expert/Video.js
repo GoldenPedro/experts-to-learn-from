@@ -3,7 +3,7 @@ import UpvoteDownVoteExpertDetails from './UpvoteDownVoteExpertDetails';
 import './ExpertDetailsCardStyle.css'
 
 const Video = (props) =>{
-    const {video, expertId} = props
+    const {video, expertId, upvotes, downvotes} = props
 
 
     return(
@@ -14,7 +14,7 @@ const Video = (props) =>{
                 </div>
                 
                 <div className="expert-detail-voting-rating-wrapper">
-                    <UpvoteDownVoteExpertDetails field="videos" subfield="video" rating={video.rating} id={video._id} expertId={expertId} tag={video.video}/>         
+                    <UpvoteDownVoteExpertDetails upvotes={upvotes} downvotes={downvotes} field="videos" subfield="video" rating={video.rating} id={video._id} expertId={expertId} tag={video.video}/>         
                 </div>
             </div>
         

@@ -13,7 +13,7 @@ const defaultValues = {
 let useridLocal = window.localStorage.getItem('userid');
 
 const QuotesTab = (props) =>{
-const {quotes, expertId, userinfo} = props
+const {quotes, expertId, upvotes, downvotes} = props
 const [formValues, setFormValues] = useState(defaultValues);
 const [savedFormInfo, setSavedFormInfo] = useState([]);
 
@@ -74,7 +74,7 @@ const [savedFormInfo, setSavedFormInfo] = useState([]);
             </div>
                 
             {quotes.map(quote => (
-                <Quote quote={quote} expertId={expertId} />
+                <Quote upvotes={upvotes} downvotes={downvotes} quote={quote} expertId={expertId} />
             ))}
 
             </div>

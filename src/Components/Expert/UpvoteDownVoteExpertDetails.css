@@ -12,7 +12,7 @@
     font-size: 1rem;
 }
 
-.upvote-icon-details {
+/* .upvote-icon-details {
     width: 15%;
     transform: rotate(-90deg);
     filter: invert(89%) sepia(10%) saturate(13%) hue-rotate(315deg) brightness(90%) contrast(84%);
@@ -30,6 +30,38 @@
 }
 
 .downvote-icon-details:hover {
+    cursor: pointer;
+    filter: invert(60%) sepia(65%) saturate(2803%) hue-rotate(343deg) brightness(102%) contrast(101%);
+}
+ */
+
+
+.upvote-icon-details-upvoted {
+    filter: invert(32%) sepia(96%) saturate(2947%) hue-rotate(213deg) brightness(103%) contrast(101%) !important;
+}
+
+.upvote-icon-details-neutral {
+    width: 20%;
+    transform: rotate(-90deg);
+    filter: invert(89%) sepia(10%) saturate(13%) hue-rotate(315deg) brightness(90%) contrast(84%);
+}
+
+.upvote-icon-details-neutral:hover {
+    filter: invert(32%) sepia(96%) saturate(2947%) hue-rotate(213deg) brightness(103%) contrast(101%);
+    cursor: pointer;
+}
+
+.downvote-icon-details-neutral {
+    width: 20%;
+    transform: rotate(90deg);
+    filter: invert(89%) sepia(10%) saturate(13%) hue-rotate(315deg) brightness(90%) contrast(84%);
+}
+
+.downvote-icon-details-downvoted {
+    filter: invert(60%) sepia(65%) saturate(2803%) hue-rotate(343deg) brightness(102%) contrast(101%) !important;
+}
+
+.downvote-icon-details-neutral:hover {
     cursor: pointer;
     filter: invert(60%) sepia(65%) saturate(2803%) hue-rotate(343deg) brightness(102%) contrast(101%);
 }

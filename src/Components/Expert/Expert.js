@@ -35,12 +35,13 @@ const Expert = (props) =>{
             // setUservotes(res.data)
             setUpvotes(res.data.upvotes);
             setDownvotes(res.data.downvotes)
-            console.log('==> upvotes: ' + upvotes)
           })
 
       }, []);
 
-      
+      // console.log('==> upvotes: ' + JSON.stringify(upvotes))
+
+
       if (!experts.descriptions) {
         return <span>Loading...</span>
       }
@@ -79,31 +80,31 @@ const Expert = (props) =>{
                     </TabList>
 
                     <TabPanel>
-                      <ArticlesTab upvotes={upvotes} articles={experts.articles} expertId={experts._id}/>
+                      <ArticlesTab upvotes={upvotes} downvotes={downvotes} articles={experts.articles} expertId={experts._id}/>
                     </TabPanel>
                     <TabPanel>
-                      <TweetsTab tweets={experts.tweets} expertId={experts._id} />
+                      <TweetsTab upvotes={upvotes} downvotes={downvotes} tweets={experts.tweets} expertId={experts._id} />
                     </TabPanel>
                     <TabPanel>
-                      <VideosTab videos={experts.videos} expertId={experts._id} />
+                      <VideosTab upvotes={upvotes} downvotes={downvotes} videos={experts.videos} expertId={experts._id} />
                     </TabPanel>
                     <TabPanel>
-                      <QuotesTab quotes={experts.quotes} expertId={experts._id} />
+                      <QuotesTab upvotes={upvotes} downvotes={downvotes} quotes={experts.quotes} expertId={experts._id} />
                     </TabPanel>
                     <TabPanel>
-                      <BookRecommendationsTab bookRecommendations={experts.bookRecommendations} expertId={experts._id} />
+                      <BookRecommendationsTab upvotes={upvotes} downvotes={downvotes} bookRecommendations={experts.bookRecommendations} expertId={experts._id} />
                     </TabPanel>
                     <TabPanel>
-                      <DescriptionsTab descriptions={experts.descriptions} expertId={experts._id} />
+                      <DescriptionsTab upvotes={upvotes} downvotes={downvotes} descriptions={experts.descriptions} expertId={experts._id} />
                     </TabPanel>
                     <TabPanel>
-                      <TwitterLinksTab twitterLinks={experts.twitterLinks} expertId={experts._id} />
+                      <TwitterLinksTab upvotes={upvotes} downvotes={downvotes} twitterLinks={experts.twitterLinks} expertId={experts._id} />
                     </TabPanel>
                     <TabPanel>
-                      <YoutubeChannelsTab youtubeChannels={experts.youtubeChannels} expertId={experts._id} />
+                      <YoutubeChannelsTab upvotes={upvotes} downvotes={downvotes} youtubeChannels={experts.youtubeChannels} expertId={experts._id} />
                     </TabPanel>
                     <TabPanel>
-                      <OtherLinksTab otherLinks={experts.otherLinks} expertId={experts._id} />
+                      <OtherLinksTab upvotes={upvotes} downvotes={downvotes} otherLinks={experts.otherLinks} expertId={experts._id} />
                     </TabPanel>
                   </Tabs>
                 </div>
